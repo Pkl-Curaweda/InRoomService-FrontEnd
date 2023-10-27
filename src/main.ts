@@ -5,6 +5,9 @@ import 'uno.css'
 import '@unocss/reset/tailwind.css'
 import 'src/styles/main.css'
 
+import '@quasar/extras/material-icons/material-icons.css'
+import '@quasar/extras/material-icons-outlined/material-icons-outlined.css'
+
 const app = createApp(App)
 const modules = import.meta.glob<any>('/src/modules/*.ts', { eager: true })
 
