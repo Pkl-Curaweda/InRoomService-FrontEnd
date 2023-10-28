@@ -1,18 +1,44 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
-import indexVue from './pages/default/index.vue'
+import loginVue from './layouts/login.vue'
+import adminVue from './pages/login/admin.vue'
+import mitraVue from './pages/login/mitra.vue'
 import correctionVue from './pages/default/correction.vue'
+import foodbeverageVue from './pages/default/foodbeverage.vue'
+import promotodayVue from './pages/default/promotoday.vue'
+import laundryVue from './pages/default/laundry.vue'
+import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 
 export const routes: RouteType[] = [
   {
-    path: '/',
-    component: indexVue, // dashboard
+    path: '/admin',
+    component: adminVue, // dashboard
     meta: {
-      layout: defaultVue,
-      title: 'Dashboard - Lingian Hotel',
-      label: 'dashboard',
-      icon: 'dashboard',
+      layout: loginVue,
+      title: 'Home - Lingian Hotel',
+      label: 'home',
+      icon: 'home',
+    },
+  },
+  {
+    path: '/mitra',
+    component: adminVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/user',
+    component: adminVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
     },
   },
   {
@@ -20,9 +46,59 @@ export const routes: RouteType[] = [
     component: correctionVue,
     meta: {
       layout: defaultVue,
-      title: 'Correction - Lingian Hotel',
-      label: 'correction',
-      icon: 'tune',
+      title: 'Mini Market - Lingian Hotel',
+      label: 'mini market',
+      icon: 'store',
+    },
+  },
+  {
+    path: '/foodbeverage',
+    component: foodbeverageVue,
+    meta: {
+      layout: defaultVue,
+      title: 'Food & Beverage - Lingian Hotel',
+      label: 'food & beverage',
+      icon: 'emoji_food_beverage',
+    },
+  },
+  {
+    path: '/promotoday',
+    component: promotodayVue,
+    meta: {
+      layout: defaultVue,
+      title: 'Promo Today - Lingian Hotel',
+      label: 'promo today',
+      icon: 'percent',
+    },
+  },
+  {
+    path: '/laundry',
+    component: laundryVue,
+    meta: {
+      layout: defaultVue,
+      title: 'Laundry - Lingian Hotel',
+      label: 'laundry',
+      icon: 'local_laundry_service',
+    },
+  },
+  {
+    path: '/customerservice',
+    component: customerserviceVue,
+    meta: {
+      layout: defaultVue,
+      title: 'Customer Service - Lingian Hotel',
+      label: 'customer service',
+      icon: 'support_agent',
+    },
+  },
+  {
+    path: '/logout',
+    component: '',
+    meta: {
+      layout: '',
+      title: 'Logout - Lingian Hotel',
+      label: 'logout',
+      icon: 'logout',
     },
   },
 ]
