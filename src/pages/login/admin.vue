@@ -40,12 +40,15 @@
     <p class="mt-8" v-if="$route.path !== '/user'">
       Don't have an account? <a class="text-[#D1CB2A]" href="">Create an account</a>
     </p>
+
+    <card-menu tanggal="9" namaToko="bagong darat" jam="sekian" iconName="close" />
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref } from 'vue'
   import ButtonVue from '../../components/Button.vue'
+  import CardMenu from 'src/components/CardMenu.vue'
 
   const username = ref('')
   const pw = ref('')
