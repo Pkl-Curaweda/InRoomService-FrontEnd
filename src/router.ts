@@ -1,8 +1,9 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
-import adminVue from './pages/login/admin.vue'
+import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
+import regsiterPageVue from './pages/register/registerPages.vue'
 import correctionVue from './pages/default/correction.vue'
 import foodbeverageVue from './pages/default/foodbeverage.vue'
 import promotodayVue from './pages/default/promotoday.vue'
@@ -13,7 +14,7 @@ import RouteType from './types/route'
 export const routes: RouteType[] = [
   {
     path: '/admin',
-    component: adminVue, // dashboard
+    component: loginPageVue, // dashboard
     meta: {
       layout: loginVue,
       title: 'Home - Lingian Hotel',
@@ -23,7 +24,7 @@ export const routes: RouteType[] = [
   },
   {
     path: '/mitra',
-    component: adminVue, // dashboard
+    component: loginPageVue, // dashboard
     meta: {
       layout: loginVue,
       title: 'Home - Lingian Hotel',
@@ -33,7 +34,17 @@ export const routes: RouteType[] = [
   },
   {
     path: '/user',
-    component: adminVue, // dashboard
+    component: loginPageVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/admin/register',
+    component: regsiterPageVue, // dashboard
     meta: {
       layout: loginVue,
       title: 'Home - Lingian Hotel',

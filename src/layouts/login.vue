@@ -78,7 +78,7 @@
         </q-scroll-area>
       </q-drawer>
 
-      <q-page-container class="flex items-center justify-center mt-8">
+      <q-page-container class="flex items-center justify-center h-screen">
         <router-view />
       </q-page-container>
     </q-layout>
