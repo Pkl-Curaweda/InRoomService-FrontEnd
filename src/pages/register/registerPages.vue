@@ -75,7 +75,7 @@
           <template #append>
             <q-icon name="expand_more" class="text-[#069550] cursor-pointer" size="35px">
               <q-popup-proxy>
-                <q-date v-model="selectedDate" :mask="mask" />
+                <q-date v-model="selectedDate" :mask="mask" default-view="Years" />
               </q-popup-proxy>
             </q-icon>
           </template>
