@@ -43,12 +43,24 @@
     </p>
 
     <card-menu tanggal="9" namaToko="bagong darat" jam="sekian" iconName="close" />
+    <card-user
+      gambarProduk="src\assets\img\login.png"
+      namaProduk="Bakso baghdad"
+      descProduk="dibuat dari daging onta asli"
+      hargaProduk="20000" />
+    <card-mitra
+      gambarProduk="src\assets\img\login.png"
+      namaProduk="Bakso baghdad"
+      descProduk="dibuat dari daging onta asli"
+      hargaProduk="20000" />
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   import ButtonVue from '../../components/Button.vue'
+  import CardMitra from 'src/components/CardMitra.vue'
+  import CardUser from 'src/components/CardUser.vue'
   import CardMenu from 'src/components/CardMenu.vue'
   import { useRoute } from 'vue-router'
 
