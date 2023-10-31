@@ -1,6 +1,7 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
+import navAbout from './layouts/about.vue'
 import indexUser from './pages/customer/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
@@ -48,7 +49,7 @@ export const routes: RouteType[] = [
     path: '/user/home',
     component: indexUser, // dashboard
     meta: {
-      layout: loginVue,
+      layout: navAbout,
       title: 'Login - Lingian Hotel',
       label: '',
       icon: '',
@@ -118,9 +119,11 @@ export const routes: RouteType[] = [
     path: '/laundry',
     component: laundryVue,
     meta: {
-      layout: defaultVue,
+      // layout: defaultVue,
+      layout: navAbout,
       title: 'Laundry - Lingian Hotel',
-      label: 'laundry',
+      // label: 'laundry',
+      label: 'About',
       icon: 'local_laundry_service',
     },
   },
