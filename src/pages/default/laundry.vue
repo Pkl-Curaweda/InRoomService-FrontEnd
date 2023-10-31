@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <Receipt />
 </template>
 
 <script setup></script>
