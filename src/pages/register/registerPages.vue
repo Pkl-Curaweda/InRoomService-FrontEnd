@@ -80,6 +80,14 @@
             </q-icon>
           </template>
         </q-input>
+
+        <q-input outlined color="dark" bg-color="white" class="w-32" v-model="month"></q-input>
+        <q-input outlined color="dark" bg-color="white" class="w-32" v-model="day"></q-input>
+
+        <!-- Input for month -->
+
+        <!-- Input for year -->
+        <q-input outlined color="dark" bg-color="white" class="w-32" v-model="year"></q-input>
       </div>
 
       <q-btn unelevated rounded color="green" label="Submit" text-color="dark" class="px-8" />
@@ -89,13 +97,41 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { computed, ref, watch } from 'vue'
   const text = ref('')
   const pw = ref('')
   const email = ref('')
-  const selectedDate = ref()
+  const selectedDate = ref('')
+  const day = ref('')
+  const month = ref('')
+  const year = ref('')
   const mask = 'DD/MM/YYYY'
   const passwordFieldType = ref('password')
+
+  const selectedDateParts = computed(() => {
+    const date = new Date(selectedDate.value)
+    if (!isNaN(date.getTime())) {
+      // Check if the date is valid
+      return {
+        day: date.getDate().toString(),
+        month: (date.getMonth() + 1).toString(), // Months are zero-based
+        year: date.getFullYear().toString(),
+      }
+    } else {
+      return {
+        day: '',
+        month: '',
+        year: '',
+      }
+    }
+  })
+
+  watch(selectedDateParts, (newValue) => {
+    day.value = newValue.day
+    month.value = newValue.month
+    year.value = newValue.year
+  })
+
   function togglePasswordVisibility() {
     passwordFieldType.value = passwordFieldType.value === 'password' ? 'text' : 'password'
   }
