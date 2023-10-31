@@ -1,13 +1,25 @@
+<script setup>
+  import { defineProps } from 'vue'
+  const props = defineProps({
+    items: String,
+    totalitems: Number,
+    subtotal: Number,
+    ppn: Number,
+    servicefees: Number,
+    total: Number,
+  })
+</script>
+
 <template>
-  <div class="p-3 text-sm h-screen items-center flex z-10">
+  <div class="py-3 text-sm h-screen items-center flex z-10">
     <div
-      class="w-full bg-[#ffffff] px-3 py-6 flex-block rounded-lg md:w-6/12 lg:w-4/12 md:py-10 mx-auto shadow-black">
-      <div class="flex align-middle my-5 gap-2">
+      class="w-full bg-[#b5dbc86d] px-3 py-6 flex-block rounded-lg md:w-6/12 lg:w-4/12 md:py-10 mx-auto drop-shadow-md">
+      <div class="flex flex-nowrap align-middle my-5 gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="#069550"
-          class="w-5 h-5 my-auto">
+          class="w-6 h-6 my-auto">
           <path
             fill-rule="evenodd"
             d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
@@ -21,7 +33,7 @@
       <!-- order item -->
       <div class="order-details">
         <h2>Order Details</h2>
-        <div class="flex justify-between p-5 font-bold">
+        <div class="flex justify-between pb-5 font-bold">
           <table class="table-collapse justify-between w-full">
             <tr>
               <td>{{ items }}</td>
@@ -36,25 +48,25 @@
 
       <div class="payment-details">
         <h2>Payment Details</h2>
-        <div class="block justify-between p-5">
+        <div class="block justify-between pb-3">
           <table class="table-collapse justify-between w-full">
             <tr>
               <td class="w-[70%]">Subtotal Order ({{ totalitems }})</td>
-              <td class="w-[30%] text-right">{{ subtotal }}</td>
+              <td class="w-[30%] text-right">Rp.{{ subtotal }}</td>
             </tr>
             <tr>
               <td class="w-[70%]">PPN</td>
-              <td class="w-[30%] text-right">{{ ppn }}</td>
+              <td class="w-[30%] text-right">Rp.{{ ppn }}</td>
             </tr>
             <tr>
               <td class="w-[70%]">Service Fees</td>
-              <td class="w-[30%] text-right">{{ servicefees }}</td>
+              <td class="w-[30%] text-right">Rp.{{ servicefees }}</td>
             </tr>
           </table>
           <table class="table-collapse justify-between w-full font-bold">
             <tr>
               <td class="w-[70%]">TOTAL</td>
-              <td class="w-[30%] text-right">{{ total }}</td>
+              <td class="w-[30%] text-right">Rp.{{ total }}</td>
             </tr>
           </table>
         </div>
@@ -68,20 +80,8 @@
         Back
       </button>
       <div class="w-full justify-center flex">
-        <img src="../assets/image/lingian-logo.png" class="w-36" alt="" />
+        <img src="../assets/img/lingian-logo-colored.png" class="w-36" alt="" />
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-  import { defineProps } from 'vue'
-  const props = defineProps({
-    items: String,
-    totalitems: Int,
-    subtotal: Int,
-    ppn: Int,
-    servicefees: Int,
-    total: Int,
-  })
-</script>
