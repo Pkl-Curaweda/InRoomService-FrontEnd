@@ -21,6 +21,7 @@
         label="Password"
         for="password"
         color="dark"
+        class="w-full"
         bg-color="white">
         <template v-slot:prepend>
           <q-icon name="key" />
@@ -35,6 +36,7 @@
       <q-input
         outlined
         v-model="email"
+        class="w-full"
         :type="emailFieldType"
         label="Email"
         for="email"
@@ -75,14 +77,14 @@
           <template #append>
             <q-icon name="expand_more" class="text-[#069550] cursor-pointer" size="35px">
               <q-popup-proxy>
-                <q-date v-model="selectedDate" :mask="mask" default-view="Years" />
+                <q-date v-model="selectedDate" :mask="mask" default-view="Calendar" />
               </q-popup-proxy>
             </q-icon>
           </template>
         </q-input>
 
-        <q-input outlined color="dark" bg-color="white" class="w-32" v-model="month"></q-input>
         <q-input outlined color="dark" bg-color="white" class="w-32" v-model="day"></q-input>
+        <q-input outlined color="dark" bg-color="white" class="w-32" v-model="month"></q-input>
 
         <!-- Input for month -->
 
