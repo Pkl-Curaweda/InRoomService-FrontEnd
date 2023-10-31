@@ -1,6 +1,8 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
+import navAbout from './layouts/about.vue'
+import indexUser from './pages/customer/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
 import regsiterPageVue from './pages/register/registerPages.vue'
@@ -10,6 +12,7 @@ import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
 import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
+import indexVue from './pages/index.vue'
 
 export const routes: RouteType[] = [
   {
@@ -17,9 +20,9 @@ export const routes: RouteType[] = [
     component: loginPageVue, // dashboard
     meta: {
       layout: loginVue,
-      title: 'Home - Lingian Hotel',
-      label: 'home',
-      icon: 'home',
+      title: 'Login - Lingian Hotel',
+      label: '',
+      icon: '',
     },
   },
   {
@@ -27,7 +30,7 @@ export const routes: RouteType[] = [
     component: loginPageVue, // dashboard
     meta: {
       layout: loginVue,
-      title: 'Home - Lingian Hotel',
+      title: 'Login - Lingian Hotel',
       label: '',
       icon: '',
     },
@@ -37,7 +40,17 @@ export const routes: RouteType[] = [
     component: loginPageVue, // dashboard
     meta: {
       layout: loginVue,
-      title: 'Home - Lingian Hotel',
+      title: 'Login - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/user/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Login - Lingian Hotel',
       label: '',
       icon: '',
     },
@@ -47,13 +60,33 @@ export const routes: RouteType[] = [
     component: regsiterPageVue, // dashboard
     meta: {
       layout: loginVue,
-      title: 'Home - Lingian Hotel',
+      title: 'Register - Lingian Hotel',
       label: '',
       icon: '',
     },
   },
   {
-    path: '/correction',
+    path: '/mitra/register',
+    component: regsiterPageVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Register - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/',
+    component: indexVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Home - Lingian Hotel',
+      label: 'home',
+      icon: 'home',
+    },
+  },
+  {
+    path: '/minimarket',
     component: correctionVue,
     meta: {
       layout: defaultVue,
@@ -86,9 +119,11 @@ export const routes: RouteType[] = [
     path: '/laundry',
     component: laundryVue,
     meta: {
-      layout: defaultVue,
+      // layout: defaultVue,
+      layout: navAbout,
       title: 'Laundry - Lingian Hotel',
-      label: 'laundry',
+      // label: 'laundry',
+      label: 'About',
       icon: 'local_laundry_service',
     },
   },
