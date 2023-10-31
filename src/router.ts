@@ -2,7 +2,7 @@ import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
 import navAbout from './layouts/about.vue'
-import indexUser from './pages/customer/index.vue'
+import indexUser from './pages/mainPages/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
 import regsiterPageVue from './pages/register/registerPages.vue'
@@ -26,41 +26,31 @@ export const routes: RouteType[] = [
     },
   },
   {
-    path: '/mitra',
-    component: loginPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/user',
-    component: loginPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/user/home',
-    component: indexUser, // dashboard
-    meta: {
-      layout: navAbout,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
     path: '/admin/register',
     component: regsiterPageVue, // dashboard
     meta: {
       layout: loginVue,
       title: 'Register - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/admin/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/mitra',
+    component: loginPageVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Login - Lingian Hotel',
       label: '',
       icon: '',
     },
@@ -76,7 +66,38 @@ export const routes: RouteType[] = [
     },
   },
   {
+    path: '/mitra/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/',
+    component: loginPageVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Login - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+
+  {
+    path: '/tes',
     component: indexVue, // dashboard
     meta: {
       layout: loginVue,

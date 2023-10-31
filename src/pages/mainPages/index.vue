@@ -3,9 +3,11 @@
     <h3 class="text-black font-bold text-2xl">Welcome, Guest 355</h3>
     <p class="text-black text-base">What do you need today?</p>
 
-    <div class="flex gap-6 items-center flex-col">
+    <div class="flex gap-6 items-center flex-col mt-6">
       <div v-for="(card, index) in cardData" :key="index">
+        <template></template>
         <card-menu
+          v-if="shouldRenderCard(card.link)"
           :tanggal="card.tanggal"
           :namaToko="card.namaToko"
           :jam="card.jam"
@@ -18,6 +20,9 @@
 
 <script setup lang="ts">
   import CardMenu from 'src/components/CardMenu.vue'
+  import { useRoute, useRouter } from 'vue-router'
+
+  const route = useRoute()
 
   const cardData = [
     {
@@ -49,4 +54,29 @@
       link: '/information',
     },
   ]
+
+  function shouldRenderCard(link: string): boolean {
+    // Ganti '/mitra/home' dengan rute yang sesuai
+    return route.path !== '/mitra/home' || (link !== '/laundry' && link !== '/foodbeverage')
+  }
+
+  // if (route.path === '/mitra/home') {
+  //   const cardData = [
+  //     {
+  //       tanggal: new Date().toLocaleDateString(),
+  //       namaToko: 'Mini Market',
+  //       jam: '10 am - 12 pm',
+  //       iconName: 'store',
+  //       link: '/minimarket',
+  //     },
+
+  //     {
+  //       tanggal: new Date().toLocaleDateString(),
+  //       namaToko: 'Hotel Information',
+  //       jam: '10 am - 12 pm',
+  //       iconName: 'info',
+  //       link: '/information',
+  //     },
+  //   ]
+  // }
 </script>

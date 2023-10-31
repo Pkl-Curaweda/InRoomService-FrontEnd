@@ -32,7 +32,7 @@
         </q-toolbar>
       </q-header>
 
-      <q-page-container class="flex items-center justify-center h-screen">
+      <q-page-container class="flex items-center justify-start flex-col h-screen">
         <router-view />
       </q-page-container>
     </q-layout>
