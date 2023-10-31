@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md bg-[#DADADA]">
     <!-- <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
       <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
         <q-toolbar>
@@ -17,6 +17,10 @@
               <img src="../assets/img/lingian-logo-colored.png" alt="" class="opacity-100" />
             </q-avatar>
           </q-toolbar-title>
+
+          <router-link to="/" v-if="$route.path !== '/about'">
+            <q-btn flat round icon="o_notifications" class="opacity-80 hover:opacity-100" />
+          </router-link>
 
           <router-link to="/">
             <q-btn flat round icon="o_mail" class="opacity-80 hover:opacity-100" />

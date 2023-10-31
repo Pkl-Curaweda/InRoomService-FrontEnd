@@ -3,13 +3,15 @@
     <h3 class="text-black font-bold text-2xl">Welcome, Guest 355</h3>
     <p class="text-black text-base">What do you need today?</p>
 
-    <div v-for="(card, index) in cardData" :key="index">
-      <card-menu
-        :tanggal="card.tanggal"
-        :namaToko="card.namaToko"
-        :jam="card.jam"
-        :iconName="card.iconName"
-        :link="card.link" />
+    <div class="flex gap-6 items-center flex-col">
+      <div v-for="(card, index) in cardData" :key="index">
+        <card-menu
+          :tanggal="card.tanggal"
+          :namaToko="card.namaToko"
+          :jam="card.jam"
+          :iconName="card.iconName"
+          :link="card.link" />
+      </div>
     </div>
   </div>
 </template>

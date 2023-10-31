@@ -11,10 +11,11 @@
 
 <template>
   <a class="flex flex-col justify-center h-[130px] cursor-pointer w-[236px]" :href="link">
-    <div class="h-[130px] w-2 bg-[#0985BA] rounded-2xl border border-black -mr-2 z-10"></div>
+    <div
+      class="h-[130px] w-2 bg-[#0985BA] rounded-2xl border border-black -mr-2 z-10 shadow-md"></div>
     <div class="py-3 w-[236px]">
       <div
-        class="rounded-xl bg-white flex flex-row items-center px-3 justify-between gap-6 py-3 pl-5">
+        class="rounded-xl bg-white flex border border-black flex-row items-center px-3 justify-between gap-6 py-3 pl-5 shadow-md">
         <div class="flex flex-col gap-2 items-start w-[110px]">
           <p class="text-[#0660A1]">{{ tanggal }}</p>
           <!-- elemen ini berdasarkan props -->
