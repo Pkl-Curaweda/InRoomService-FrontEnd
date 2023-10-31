@@ -1,6 +1,7 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
+import indexUser from './pages/customer/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
 import regsiterPageVue from './pages/register/registerPages.vue'
@@ -44,6 +45,16 @@ export const routes: RouteType[] = [
     },
   },
   {
+    path: '/user/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Login - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/admin/register',
     component: regsiterPageVue, // dashboard
     meta: {
@@ -74,7 +85,7 @@ export const routes: RouteType[] = [
     },
   },
   {
-    path: '/correction',
+    path: '/minimarket',
     component: correctionVue,
     meta: {
       layout: defaultVue,
