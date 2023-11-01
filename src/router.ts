@@ -13,6 +13,8 @@ import laundryVue from './pages/default/laundry.vue'
 import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
+// Tambahan untuk page payment doang
+import paymentminimarketVue from './pages/default/paymentminimarket.vue'
 import customerVue from './layouts/customer.vue'
 
 export const routes: RouteType[] = [
@@ -158,6 +160,17 @@ export const routes: RouteType[] = [
       title: 'Logout - Lingian Hotel',
       label: 'logout',
       icon: 'logout',
+    },
+  },
+  // Tambahan untuk page payment doang
+  {
+    path: '/paymenttest',
+    component: paymentminimarketVue,
+    meta: {
+      layout: loginVue,
+      title: 'Customer Service - Lingian Hotel',
+      label: 'customer service',
+      icon: 'support_agent',
     },
   },
 ]
