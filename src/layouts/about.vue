@@ -1,15 +1,7 @@
 <template>
-  <div class="q-pa-md">
-    <!-- <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
-      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
-        <q-toolbar>
-          <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>Header</q-toolbar-title>
-        </q-toolbar>
-      </q-header>
-    </q-layout> -->
+  <div>
     <q-layout view="lHh lpR fFf">
-      <q-header reveal class="bg-[#069550] text-white">
+      <q-header reveal class="bg-[#069550] text-white py-3">
         <q-toolbar>
           <q-toolbar-title class="text-capitalize font-semibold">
             <!-- {{ route.meta.label }} -->
@@ -28,7 +20,7 @@
         </q-toolbar>
       </q-header>
 
-      <q-page-container class="flex items-center justify-center h-screen">
+      <q-page-container>
         <router-view />
       </q-page-container>
     </q-layout>

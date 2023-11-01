@@ -13,6 +13,7 @@ import laundryVue from './pages/default/laundry.vue'
 import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
+import about from './pages/about/about.vue'
 
 export const routes: RouteType[] = [
   {
@@ -119,34 +120,34 @@ export const routes: RouteType[] = [
     path: '/laundry',
     component: laundryVue,
     meta: {
-      // layout: defaultVue,
-      layout: navAbout,
+      layout: defaultVue,
       title: 'Laundry - Lingian Hotel',
-      // label: 'laundry',
-      label: 'About',
+      label: 'Laundry',
+      // chnage name label to laundry
       icon: 'local_laundry_service',
     },
   },
   {
-    path: '/customerservice',
-    component: customerserviceVue,
+    // create path about
+    path: '/about',
+    component: about,
     meta: {
-      layout: defaultVue,
-      title: 'Customer Service - Lingian Hotel',
-      label: 'customer service',
-      icon: 'support_agent',
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
     },
   },
-  {
-    path: '/logout',
-    component: '',
-    meta: {
-      layout: '',
-      title: 'Logout - Lingian Hotel',
-      label: 'logout',
-      icon: 'logout',
-    },
-  },
+  // {
+  //   path: '/logout',
+  //   component: '',
+  //   meta: {
+  //     layout: '',
+  //     title: 'Logout - Lingian Hotel',
+  //     label: 'logout',
+  //     icon: 'logout',
+  //   },
+  // },
 ]
 
 const router = createRouter({
