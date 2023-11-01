@@ -2,7 +2,7 @@ import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
 import navAbout from './layouts/about.vue'
-import indexUser from './pages/customer/index.vue'
+import indexUser from './pages/mainPages/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
 import regsiterPageVue from './pages/register/registerPages.vue'
@@ -13,6 +13,9 @@ import laundryVue from './pages/default/laundry.vue'
 import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
+// Tambahan untuk page payment doang
+import paymentminimarketVue from './pages/default/paymentminimarket.vue'
+import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
 
 export const routes: RouteType[] = [
@@ -22,6 +25,17 @@ export const routes: RouteType[] = [
     meta: {
       layout: loginVue,
       title: 'Login - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+
+  {
+    path: '/admin/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Home - Lingian Hotel',
       label: '',
       icon: '',
     },
@@ -37,36 +51,6 @@ export const routes: RouteType[] = [
     },
   },
   {
-    path: '/user',
-    component: loginPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/user/home',
-    component: indexUser, // dashboard
-    meta: {
-      layout: navAbout,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/admin/register',
-    component: regsiterPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Register - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
     path: '/mitra/register',
     component: regsiterPageVue, // dashboard
     meta: {
@@ -77,20 +61,51 @@ export const routes: RouteType[] = [
     },
   },
   {
+    path: '/mitra/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/',
+    component: loginPageVue, // dashboard
+    meta: {
+      layout: loginVue,
+      title: 'Login - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/home',
+    component: indexUser, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Home - Lingian Hotel',
+      label: 'Home',
+      icon: 'home',
+    },
+  },
+
+  {
+    path: '/tes',
     component: indexVue, // dashboard
     meta: {
       layout: loginVue,
       title: 'Home - Lingian Hotel',
-      label: 'home',
-      icon: 'home',
+      label: '',
+      icon: '',
     },
   },
   {
     path: '/minimarket',
     component: correctionVue,
     meta: {
-      layout: defaultVue,
+      layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
       label: 'mini market',
       icon: 'store',
@@ -122,8 +137,8 @@ export const routes: RouteType[] = [
     meta: {
       layout: defaultVue,
       title: 'Laundry - Lingian Hotel',
-      label: 'Laundry',
-      // chnage name label to laundry
+      // label: 'laundry',
+      label: 'laundry',
       icon: 'local_laundry_service',
     },
   },
@@ -138,16 +153,27 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-  // {
-  //   path: '/logout',
-  //   component: '',
-  //   meta: {
-  //     layout: '',
-  //     title: 'Logout - Lingian Hotel',
-  //     label: 'logout',
-  //     icon: 'logout',
-  //   },
-  // },
+  {
+    path: '/logout',
+    component: '',
+    meta: {
+      layout: '',
+      title: 'Logout - Lingian Hotel',
+      label: 'logout',
+      icon: 'logout',
+    },
+  },
+  // Tambahan untuk page payment doang
+  {
+    path: '/paymenttest',
+    component: paymentminimarketVue,
+    meta: {
+      layout: loginVue,
+      title: 'Customer Service - Lingian Hotel',
+      label: 'customer service',
+      icon: 'support_agent',
+    },
+  },
 ]
 
 const router = createRouter({

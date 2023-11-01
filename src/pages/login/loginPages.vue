@@ -37,18 +37,30 @@
       <q-btn unelevated rounded color="green" label="Login" text-color="dark" class="px-8" />
     </q-form>
 
-    <p class="mt-8" v-if="$route.path !== '/user'">
+    <p class="mt-8" v-if="$route.path === '/mitra'">
       Don't have an account?
-      <a class="text-[#D1CB2A]" :href="getRegistrationLink">Create an account</a>
+      <a class="text-[#D1CB2A]" href="/mitra/register">Create an account</a>
     </p>
 
     <card-menu tanggal="9" namaToko="bagong darat" jam="sekian" iconName="close" />
+    <card-user
+      gambarProduk="src\assets\img\login.png"
+      namaProduk="Bakso baghdad"
+      descProduk="dibuat dari daging onta asli"
+      hargaProduk="20000" />
+    <card-mitra
+      gambarProduk="src\assets\img\login.png"
+      namaProduk="Bakso baghdad"
+      descProduk="dibuat dari daging onta asli"
+      hargaProduk="20000" />
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   import ButtonVue from '../../components/Button.vue'
+  import CardMitra from 'src/components/CardMitra.vue'
+  import CardUser from 'src/components/CardUser.vue'
   import CardMenu from 'src/components/CardMenu.vue'
   import { useRoute } from 'vue-router'
 

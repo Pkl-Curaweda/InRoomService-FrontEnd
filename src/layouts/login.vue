@@ -22,10 +22,9 @@
   <div class="my-bg">
     <q-layout view="lHh lpR fFf" class="text-white max-h-screen min-h-screen">
       <q-header reveal class="bg-transparent border-0 border-transparent">
-        <q-toolbar class="flex items-center justify-between">
-          <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="text-white" />
+        <q-toolbar class="flex items-center justify-end">
           <q-btn
-            v-if="$route.path === '/user'"
+            v-if="$route.path === '/'"
             dense
             flat
             round
@@ -34,49 +33,6 @@
             class="text-white" />
         </q-toolbar>
       </q-header>
-
-      <q-drawer
-        v-model="leftDrawerOpen"
-        side="left"
-        overlay
-        elevated
-        :width="240"
-        class="text-white bg-[#9F9F9F]">
-        <q-scroll-area class="fit">
-          <div class="flex flex-col items-center p-2 mb-4">
-            <q-btn
-              flat
-              round
-              color="white"
-              icon="close"
-              size="60"
-              @click="toggleLeftDrawer"
-              class="ms-auto z-10" />
-            <q-img src="../assets/img/logoLingian.png" class="w-40" />
-          </div>
-          <q-list>
-            <template v-for="(route, index) in routes" :key="index">
-              <!-- Only display routes with a non-empty label in the sidebar -->
-              <template v-if="route.meta.label">
-                <q-item
-                  clickable
-                  :active="route.meta.label === 'Outbox'"
-                  v-ripple
-                  @click="router.push(route.path)">
-                  <q-item-section avatar>
-                    <q-icon :name="'o_' + route.meta.icon" />
-                  </q-item-section>
-                  <q-item-section>
-                    <p class="text-bold text-capitalize">
-                      {{ route.meta.label }}
-                    </p>
-                  </q-item-section>
-                </q-item>
-              </template>
-            </template>
-          </q-list>
-        </q-scroll-area>
-      </q-drawer>
 
       <q-page-container class="flex items-center justify-center h-screen">
         <router-view />
