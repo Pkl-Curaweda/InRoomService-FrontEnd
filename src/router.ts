@@ -13,6 +13,7 @@ import laundryVue from './pages/default/laundry.vue'
 import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
+import customerVue from './layouts/customer.vue'
 
 export const routes: RouteType[] = [
   {
@@ -25,16 +26,7 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    path: '/admin/register',
-    component: regsiterPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Register - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
+
   {
     path: '/admin/home',
     component: indexUser, // dashboard
@@ -91,8 +83,8 @@ export const routes: RouteType[] = [
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
-      label: '',
-      icon: '',
+      label: 'Home',
+      icon: 'home',
     },
   },
 
@@ -102,15 +94,15 @@ export const routes: RouteType[] = [
     meta: {
       layout: loginVue,
       title: 'Home - Lingian Hotel',
-      label: 'home',
-      icon: 'home',
+      label: '',
+      icon: '',
     },
   },
   {
     path: '/minimarket',
     component: correctionVue,
     meta: {
-      layout: defaultVue,
+      layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
       label: 'mini market',
       icon: 'store',
@@ -144,7 +136,7 @@ export const routes: RouteType[] = [
       layout: navAbout,
       title: 'Laundry - Lingian Hotel',
       // label: 'laundry',
-      label: 'About',
+      label: 'laundry',
       icon: 'local_laundry_service',
     },
   },
