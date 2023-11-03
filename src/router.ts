@@ -17,6 +17,7 @@ import indexVue from './pages/index.vue'
 import paymentminimarketVue from './pages/default/paymentminimarket.vue'
 import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
+import profilePageVue from './pages/profile/profilepage.vue'
 
 export const routes: RouteType[] = [
   {
@@ -66,6 +67,16 @@ export const routes: RouteType[] = [
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/profile',
+    component: profilePageVue, // dashboard
+    meta: {
+      layout: navAbout,
+      title: 'Profile - Lingian Hotel',
       label: '',
       icon: '',
     },

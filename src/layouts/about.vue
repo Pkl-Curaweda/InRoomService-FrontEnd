@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md bg-[#DADADA]">
+  <div class=" bg-[#DADADA]">
     <!-- <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
       <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
         <q-toolbar>
