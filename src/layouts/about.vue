@@ -1,13 +1,5 @@
 <template>
-  <div class=" bg-[#DADADA]">
-    <!-- <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
-      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
-        <q-toolbar>
-          <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>Header</q-toolbar-title>
-        </q-toolbar>
-      </q-header>
-    </q-layout> -->
+  <div class="sm:w-[50%] md:w-[40%] lg:w-[30%] xl:w-[25%] justify-center mx-auto">
     <q-layout view="lHh lpR fFf">
       <q-header reveal class="bg-[#069550] text-white py-3">
         <q-toolbar>

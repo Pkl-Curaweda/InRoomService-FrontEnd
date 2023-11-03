@@ -6,7 +6,7 @@ import indexUser from './pages/mainPages/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
 import regsiterPageVue from './pages/register/registerPages.vue'
-import correctionVue from './pages/default/correction.vue'
+import minimarketVue from './pages/default/minimarket.vue'
 import foodbeverageVue from './pages/default/foodbeverage.vue'
 import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
@@ -14,7 +14,7 @@ import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
 // Tambahan untuk page payment doang
-import paymentminimarketVue from './pages/default/paymentminimarket.vue'
+import paymentminimarketVue from './pages/default/minimarketadmin.vue'
 import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
@@ -114,7 +114,7 @@ export const routes: RouteType[] = [
   },
   {
     path: '/minimarket',
-    component: correctionVue,
+    component: minimarketVue,
     meta: {
       layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
@@ -174,7 +174,7 @@ export const routes: RouteType[] = [
       icon: 'logout',
     },
   },
-  // Tambahan untuk page payment doang
+  // Tambahan untuk page minimarket admin doang
   {
     path: '/paymenttest',
     component: paymentminimarketVue,

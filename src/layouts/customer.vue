@@ -12,6 +12,9 @@
   const route = useRoute()
   const router = useRouter()
   const search = ref('')
+
+  const price = ref(0) // Receive total price
+
   useHead({
     title: 'Your Page Title',
     // other meta tags or properties
@@ -28,7 +31,10 @@
           <q-toolbar-title class="text-capitalize font-bold">
             {{ route.meta.label }}
           </q-toolbar-title>
-          <div class="flex items-center gap-4">
+        </q-toolbar>
+
+        <q-toolbar class="flex flex-col w-screen">
+          <div class="flex items-center gap-2 flex-row">
             <q-btn dense flat round icon="chat" @click="toggleLeftDrawer" class="text-white" />
             <q-btn dense flat round icon="person" @click="toggleLeftDrawer" class="text-white" />
             <q-btn
@@ -46,7 +52,7 @@
                 label="Search"
                 for="search"
                 type="search"
-                color="dark"
+                color="dark w-56"
                 bg-color="white"
                 class="">
                 <template v-slot:append class="">
@@ -55,11 +61,11 @@
               </q-input>
             </q-form>
           </div>
-        </q-toolbar>
-
-        <q-toolbar inset>
-          <q-breadcrumbs active-color="white" style="font-size: 16px">
-            <div class="flex items-start gap-2">
+          <div
+            active-color="white"
+            style="font-size: 16px"
+            class="flex flex-row items-center mt-6 flex-nowrap">
+            <div class="flex items-start gap-2 flex-nowrap">
               <q-btn class="text-white" label="1" color="green" rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p>Add to Cart</p>
@@ -68,8 +74,8 @@
             </div>
 
             <div
-              class="h-[2px] w-14 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
-            <div class="flex items-start gap-2">
+              class="h-[2px] w-12 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
+            <div class="flex items-start gap-2 flex-nowrap">
               <q-btn
                 class="text-gray-400"
                 label="2"
@@ -81,10 +87,25 @@
                 <p class="text-gray-400">choose your food</p>
               </div>
             </div>
-          </q-breadcrumbs>
+          </div>
         </q-toolbar>
       </q-header>
-
+      <q-footer reveal class="mx-1 mb-1 rounded-lg card">
+        <q-toolbar class="flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            <q-icon name="o_shopping_cart" size="32px"></q-icon>
+            <p>{{ price }}</p>
+          </div>
+          <q-btn
+            class="bg-green w-28 rounded-full text-sm text-black font-bold"
+            label="cancel"
+            name="cancel" />
+          <q-btn
+            class="bg-green w-28 rounded-full text-sm text-black font-bold"
+            label="continue"
+            name="continue" />
+        </q-toolbar>
+      </q-footer>
       <q-drawer
         v-model="leftDrawerOpen"
         side="left"
@@ -128,7 +149,7 @@
         </q-scroll-area>
       </q-drawer>
 
-      <q-page-container class="flex items-center justify-center h-screen">
+      <q-page-container class="flex items-center justify-center h-screen overflow-hidden">
         <router-view />
       </q-page-container>
     </q-layout>
@@ -136,6 +157,9 @@
 </template>
 
 <style lang="scss" scoped>
+  .card {
+    background-color: gray;
+  }
   .my-bg {
     position: absolute;
     top: 0;
@@ -154,8 +178,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('src/assets/img/login.png');
     background-size: cover;
+    background-image: url('src/assets/img/login.png');
+
     background-position-y: 50%;
     filter: brightness(50%); /* Apply the brightness filter */
     z-index: -2; /* Move the filtered background even further behind */
