@@ -11,9 +11,9 @@
 </script>
 
 <template>
-  <div class="py-3 text-sm h-screen items-center flex z-10">
+  <div class="text-xs h-screen items-center flex z-10">
     <div
-      class="w-full bg-[#b5dbc86d] px-3 py-6 flex-block rounded-lg md:w-6/12 lg:w-4/12 md:py-10 mx-auto drop-shadow-md">
+      class="w-full bg-[#b5dbc86d] px-3 py-6 flex-block rounded-lg md:py-10 mx-auto drop-shadow-md">
       <div class="flex flex-nowrap align-middle my-5 gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
