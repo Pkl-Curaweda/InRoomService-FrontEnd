@@ -14,7 +14,7 @@ import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
 // Tambahan untuk page payment doang
-import paymentminimarketVue from './pages/default/paymentminimarket.vue'
+import paymentminimarketVue from './pages/default/minimarketadmin.vue'
 
 export const routes: RouteType[] = [
   {
@@ -170,7 +170,7 @@ export const routes: RouteType[] = [
       icon: 'logout',
     },
   },
-  // Tambahan untuk page payment doang
+  // Tambahan untuk page minimarket admin doang
   {
     path: '/paymenttest',
     component: paymentminimarketVue,
