@@ -6,7 +6,7 @@ import indexUser from './pages/mainPages/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
 import regsiterPageVue from './pages/register/registerPages.vue'
-import correctionVue from './pages/default/correction.vue'
+import minimarketVue from './pages/default/minimarket.vue'
 import foodbeverageVue from './pages/default/foodbeverage.vue'
 import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
@@ -103,7 +103,7 @@ export const routes: RouteType[] = [
   },
   {
     path: '/minimarket',
-    component: correctionVue,
+    component: minimarketVue,
     meta: {
       layout: customerVue,
       title: 'Mini Market - Lingian Hotel',

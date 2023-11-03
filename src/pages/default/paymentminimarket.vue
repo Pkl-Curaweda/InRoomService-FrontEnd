@@ -3,7 +3,7 @@
     <!-- Produk -->
     <h1 class="text-lg text-white font-bold m-0">{{ items }}</h1>
     <div class="flex flex-row justify-around">
-      <q-img :src="gambaritems" alt="gambaritems" class="m-5 w-28 h-28" />
+      <q-img :src="gambaritems" alt="gambaritems" class="w-36 h-36" />
       <q-card-actions>
         <q-btn
           @click="decrement"
@@ -72,7 +72,7 @@
     <!-- Whatsapp  Number-->
     <div class="q-pa-md max-w-full -mt-5">
       <q-item-label class="my-1">Whatsapp Number</q-item-label>
-      <q-input v-model="text" filled name="whatsapp-number" />
+      <q-input v-model="wa" filled name="whatsapp-number" />
     </div>
     <!-- Name -->
     <div class="q-pa-md max-w-full -mt-5">
@@ -94,45 +94,46 @@
 </template>
 
 <script>
-import { defineProps, ref } from 'vue'
+  import { defineProps, ref } from 'vue'
 
-export default {
-  props: {
-        items: String,
-        gambaritems: String,
-        hargaitems: String,
-        subtotal: Number,
-        ppn: Number,
-        servicefees: Number,
-        total: Number,
-  },
-  setup() {
-    const count = ref(0)
-    const decrement = () => {
-      if (count.value > 0) {
-        count.value--
+  export default {
+    props: {
+      items: String,
+      gambaritems: String,
+      hargaitems: String,
+      subtotal: Number,
+      ppn: Number,
+      servicefees: Number,
+      total: Number,
+    },
+    setup() {
+      const count = ref(0)
+      const decrement = () => {
+        if (count.value > 0) {
+          count.value--
+        }
       }
-    }
 
-    const increment = () => {
-      count.value++
-    }
+      const increment = () => {
+        count.value++
+      }
 
-    return {
-      count,
-      decrement,
-      increment,
-      text: ref(''),
-      group: ref(null),
+      return {
+        count,
+        decrement,
+        increment,
+        text: ref(''),
+        wa: ref(''),
+        group: ref(null),
 
-      options: [
-        { label: 'Cash', value: 'cash', name: 'cash' },
-        { label: 'QRIS', value: 'qris', name: 'qris' },
-        { label: 'Transfer', value: 'transfer', name: 'transfer' },
-      ],
-    }
-  },
-}
+        options: [
+          { label: 'Cash', value: 'cash', name: 'cash' },
+          { label: 'QRIS', value: 'qris', name: 'qris' },
+          { label: 'Transfer', value: 'transfer', name: 'transfer' },
+        ],
+      }
+    },
+  }
 </script>
 
 <style lang="scss" scoped></style>

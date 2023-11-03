@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import { defineProps, ref } from 'vue'
+  import { defineProps, ref, defineEmits, toRef } from 'vue'
 
   export default {
     props: {
@@ -51,17 +51,21 @@
       descProduk: String,
       hargaProduk: String,
     },
-    setup(props) {
+    setup(props, { emit }) {
       const count = ref(0)
-
+      const hargaProduk = toRef(props, 'hargaProduk')
       const decrement = () => {
         if (count.value > 0) {
           count.value--
+          // defineEmits('quantityChanged', count.value)
+          emit('quantityChanged', count.value * hargaProduk.value)
         }
       }
 
       const increment = () => {
         count.value++
+        // defineEmits('quantityChanged', count.value)
+        emit('quantityChanged', count.value * hargaProduk.value)
       }
 
       return {
