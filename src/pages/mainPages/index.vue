@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex items-center justify-center flex-col">
     <h3 class="text-black font-bold text-2xl">Welcome, Guest 355</h3>
     <p class="text-black text-base">What do you need today?</p>
 

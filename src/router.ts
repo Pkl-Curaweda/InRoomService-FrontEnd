@@ -15,6 +15,8 @@ import RouteType from './types/route'
 import indexVue from './pages/index.vue'
 // Tambahan untuk page payment doang
 import paymentminimarketVue from './pages/default/minimarketadmin.vue'
+import customerVue from './layouts/customer.vue'
+import about from './pages/about/about.vue'
 
 export const routes: RouteType[] = [
   {
@@ -27,16 +29,7 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    path: '/admin/register',
-    component: regsiterPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Register - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
+
   {
     path: '/admin/home',
     component: indexUser, // dashboard
@@ -93,8 +86,8 @@ export const routes: RouteType[] = [
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
-      label: '',
-      icon: '',
+      label: 'Home',
+      icon: 'home',
     },
   },
 
@@ -104,15 +97,15 @@ export const routes: RouteType[] = [
     meta: {
       layout: loginVue,
       title: 'Home - Lingian Hotel',
-      label: 'home',
-      icon: 'home',
+      label: '',
+      icon: '',
     },
   },
   {
     path: '/minimarket',
     component: correctionVue,
     meta: {
-      layout: defaultVue,
+      layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
       label: 'mini market',
       icon: 'store',
@@ -142,22 +135,22 @@ export const routes: RouteType[] = [
     path: '/laundry',
     component: laundryVue,
     meta: {
-      // layout: defaultVue,
-      layout: navAbout,
+      layout: defaultVue,
       title: 'Laundry - Lingian Hotel',
       // label: 'laundry',
-      label: 'About',
+      label: 'laundry',
       icon: 'local_laundry_service',
     },
   },
   {
-    path: '/customerservice',
-    component: customerserviceVue,
+    // create path about
+    path: '/about',
+    component: about,
     meta: {
-      layout: defaultVue,
-      title: 'Customer Service - Lingian Hotel',
-      label: 'customer service',
-      icon: 'support_agent',
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
     },
   },
   {
