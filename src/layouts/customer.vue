@@ -3,6 +3,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import { routes } from '../router'
   import { useHead } from '@vueuse/head'
+  import Minimarket from 'src/pages/default/minimarket.vue'
 
   const leftDrawerOpen = ref(false)
   function toggleLeftDrawer() {
@@ -12,17 +13,22 @@
   const route = useRoute()
   const router = useRouter()
   const search = ref('')
-
-  const price = ref(0) // Receive total price
-
   useHead({
     title: 'Your Page Title',
     // other meta tags or properties
   })
+
+  const prices = ref(0) // Receive total price
+
+  const updatePrice = (value: number) => {
+    prices.value = value // Update the price with the value emitted from CardUser
+  }
+  console.log()
 </script>
 
 <template>
   <div class="my-bg">
+    <Minimarket @total="updatePrice" class="hidden" />
     <q-layout view="lHh lpR fFf" class="text-white max-h-screen min-h-screen">
       <q-header reveal class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-between">
@@ -94,7 +100,7 @@
         <q-toolbar class="flex items-center justify-between">
           <div class="flex items-center gap-1">
             <q-icon name="o_shopping_cart" size="32px"></q-icon>
-            <p>{{ price }}</p>
+            <p>{{ prices }}</p>
           </div>
           <q-btn
             class="bg-green w-28 rounded-full text-sm text-black font-bold"
@@ -150,7 +156,8 @@
       </q-drawer>
 
       <q-page-container class="flex items-center justify-center h-screen overflow-hidden">
-        <router-view />
+        <Minimarket @total="updatePrice" />
+        <!-- <router-view /> -->
       </q-page-container>
     </q-layout>
   </div>

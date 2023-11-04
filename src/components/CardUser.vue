@@ -65,7 +65,7 @@
       const increment = () => {
         count.value++
         // defineEmits('quantityChanged', count.value)
-        emit('quantityChanged', count.value * hargaProduk.value)
+        emit('quantityChanged', count.value * parseFloat(hargaProduk.value))
       }
 
       return {

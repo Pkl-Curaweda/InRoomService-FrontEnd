@@ -10,48 +10,38 @@
       return {
         cardData: [
           {
-            gambarProduk: 'hotel.png',
+            gambarProduk: 'desdelux.png',
             namaProduk: 'Bakso Ngawi',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: '20000',
-            selectedQuantity: 0,
           },
           {
-            gambarProduk: 'hotel.png',
+            gambarProduk: 'desdelux.png',
             namaProduk: 'Bakso Ngawi',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: '20000',
-            selectedQuantity: 0,
           },
           {
-            gambarProduk: 'hotel.png',
+            gambarProduk: 'desdelux.png',
             namaProduk: 'Bakso Ngawi',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: '20000',
-            selectedQuantity: 0,
           },
           {
-            gambarProduk: 'hotel.png',
+            gambarProduk: 'desdelux.png',
             namaProduk: 'Bakso Ngawi',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: '20000',
-            selectedQuantity: 0,
           },
         ],
+        price: 0,
       }
     },
     methods: {
-      // updateTotalPrice(quantity: any, index: number) {
-      //   this.cardData[index].selectedQuantity = quantity // Store the selected quantity
-
-      //   // Calculate total price based on selected quantity
-      //   this.price = this.cardData.reduce((total, card) => {
-      //     return total + parseInt(card.hargaProduk) * (card.selectedQuantity || 0)
-      //   }, 0)
-      // },
-
       updateTotalPrice(value: any) {
         console.log(value)
+        this.price = value
+        this.$emit('total', value)
       },
     },
   }
@@ -60,6 +50,7 @@
 <template>
   <div class="h-full overflow-scroll">
     <div class="flex flex-col gap-4 items-center">
+      <p>{{ price }}</p>
       <div v-for="(card, index) in cardData" :key="index">
         <CardUser
           :gambarProduk="`/src/assets/img/${card.gambarProduk}`"
