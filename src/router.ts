@@ -18,6 +18,7 @@ import paymentminimarketVue from './pages/default/minimarketadmin.vue'
 import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
+import mitraPageVue from './pages/mitra/mitrapages1.vue'
 
 export const routes: RouteType[] = [
   {
@@ -157,6 +158,17 @@ export const routes: RouteType[] = [
     // create path about
     path: '/about',
     component: about,
+    meta: {
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    // create path about
+    path: '/mitra/input',
+    component: mitraPageVue,
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
