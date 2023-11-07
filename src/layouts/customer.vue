@@ -4,6 +4,7 @@
   import { routes } from '../router'
   import { useHead } from '@vueuse/head'
   import Minimarket from 'src/pages/default/minimarket.vue'
+  import FoodBeverage from 'src/pages/default/foodbeverage.vue'
 
   const leftDrawerOpen = ref(false)
   function toggleLeftDrawer() {
@@ -18,17 +19,22 @@
     // other meta tags or properties
   })
 
-  const prices = ref(0) // Receive total price
+  const minimarketPrices = ref(0) // Receive total price
+  const foodBevPrices = ref(0) // Receive total price
 
-  const updatePrice = (value: number) => {
-    prices.value = value // Update the price with the value emitted from CardUser
+  const marktUpdatePrice = (value: number) => {
+    minimarketPrices.value = value // Update the price with the value emitted from CardUser
   }
+
+  const foodUpdatePrice = (value: number) => {
+    foodBevPrices.value = value
+  }
+
   console.log()
 </script>
 
 <template>
-  <div class="my-bg">
-    <Minimarket @total="updatePrice" class="hidden" />
+  <div class="my-bg bg1">
     <q-layout view="lHh lpR fFf" class="text-white max-h-screen min-h-screen">
       <q-header reveal class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-between">
@@ -100,7 +106,8 @@
         <q-toolbar class="flex items-center justify-between">
           <div class="flex items-center gap-1">
             <q-icon name="o_shopping_cart" size="32px"></q-icon>
-            <p>{{ prices }}</p>
+            <p v-if="$route.path === '/minimarket'">{{ minimarketPrices }}</p>
+            <p v-if="$route.path === '/foodbeverage'">{{ foodBevPrices }}</p>
           </div>
           <q-btn
             class="bg-green w-28 rounded-full text-sm text-black font-bold"
@@ -156,7 +163,8 @@
       </q-drawer>
 
       <q-page-container class="flex items-center justify-center h-screen overflow-hidden">
-        <Minimarket @total="updatePrice" />
+        <Minimarket @total="marktUpdatePrice" v-if="$route.path === '/minimarket'" />
+        <FoodBeverage @total="foodUpdatePrice" v-if="$route.path === '/foodbeverage'" />
         <!-- <router-view /> -->
       </q-page-container>
     </q-layout>
@@ -173,7 +181,7 @@
     left: 0;
     background-position-y: 30%;
     width: 100%;
-    background-image: url('src/assets/img/login.png');
+
     background-size: cover;
     z-index: -1; /* Move the background behind other content */
   }
@@ -186,11 +194,13 @@
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-image: url('src/assets/img/login.png');
-
     background-position-y: 50%;
     filter: brightness(50%); /* Apply the brightness filter */
     z-index: -2; /* Move the filtered background even further behind */
+  }
+
+  .bg1 {
+    background-image: url('src/assets/img/minimarket.png');
   }
 
   // .my-bg::before {

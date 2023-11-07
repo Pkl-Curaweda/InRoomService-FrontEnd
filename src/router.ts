@@ -126,7 +126,7 @@ export const routes: RouteType[] = [
     path: '/foodbeverage',
     component: foodbeverageVue,
     meta: {
-      layout: defaultVue,
+      layout: customerVue,
       title: 'Food & Beverage - Lingian Hotel',
       label: 'food & beverage',
       icon: 'emoji_food_beverage',
@@ -146,7 +146,7 @@ export const routes: RouteType[] = [
     path: '/laundry',
     component: laundryVue,
     meta: {
-      layout: defaultVue,
+      layout: customerVue,
       title: 'Laundry - Lingian Hotel',
       // label: 'laundry',
       label: 'laundry',
