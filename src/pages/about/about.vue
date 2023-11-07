@@ -1,5 +1,5 @@
 <template >
-  <div class="h-full background">
+  <div class="h-full background sm:w-[50%] md:w-[40%] lg:w-[30%] xl:w-[25%] mx-auto">
     <div class="bg-[#00000090]">
 
       <router-link to="/">

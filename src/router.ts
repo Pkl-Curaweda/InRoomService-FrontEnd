@@ -1,7 +1,6 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import loginVue from './layouts/login.vue'
-import navAbout from './layouts/about.vue'
 import indexUser from './pages/mainPages/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
@@ -14,10 +13,16 @@ import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
 // Tambahan untuk page payment doang
-import paymentminimarketVue from './pages/default/minimarketadmin.vue'
 import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
+
+// import admin payment pages
+import paymentfoodVue from './pages/default/foodAdmin.vue'
+import paymentminimarketVue from './pages/default/minimarketadmin.vue'
+
+// navbar utama
+import navAbout from './layouts/about.vue'
 
 export const routes: RouteType[] = [
   {
@@ -177,11 +182,11 @@ export const routes: RouteType[] = [
   // Tambahan untuk page minimarket admin doang
   {
     path: '/paymenttest',
-    component: paymentminimarketVue,
+    component: paymentfoodVue,
     meta: {
-      layout: loginVue,
-      title: 'Customer Service - Lingian Hotel',
-      label: 'customer service',
+      layout: navAbout,
+      title: 'Payment - Lingian Hotel',
+      label: 'Admin',
       icon: 'support_agent',
     },
   },
