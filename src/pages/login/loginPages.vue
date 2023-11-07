@@ -41,18 +41,6 @@
       Don't have an account?
       <a class="text-[#D1CB2A]" href="/mitra/register">Create an account</a>
     </p>
-
-    <card-menu tanggal="9" namaToko="bagong darat" jam="sekian" iconName="close" />
-    <card-user
-      gambarProduk="src\assets\img\login.png"
-      namaProduk="Bakso baghdad"
-      descProduk="dibuat dari daging onta asli"
-      hargaProduk="20000" />
-    <card-mitra
-      gambarProduk="src\assets\img\login.png"
-      namaProduk="Bakso baghdad"
-      descProduk="dibuat dari daging onta asli"
-      hargaProduk="20000" />
   </div>
 </template>
 
