@@ -3,13 +3,26 @@
     <q-card class="p-3 rounded-xl shadow-md overflow-x-hidden">
       <!-- START OF TABLE -->
       <q-table
-        class="my-sticky-header-table"
+        class="my-table table-rounded"
         flat
         bordered
         title=""
         :rows="filteredRows"
         :columns="columns"
         row-key="name">
+        <!-- rounded -->
+        <!-- <template v-slot:body-row="props">
+          <q-tr :props="props" class="rounded-row" />
+        </template> -->
+        <!-- 
+        <template v-slot:top-row>
+          <q-tr>
+            <q-th v-for="column in columns" :key="column.name">
+              {{ column.label }}
+            </q-th>
+          </q-tr>
+        </template> -->
+
         <!-- SEARCH BAR -->
         <template v-slot:top-right>
           <div class="bg-gray-100 px-2 rounded-md">
@@ -25,15 +38,6 @@
               </template>
             </q-input>
           </div>
-        </template>
-
-        <!-- IMAGE DATA -->
-        <template v-slot:body-cell-image="props">
-          <q-td :props="props">
-            <q-avatar size="50px">
-              <img :src="props.row.image" />
-            </q-avatar>
-          </q-td>
         </template>
 
         <!-- DETAIL ACTION -->
@@ -86,7 +90,7 @@
       field: (row) => row.name,
       format: (val) => `${val}`,
       sortable: true,
-      style: 'width: 15px',
+      style: 'width: 15px; border-radius: 10px 0 0 10px;',
     },
     { name: 'id', align: 'center', label: 'ID', field: 'id', sortable: true },
     { name: 'name', align: 'center', label: 'Name', field: 'name', sortable: true },
@@ -98,7 +102,13 @@
       align: 'center',
       sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
     },
-    { name: 'detailaction', label: 'Detail', align: 'center' },
+
+    {
+      name: 'detailaction',
+      label: 'Detail',
+      align: 'center',
+      style: 'width: 15px; border-radius: 0 10px 10px 0;',
+    },
   ]
 
   const rows = [
@@ -135,6 +145,27 @@
       id: 555,
       name: 'Ayam Taliwang',
       price: 'Rp. 98.500',
+      detail: 'Detail',
+    },
+    {
+      image: 'Ayam Taliwang.jpg',
+      id: 666,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
+    },
+    {
+      image: 'Ayam Taliwang.jpg',
+      id: 777,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
+    },
+    {
+      image: 'Ayam Taliwang.jpg',
+      id: 888,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 100.500',
       detail: 'Detail',
     },
   ]
@@ -179,9 +210,8 @@
   }
 </script>
 
-<style lang="css">
-  .my-sticky-header-table {
-    max-height: 500px;
+<style lang="scss">
+  .my-table {
     border-radius: 0.375rem;
   }
   .q-table tbody tr:nth-child(even) {
@@ -195,6 +225,26 @@
   .q-table thead th {
     background-color: #069550; /* Ganti dengan warna latar belakang yang Anda inginkan untuk header */
     color: #ffffff; /* Warna teks di header */
-    font-weight: bold; /* Atur tebal huruf teks di header */
+    font-weight: bold;
+  }
+
+  .table-rounded thead tr:first-child th:first-child {
+    border-radius: 10px 0 0 10px;
+  }
+
+  .table-rounded thead tr:first-child th:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+
+  .table-rounded tbody tr {
+    border-spacing: 0.25rem 0.25rem;
+    row-gap: 1px;
+    margin: 10px 0 !important;
+  }
+  .q-table tbody tr:hover {
+    background-color: initial;
+  }
+  .q-table tbody tr:margin {
+    margin: 10px 0 !important;
   }
 </style>

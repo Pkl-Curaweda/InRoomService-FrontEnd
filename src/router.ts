@@ -182,7 +182,7 @@ export const routes: RouteType[] = [
   // Tambahan untuk page minimarket admin doang
   {
     path: '/paymenttest',
-    component: paymentfoodVue,
+    component: paymentminimarketVue,
     meta: {
       layout: navAbout,
       title: 'Payment - Lingian Hotel',
