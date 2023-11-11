@@ -4,7 +4,7 @@
     <p class="text-black text-base">What do you need today?</p>
 
     <div class="flex gap-6 items-center flex-col mt-6">
-      <div v-for="(card, index) in cardData" :key="index">
+      <div v-for="(card, index) in modifiedCardData" :key="index">
         <template></template>
         <card-menu
           v-if="shouldRenderCard(card.link)"
@@ -15,6 +15,10 @@
           :link="card.link" />
       </div>
     </div>
+  </div>
+
+  <div>
+    <q-icon name="support_agent" />
   </div>
 </template>
 
@@ -55,28 +59,27 @@
     },
   ]
 
+  const modifiedCardData = cardData.map((card) => {
+    // Modify the card's link based on the current route
+    if (route.path === '/admin/home') {
+      return {
+        ...card,
+        link: `/admin${card.link}`,
+      }
+    } else if (route.path === '/mitra/home') {
+      return {
+        ...card,
+        link: `/mitra${card.link}`,
+      }
+    }
+    return card // If the route is neither '/admin/home' nor '/mitra/home', keep the original link
+  })
+
   function shouldRenderCard(link: string): boolean {
-    // Ganti '/mitra/home' dengan rute yang sesuai
-    return route.path !== '/mitra/home' || (link !== '/laundry' && link !== '/foodbeverage')
+    if (route.path === '/mitra/home') {
+      return link !== '/mitra/laundry' && link !== '/mitra/foodbeverage'
+    } else {
+      return true // If the route is something else, render the card
+    }
   }
-
-  // if (route.path === '/mitra/home') {
-  //   const cardData = [
-  //     {
-  //       tanggal: new Date().toLocaleDateString(),
-  //       namaToko: 'Mini Market',
-  //       jam: '10 am - 12 pm',
-  //       iconName: 'store',
-  //       link: '/minimarket',
-  //     },
-
-  //     {
-  //       tanggal: new Date().toLocaleDateString(),
-  //       namaToko: 'Hotel Information',
-  //       jam: '10 am - 12 pm',
-  //       iconName: 'info',
-  //       link: '/information',
-  //     },
-  //   ]
-  // }
 </script>

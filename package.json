@@ -20,14 +20,17 @@
     "sortablejs": "^1.15.0",
     "velocity-animate": "^1.5.2",
     "vue": "^3.2.40",
+    "vue-barcode-reader": "^1.0.3",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vue3-qrcode-reader": "^0.0.1"
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^6.0.3",
     "@quasar/vite-plugin": "^1.2.3",
     "@types/node": "^18.8.3",
     "@types/sortablejs": "^1.15.0",
+    "@types/vue-barcode-reader": "^0.0.3",
     "@vitejs/plugin-vue": "^3.1.2",
     "sass": "1.32.0",
     "typescript": "^4.8.4",

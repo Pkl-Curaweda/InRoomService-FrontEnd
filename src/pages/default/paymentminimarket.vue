@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full p-5 bg-[#b3aeae]">
+  <div class="w-full h-full px-5 pb-5 bg-gray-500">
     <!-- Produk -->
     <h1 class="text-lg text-white font-bold m-0">{{ items }}</h1>
     <div class="flex flex-row justify-around">

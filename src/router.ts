@@ -17,13 +17,15 @@ import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
 
+import paymentMinimarketVue from './pages/default/paymentminimarket.vue'
 // import admin payment pages
-import paymentfoodVue from './pages/default/foodAdmin.vue'
-import paymentminimarketVue from './pages/default/minimarketadmin.vue'
+import foodAdminVue from './pages/default/foodAdmin.vue'
+import marketAdminVue from './pages/default/minimarketadmin.vue'
 
 // navbar utama
 import navAbout from './layouts/about.vue'
 
+import checkoutLayout from './layouts/checkout.vue'
 export const routes: RouteType[] = [
   {
     path: '/admin',
@@ -128,6 +130,16 @@ export const routes: RouteType[] = [
     },
   },
   {
+    path: '/minimarket/checkout',
+    component: paymentMinimarketVue,
+    meta: {
+      layout: checkoutLayout,
+      title: 'Mini Market - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/foodbeverage',
     component: foodbeverageVue,
     meta: {
@@ -182,7 +194,7 @@ export const routes: RouteType[] = [
   // Tambahan untuk page minimarket admin doang
   {
     path: '/paymenttest',
-    component: paymentfoodVue,
+    component: paymentMinimarketVue,
     meta: {
       layout: navAbout,
       title: 'Payment - Lingian Hotel',
