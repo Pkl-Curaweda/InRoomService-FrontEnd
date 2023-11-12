@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white">
-    <div class="py-8 bg-green">
-      <q-card class="mt-5 mx-2 rounded">
+  <div class="bg-white -mt-4">
+    <div class="py-8 bg-[#069550]">
+      <q-card class="mx-2 rounded">
         <q-card-section
           class="bg-white text-black"
           style="
@@ -14,9 +14,10 @@
             gap: 30px;
           ">
           <q-img
-            src="/src/assets/img/room-3.jpg"
+            src="../../assets/img/profile.jpg"
             class="ayam rounded-full"
-            style="width: 65px; height: 65px"></q-img>
+            style="width: 65px; height: 65px">
+          </q-img>
           <div>
             <h2 class="text-black open-sans text-2xl font-bold">Akbar Fadhl Ramadhan</h2>
             <h2 class="text-black open-sans text-lg">Basic Member</h2>
@@ -27,7 +28,7 @@
 
     <div class="bagiankedua mt-16">
       <div class="flex items-center px-4 gap-2">
-        <q-icon name="phone" size="20px" />
+        <q-icon color="green" name="phone" size="20px" />
         <h2
           class="text-black open-sans font-bold"
           style="font-size: 20px; justify-content: left; margin-left: 10px">
@@ -60,7 +61,7 @@
 
     <div class="bagianketiga mt-12">
       <div class="flex items-center px-4 gap-4">
-        <q-icon name="mail" size="20px" />
+        <q-icon color="green" name="mail" size="20px" />
         <h2
           class="text-black open-sans font-bold"
           style="font-size: 20px; justify-content: left; margin-left: 10px">
@@ -93,7 +94,7 @@
 
     <div class="bagianempat mt-12">
       <div class="flex items-center px-4 gap-4">
-        <q-icon name="fingerprint" size="20px" />
+        <q-icon color="green" name="fingerprint" size="20px" />
         <h2
           class="text-black open-sans font-bold"
           style="font-size: 20px; justify-content: left; margin-left: 10px">
@@ -126,7 +127,7 @@
 
     <div class="bagiantujuh mt-12">
       <div class="flex items-center px-4 gap-4">
-        <q-icon name="person" size="20px" />
+        <q-icon color="green" name="person" size="20px" />
         <h2
           class="text-black open-sans font-bold"
           style="font-size: 20px; justify-content: left; margin-left: 10px">
@@ -157,7 +158,7 @@
 
     <div class="bagiandelapan mt-12">
       <div class="flex items-center px-4 gap-4">
-        <q-icon name="person" size="20px" />
+        <q-icon color="green" name="person" size="20px" />
         <h2
           class="text-black open-sans font-bold"
           style="font-size: 20px; justify-content: left; margin-left: 10px">
@@ -185,8 +186,8 @@
         </q-card-section>
       </q-card>
     </div>
-    <div class="mt-10 w-full flex justify-center">
-      <button class="green-button">KEMBALI</button>
+    <div class="q-gutter-sm mx-auto mt-6 w-fit">
+      <q-btn unelevated rounded color="green" label="back" />
     </div>
   </div>
 </template>
@@ -211,13 +212,4 @@
   }
 </script>
 
-<style scoped>
-  .green-button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-</style>
+<style scoped></style>

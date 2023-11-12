@@ -25,6 +25,42 @@
         <div class="bg-gray-500">
           <q-toolbar class="flex items-center justify-between">
             <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="text-white" />
+            <q-btn
+              dense
+              flat
+              icon="fastfood"
+              href="/checkout/foodbeverage"
+              :class="{
+                'text-white': $route.path !== '/checkout/foodbeverage',
+                ' border-b-4 border-b-green-500': $route.path === '/checkout/foodbeverage',
+              }" />
+            <q-btn
+              dense
+              flat
+              icon="store"
+              href="/checkout/minimarket"
+              :class="{
+                'text-white': $route.path !== '/checkout/minimarket',
+                ' border-b-4 border-b-green-500': $route.path === '/checkout/minimarket',
+              }" />
+            <q-btn
+              dense
+              flat
+              icon="local_laundry_service"
+              href="/checkout/laundry"
+              :class="{
+                'text-white': $route.path !== '/checkout/laundry',
+                ' border-b-4 border-b-green-500': $route.path === '/checkout/laundry',
+              }" />
+            <q-btn
+              dense
+              flat
+              icon="history"
+              href="/checkout/history"
+              :class="{
+                'text-white': $route.path !== '/checkout/history',
+                ' border-b-4 border-b-green-500': $route.path === '/checkout/history',
+              }" />
           </q-toolbar>
 
           <q-toolbar class="flex flex-col w-screen">
@@ -78,7 +114,7 @@
             <q-img src="../assets/img/logoLingian.png" class="w-40" />
           </div>
           <q-list>
-            <template v-for="(route, index) in routes" :key="index">
+            <template v-for="(route, index) in mainRoutes" :key="index">
               <!-- Only display routes with a non-empty label in the sidebar -->
               <template v-if="route.meta.label">
                 <q-item
@@ -110,7 +146,7 @@
 <script setup>
   import { useRoute, useRouter } from 'vue-router'
   import { computed, ref, watch } from 'vue'
-  import { routes } from '../router'
+  import { mainRoutes } from '../routes/main-routes'
 
   const leftDrawerOpen = ref(false)
   function toggleLeftDrawer() {

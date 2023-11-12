@@ -80,13 +80,8 @@
   import { useRoute, useRouter } from 'vue-router'
   import { routes } from '../router'
   import { useHead } from '@vueuse/head'
-  import { StreamBarcodeReader } from 'vue-barcode-reader'
-
-  const leftDrawerOpen = ref(false)
-  function toggleLeftDrawer() {
-    leftDrawerOpen.value = !leftDrawerOpen.value
-  }
-
+  import { StreamBarcodeReader, ImageBarcodeReader } from 'vue-barcode-reader'
+  import { QImg } from 'quasar'
   const openCamera = ref(false)
   function toggleCamera() {
     openCamera.value = !openCamera.value
@@ -99,13 +94,12 @@
     tex = Text.value
     // window.location.replace(Text)
   }
+  function onDecoded(result: String) {
+    console.log(result)
+  }
   function onLoad(Text: any) {
     console.log(`Ready to start scanning barcodes`)
   }
-  useHead({
-    title: 'Your Page Title',
-    // other meta tags or properties
-  })
 </script>
 <template>
   <div class="my-bg">
@@ -113,7 +107,7 @@
       <q-header reveal class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-end">
           <q-btn
-            v-if="$route.path === '/'"
+            v-if="$route.path === '/' && !openCamera"
             dense
             flat
             round
@@ -122,13 +116,26 @@
             class="text-white" />
         </q-toolbar>
       </q-header>
-      <div class="w-full h-screen absolute z-10" v-if="openCamera">
-        <StreamBarcodeReader
-          @decode="onDecode"
-          @loaded="onLoad"
-          style="position: absolute !important"
-          class="absolute top-[23%] z-10"
-          v-if="openCamera"></StreamBarcodeReader>
+      <div
+        class="w-full h-screen z-10 flex flex-col items-center justify-center gap-4"
+        v-if="openCamera">
+        <h2 class="text-white text-base font-extrabold">Scan the QR code to access Lingin Hotel</h2>
+
+        <q-btn
+          round
+          @click="toggleCamera"
+          icon="arrow_back"
+          color="white"
+          text-color="dark"
+          class="self-start" />
+        <StreamBarcodeReader @decode="onDecode" @loaded="onLoad" v-if="openCamera">
+        </StreamBarcodeReader>
+        <!-- <ImageBarcodeReader @decode="onDecoded"></ImageBarcodeReader> -->
+
+        <div class="flex flex-col items-center justify-center">
+          <h3 class="text-white font-extrabold text-sm">Powered By:</h3>
+          <img src="../assets/img/logoLingian.png" width="144" height="165" />
+        </div>
       </div>
       <!-- <div v-if="showCamera"> -->
       <!-- <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit"> </qrcode-stream> -->

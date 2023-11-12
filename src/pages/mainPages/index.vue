@@ -18,7 +18,7 @@
   </div>
 
   <div>
-    <q-icon name="support_agent" />
+    <q-icon name="support_agent" size="34px" />
   </div>
 </template>
 

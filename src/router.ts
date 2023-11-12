@@ -1,6 +1,5 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
-import loginVue from './layouts/login.vue'
 import indexUser from './pages/mainPages/index.vue'
 import loginPageVue from './pages/login/loginPages.vue'
 import mitraVue from './pages/login/mitra.vue'
@@ -13,91 +12,29 @@ import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
 import indexVue from './pages/index.vue'
 // Tambahan untuk page payment doang
-import customerVue from './layouts/customer.vue'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
+import mitraPageVue from './pages/mitra/mitrapages1.vue'
 
-import paymentMinimarketVue from './pages/default/paymentminimarket.vue'
 // import admin payment pages
 import foodAdminVue from './pages/default/foodAdmin.vue'
 import marketAdminVue from './pages/default/minimarketadmin.vue'
 
-// navbar utama
+// import checkout
+import paymentFoodVue from './pages/checkout/paymentFood.vue'
+import paymentMinimarketVue from './pages/checkout/paymentminimarket.vue'
+import paymentLaundryVue from './pages/checkout/paymentLaundry.vue'
+
+// import layout utama
+import customerVue from './layouts/customer.vue'
+import loginVue from './layouts/login.vue'
 import navAbout from './layouts/about.vue'
-
 import checkoutLayout from './layouts/checkout.vue'
-export const routes: RouteType[] = [
-  {
-    path: '/admin',
-    component: loginPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
 
-  {
-    path: '/admin/home',
-    component: indexUser, // dashboard
-    meta: {
-      layout: navAbout,
-      title: 'Home - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/mitra',
-    component: loginPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/mitra/register',
-    component: regsiterPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Register - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/mitra/home',
-    component: indexUser, // dashboard
-    meta: {
-      layout: navAbout,
-      title: 'Home - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/profile',
-    component: profilePageVue, // dashboard
-    meta: {
-      layout: navAbout,
-      title: 'Profile - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
-    path: '/',
-    component: loginPageVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Login - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
+import blankRoutes from './routes/blank-routes'
+import mainRoutes from './routes/main-routes'
+import subRoutes from './routes/sub-routes'
+export const routes: RouteType[] = [
   {
     path: '/home',
     component: indexUser, // dashboard
@@ -110,16 +47,6 @@ export const routes: RouteType[] = [
   },
 
   {
-    path: '/tes',
-    component: indexVue, // dashboard
-    meta: {
-      layout: loginVue,
-      title: 'Home - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
     path: '/minimarket',
     component: minimarketVue,
     meta: {
@@ -129,16 +56,7 @@ export const routes: RouteType[] = [
       icon: 'store',
     },
   },
-  {
-    path: '/minimarket/checkout',
-    component: paymentMinimarketVue,
-    meta: {
-      layout: checkoutLayout,
-      title: 'Mini Market - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
+
   {
     path: '/foodbeverage',
     component: foodbeverageVue,
@@ -146,9 +64,10 @@ export const routes: RouteType[] = [
       layout: customerVue,
       title: 'Food & Beverage - Lingian Hotel',
       label: 'food & beverage',
-      icon: 'emoji_food_beverage',
+      icon: 'fastfood',
     },
   },
+
   {
     path: '/promotoday',
     component: promotodayVue,
@@ -170,10 +89,22 @@ export const routes: RouteType[] = [
       icon: 'local_laundry_service',
     },
   },
+
   {
     // create path about
     path: '/about',
     component: about,
+    meta: {
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    // create path about
+    path: '/mitra/input',
+    component: mitraPageVue,
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
@@ -192,21 +123,11 @@ export const routes: RouteType[] = [
     },
   },
   // Tambahan untuk page minimarket admin doang
-  {
-    path: '/paymenttest',
-    component: paymentMinimarketVue,
-    meta: {
-      layout: navAbout,
-      title: 'Payment - Lingian Hotel',
-      label: 'Admin',
-      icon: 'support_agent',
-    },
-  },
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routes as unknown as RouteRecordRaw[],
+  routes: [...routes, ...blankRoutes, ...mainRoutes, ...subRoutes] as unknown as RouteRecordRaw[],
 })
 
 router.beforeEach((_to, _from, next) => {
