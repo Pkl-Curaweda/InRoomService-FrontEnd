@@ -9,11 +9,13 @@ import paymentFoodVue from '../pages/checkout/paymentFood.vue'
 import paymentLaundryVue from '../pages/checkout/paymentLaundry.vue'
 
 import mitraPageVue from '../pages/mitra/mitrapages1.vue'
+import about from 'src/pages/about/about.vue'
 
 // layout
 import navAbout from '../layouts/about.vue'
 import loginVue from '../layouts/login.vue'
 import checkoutLayout from '../layouts/checkout.vue'
+import mitraLayout from '../layouts/mitra.vue'
 
 const subRoutes: RouteType[] = [
   {
@@ -42,8 +44,8 @@ const subRoutes: RouteType[] = [
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
-      label: '',
-      icon: '',
+      label: 'Home',
+      icon: 'home',
     },
   },
   {
@@ -51,7 +53,7 @@ const subRoutes: RouteType[] = [
     path: '/mitra/input',
     component: mitraPageVue,
     meta: {
-      layout: navAbout,
+      layout: mitraLayout,
       title: 'About - Lingian Hotel',
       label: '',
       icon: '',
@@ -86,6 +88,46 @@ const subRoutes: RouteType[] = [
       title: 'Mini Market - Lingian Hotel',
       label: '',
       icon: '',
+    },
+  },
+  {
+    path: '/mitra/minimarket',
+    component: about,
+    meta: {
+      layout: navAbout,
+      title: 'Minimarket - Lingian Hotel',
+      label: 'Mini market',
+      icon: 'store',
+    },
+  },
+  {
+    path: '/mitra/customer',
+    component: about,
+    meta: {
+      layout: navAbout,
+      title: 'Minimarket - Lingian Hotel',
+      label: 'Customer Order',
+      icon: 'shopping_cart',
+    },
+  },
+  {
+    path: '/servicecenter',
+    component: about,
+    meta: {
+      layout: navAbout,
+      title: 'Service Center - Lingian Hotel',
+      label: 'Service Center',
+      icon: 'support_agent',
+    },
+  },
+  {
+    path: '/logout',
+    component: '',
+    meta: {
+      layout: '',
+      title: 'Logout - Lingian Hotel',
+      label: 'logout',
+      icon: 'logout',
     },
   },
 ]
