@@ -31,23 +31,23 @@
           <q-toolbar class="flex items-center justify-between">
             <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="text-black" />
             <!-- <q-btn
-              dense
-              flat
-              icon="add"
-              href="/mitra/input"
-              :class="{
-                'text-black': $route.path !== '/mitra/input',
-                ' border-b-4 border-b-green-500': $route.path === '/mitra/input',
-              }" /> -->
+                dense
+                flat
+                icon="add"
+                href="/mitra/input"
+                :class="{
+                  'text-black': $route.path !== '/mitra/input',
+                  ' border-b-4 border-b-green-500': $route.path === '/mitra/input',
+                }" /> -->
             <!-- <q-btn
-              dense
-              flat
-              icon="history"
-              href="/mitra/customer/history"
-              :class="{
-                'text-black': $route.path !== '/mitra/customer',
-                ' border-b-4 border-b-green-500': $route.path === '/mitra/customer/history',
-              }" /> -->
+                dense
+                flat
+                icon="history"
+                href="/mitra/customer/history"
+                :class="{
+                  'text-black': $route.path !== '/mitra/customer',
+                  ' border-b-4 border-b-green-500': $route.path === '/mitra/customer/history',
+                }" /> -->
           </q-toolbar>
 
           <q-toolbar
@@ -103,14 +103,14 @@
             <q-img src="../assets/img/logoLingian.png" class="w-40" />
           </div>
           <q-list>
-            <template v-for="(route, index) in subRoutes" :key="index">
+            <template v-for="(route, index) in routes" :key="index">
               <!-- Only display routes with a non-empty label in the sidebar -->
-              <template v-if="route.meta.label">
+              <template v-if="route.meta.label && route.path !== '/promotoday'">
                 <q-item
                   clickable
                   :active="route.meta.label === 'Outbox'"
                   v-ripple
-                  @click="router.push(route.path)">
+                  @click="router.push('/admin' + route.path)">
                   <q-item-section avatar>
                     <q-icon :name="'o_' + route.meta.icon" />
                   </q-item-section>
@@ -136,6 +136,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import { computed, ref, watch } from 'vue'
   import { mainRoutes } from '../routes/main-routes'
+  import { routes } from 'src/router'
   import subRoutes from '../routes/sub-routes'
 
   const leftDrawerOpen = ref(false)
