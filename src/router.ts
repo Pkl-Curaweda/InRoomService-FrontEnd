@@ -25,6 +25,9 @@ import paymentFoodVue from './pages/checkout/paymentFood.vue'
 import paymentMinimarketVue from './pages/checkout/paymentminimarket.vue'
 import paymentLaundryVue from './pages/checkout/paymentLaundry.vue'
 
+// tambahan list partner goods
+import ListPartnerGoodsVue from './pages/default/PartnerGoods.vue'
+
 // import layout utama
 import customerVue from './layouts/customer.vue'
 import loginVue from './layouts/login.vue'
@@ -108,6 +111,17 @@ export const routes: RouteType[] = [
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    // buat create path list partner goods
+    path: '/partnergoods',
+    component: ListPartnerGoodsVue,
+    meta: {
+      layout: navAbout,
+      title: 'List of Partner Goods - Lingian Hotel',
       label: '',
       icon: '',
     },
