@@ -34,6 +34,9 @@ import checkoutLayout from './layouts/checkout.vue'
 import blankRoutes from './routes/blank-routes'
 import mainRoutes from './routes/main-routes'
 import subRoutes from './routes/sub-routes'
+
+// pages mitra
+import menuMitra from './pages/mitra/menuMarket.vue'
 export const routes: RouteType[] = [
   {
     path: '/home',
@@ -105,6 +108,17 @@ export const routes: RouteType[] = [
     // create path about
     path: '/mitra/input',
     component: mitraPageVue,
+    meta: {
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    // create path about
+    path: '/mitra/menuMitra',
+    component: menuMitra,
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
