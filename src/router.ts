@@ -1,35 +1,15 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import indexUser from './pages/mainPages/index.vue'
-import loginPageVue from './pages/login/loginPages.vue'
-import mitraVue from './pages/login/mitra.vue'
-import regsiterPageVue from './pages/register/registerPages.vue'
 import minimarketVue from './pages/default/minimarket.vue'
 import foodbeverageVue from './pages/default/foodbeverage.vue'
 import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
-import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
-import indexVue from './pages/index.vue'
-// Tambahan untuk page payment doang
 import about from './pages/about/about.vue'
-import profilePageVue from './pages/profile/profilepage.vue'
-import mitraPageVue from './pages/mitra/mitrapages1.vue'
-
-// import admin payment pages
-import foodAdminVue from './pages/default/foodAdmin.vue'
-import marketAdminVue from './pages/default/minimarketadmin.vue'
-
-// import checkout
-import paymentFoodVue from './pages/checkout/paymentFood.vue'
-import paymentMinimarketVue from './pages/checkout/paymentminimarket.vue'
-import paymentLaundryVue from './pages/checkout/paymentLaundry.vue'
-
 // import layout utama
 import customerVue from './layouts/customer.vue'
-import loginVue from './layouts/login.vue'
 import navAbout from './layouts/about.vue'
-import checkoutLayout from './layouts/checkout.vue'
 
 import blankRoutes from './routes/blank-routes'
 import mainRoutes from './routes/main-routes'
@@ -104,17 +84,18 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
+
   {
-    // create path about
-    path: '/mitra/input',
-    component: mitraPageVue,
+    path: '/servicecenter',
+    component: about,
     meta: {
       layout: navAbout,
-      title: 'About - Lingian Hotel',
-      label: '',
-      icon: '',
+      title: 'Service Center - Lingian Hotel',
+      label: 'Service Center',
+      icon: 'support_agent',
     },
   },
+
   {
     // create path about
     path: '/mitra/menuMitra',
