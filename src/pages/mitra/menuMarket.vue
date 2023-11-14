@@ -48,13 +48,13 @@
   }
 </script>
 <template>
-  <div class="h-screen">
+  <div class="h-full overflow-scroll">
     <div class="sticky flex justify-end w-full px-2 pb-20 gap-2 z-10 bg-transparent">
       <q-btn unelevated rounded color="green" label="Edit" class="px-8 font-bold" />
       <q-btn unelevated rounded color="green" label="Upload" class="px-8 font-bold" />
     </div>
 
-    <div class="max-h-screen overflow-scroll custom-scrollbar">
+    <div class="max-h-[540px] overflow-scroll custom-scrollbar">
       <div class="flex flex-col gap-4 items-center">
         <div v-for="(card, index) in cardData" :key="index">
           <q-card class="card my-card text-white p-3 w-[380px]">

@@ -1,10 +1,10 @@
 <template>
   <div class="justify-center mx-auto">
     <q-layout view="lHh lpR fFf">
-      <q-header reveal class="bg-[#069550] text-white pt-1">
-        <q-toolbar>
+      <q-header reveal>
+        <q-toolbar class="bg-[#069550] text-white pt-1" v-if="$route.path !== '/mitra/minimarket'">
           <q-toolbar-title class="text-capitalize font-semibold">
-            <!-- {{ route.meta.label }} -->
+            {{ route.meta.label }}
             <q-avatar>
               <img src="../assets/img/lingian-logo-colored.png" alt="" class="opacity-100" />
             </q-avatar>
@@ -23,6 +23,11 @@
           </router-link>
         </q-toolbar>
         <div class="bg-white text-black">
+          <q-toolbar-title
+            class="text-capitalize font-semibold mx-4"
+            v-if="$route.path == '/mitra/minimarket'">
+            Minimarket
+          </q-toolbar-title>
           <q-toolbar class="flex items-center justify-between">
             <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="text-black" />
             <!-- <q-btn
@@ -45,7 +50,9 @@
               }" /> -->
           </q-toolbar>
 
-          <q-toolbar class="flex flex-col w-screen justify-center">
+          <q-toolbar
+            class="flex flex-col w-screen justify-center"
+            v-if="$route.path !== '/mitra/minimarket'">
             <div
               active-color="white"
               style="font-size: 16px"

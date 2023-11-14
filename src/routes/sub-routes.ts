@@ -10,6 +10,7 @@ import paymentLaundryVue from '../pages/checkout/paymentLaundry.vue'
 
 import mitraPageVue from '../pages/mitra/mitrapages1.vue'
 import about from 'src/pages/about/about.vue'
+import menuMitra from '../pages/mitra/menuMarket.vue'
 
 // layout
 import navAbout from '../layouts/about.vue'
@@ -92,9 +93,9 @@ const subRoutes: RouteType[] = [
   },
   {
     path: '/mitra/minimarket',
-    component: about,
+    component: menuMitra,
     meta: {
-      layout: navAbout,
+      layout: mitraLayout,
       title: 'Minimarket - Lingian Hotel',
       label: 'Mini market',
       icon: 'store',
@@ -110,6 +111,7 @@ const subRoutes: RouteType[] = [
       icon: 'shopping_cart',
     },
   },
+
   {
     path: '/servicecenter',
     component: about,

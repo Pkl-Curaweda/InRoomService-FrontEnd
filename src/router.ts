@@ -97,17 +97,6 @@ export const routes: RouteType[] = [
   },
 
   {
-    // create path about
-    path: '/mitra/menuMitra',
-    component: menuMitra,
-    meta: {
-      layout: navAbout,
-      title: 'About - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
-  {
     path: '/logout',
     component: '',
     meta: {
