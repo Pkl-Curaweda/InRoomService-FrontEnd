@@ -109,16 +109,16 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-  // {
-  //   path: '/logout',
-  //   component: '',
-  //   meta: {
-  //     layout: '',
-  //     title: 'Logout - Lingian Hotel',
-  //     label: 'logout',
-  //     icon: 'logout',
-  //   },
-  // },
+  {
+    path: '/logout',
+    component: '',
+    meta: {
+      layout: '',
+      title: 'Logout - Lingian Hotel',
+      label: 'logout',
+      icon: 'logout',
+    },
+  },
   // Tambahan untuk page minimarket admin doang
 ]
 
