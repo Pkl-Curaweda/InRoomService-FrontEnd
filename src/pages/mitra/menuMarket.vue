@@ -1,6 +1,6 @@
 <script lang="ts">
   import { defineProps, ref, defineEmits, toRef } from 'vue'
-
+  import { useRouter } from 'vue-router'
   export default {
     components: {},
 
@@ -45,13 +45,23 @@
         price: 0,
       }
     },
+    setup(props) {
+      const navigate = useRouter()
+      return { navigate }
+    },
   }
 </script>
 <template>
   <div class="h-full overflow-scroll">
     <div class="sticky flex justify-end w-full px-2 pb-20 gap-2 z-10 bg-transparent">
       <q-btn unelevated rounded color="green" label="Edit" class="px-8 font-bold" />
-      <q-btn unelevated rounded color="green" label="Upload" class="px-8 font-bold" />
+      <q-btn
+        unelevated
+        rounded
+        color="green"
+        label="Upload"
+        class="px-8 font-bold"
+        @click="navigate.push('/mitra/upload')" />
     </div>
 
     <div class="max-h-[540px] overflow-scroll custom-scrollbar">

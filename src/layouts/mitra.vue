@@ -52,7 +52,7 @@
 
           <q-toolbar
             class="flex flex-col w-screen justify-center"
-            v-if="$route.path == '/mitra/input'">
+            v-if="$route.path == '/mitra/upload'">
             <div
               active-color="white"
               style="font-size: 16px"
@@ -105,7 +105,7 @@
           <q-list>
             <template v-for="(route, index) in subRoutes" :key="index">
               <!-- Only display routes with a non-empty label in the sidebar -->
-              <template v-if="route.meta.label">
+              <template v-if="route.meta.label && route.meta.label != 'Service Center'">
                 <q-item
                   clickable
                   :active="route.meta.label === 'Outbox'"

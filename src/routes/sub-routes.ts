@@ -15,6 +15,7 @@ import menuOrderan from '../pages/mitra/menuOrderan.vue'
 import historyPageVue from '../pages/mitra/history.vue'
 import adminFoodBeverage from '../pages/admin/foodAdmin.vue'
 import adminMinimarket from '../pages/admin/minimarketadmin.vue'
+import partnersVue from '../pages/admin/partners.vue'
 // layout
 import navAbout from '../layouts/about.vue'
 import loginVue from '../layouts/login.vue'
@@ -47,7 +48,7 @@ const subRoutes: RouteType[] = [
     component: adminFoodBeverage, // dashboard
     meta: {
       layout: adminLayout,
-      title: 'Home - Lingian Hotel',
+      title: 'Food & Beverage - Lingian Hotel',
       label: '',
       icon: '',
     },
@@ -57,7 +58,17 @@ const subRoutes: RouteType[] = [
     component: adminMinimarket, // dashboard
     meta: {
       layout: adminLayout,
-      title: 'Home - Lingian Hotel',
+      title: 'Mini Market - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/admin/partners',
+    component: partnersVue, // dashboard
+    meta: {
+      layout: adminLayout,
+      title: 'Partners - Lingian Hotel',
       label: '',
       icon: '',
     },
@@ -84,11 +95,11 @@ const subRoutes: RouteType[] = [
   },
   {
     // create path about
-    path: '/mitra/input',
+    path: '/mitra/upload',
     component: mitraPageVue,
     meta: {
       layout: mitraLayout,
-      title: 'About - Lingian Hotel',
+      title: 'Input - Lingian Hotel',
       label: '',
       icon: '',
     },

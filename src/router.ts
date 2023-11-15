@@ -11,7 +11,7 @@ import about from './pages/about/about.vue'
 import customerVue from './layouts/customer.vue'
 import navAbout from './layouts/about.vue'
 
-import ListPartnerGoodsVue from './pages/default/PartnerGoods.vue'
+import ListPartnerGoodsVue from './pages/admin/PartnerGoods.vue'
 
 import blankRoutes from './routes/blank-routes'
 import mainRoutes from './routes/main-routes'
@@ -98,17 +98,6 @@ export const routes: RouteType[] = [
     },
   },
 
-  {
-    // create path about
-    path: '/mitra/menuMitra',
-    component: menuMitra,
-    meta: {
-      layout: navAbout,
-      title: 'About - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
   {
     // buat create path list partner goods
     path: '/partnergoods',
