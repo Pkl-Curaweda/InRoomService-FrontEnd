@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { defineProps, ref, defineEmits, toRef } from 'vue'
+  // import { defineProps, ref, defineEmits, toRef } from 'vue'
   import { useRouter } from 'vue-router'
   export default {
     components: {},
@@ -52,35 +52,50 @@
   }
 </script>
 <template>
-  <div class="h-full overflow-scroll">
-    <div class="sticky flex justify-end w-full px-2 pb-20 gap-2 z-10 bg-transparent">
-      <q-btn unelevated rounded color="green" label="Edit" class="px-8 font-bold" />
+  <div class="m-auto h-full overflow-scroll">
+    <div class="flex justify-end p-2 w-full">
       <q-btn
         unelevated
+        size="sm"
         rounded
+        padding="sm"
         color="green"
-        label="Upload"
-        class="px-8 font-bold"
-        @click="navigate.push('/mitra/upload')" />
+        class="px-8 font-semibold items-center text-semibold"
+        ><q-icon
+          name="o_add"
+          class="mr-5 w-2 h-2 items-center h-full"
+          @click="navigate.push('/mitra/upload')" />
+        <span class="font-bold">Upload</span>
+      </q-btn>
     </div>
-
-    <div class="max-h-[540px] overflow-scroll custom-scrollbar">
-      <div class="flex flex-col gap-4 items-center">
+    <div class="max-h-xl overflow-scroll custom-scrollbar text-lg mt-10">
+      <div class="block w-full gap-4 items-center">
         <div v-for="(card, index) in cardData" :key="index">
-          <q-card class="card my-card text-white p-3 w-[380px]">
+          <q-card class="card my-card text-white p-3 w-[80%] md:w-md m-auto my-5">
             <q-card-section horizontal class="flex justify-between">
-              <div class="tulisan">
+              <div class="block relative w-32">
                 <div class="text-md pb-1 font-bold">{{ card.namaProduk }}</div>
                 <div class="text-xs text-justify">
                   {{ card.descProduk }}
                 </div>
-                <div class="flex flex-row items-center justify-between">
+                <div class="flex flex-row items-center justify-between mb-2">
                   <div class="text-sm">
                     {{ card.hargaProduk }}
                   </div>
                 </div>
+                <div class="flex">
+                  <q-btn
+                    size="sm"
+                    rounded
+                    padding="xs"
+                    color="green"
+                    class="sm:px-2 w-24 font-semibold items-center font-semibold sm:py-2"
+                    ><q-icon name="o_edit" class="mr-5 w-2 h-2 items-center h-full" />
+                    <span>Edit</span>
+                  </q-btn>
+                </div>
               </div>
-              <q-img :src="`/src/assets/img/${card.gambarProduk}`" class="col-4" ratio="1" />
+              <q-img :src="`/src/assets/img/${card.gambarProduk}`" class="w-24" ratio="1" />
             </q-card-section>
           </q-card>
         </div>
