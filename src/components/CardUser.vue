@@ -7,26 +7,7 @@
           {{ descProduk }}
         </div>
         <div class="flex flex-row items-center justify-between">
-          <div class="text-sm">
-            {{ hargaProduk }}
-          </div>
-          <q-card-actions>
-            <q-btn
-              @click="decrement"
-              class="border-[#16A75C] text-black border-2"
-              round
-              color="white"
-              icon="remove"
-              size="sm" />
-            <p class="mx-1 px-2">{{ count }}</p>
-            <q-btn
-              @click="increment"
-              class="border-[#16A75C] text-black border-2"
-              round
-              color="white"
-              icon="add"
-              size="sm" />
-          </q-card-actions>
+          <div class="text-sm font-bold">Rp. {{ hargaProduk }}</div>
         </div>
       </div>
       <q-img :src="gambarProduk" class="col-4" ratio="1" />
@@ -35,13 +16,14 @@
     <q-card-actions>
       <q-btn
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
-        label="Send"
-        name="send" />
+        label="Add to Cart"
+        name="add"
+        @click="handleClick" />
     </q-card-actions>
   </q-card>
 </template>
 
-<script>
+<script lang="ts">
   import { defineProps, ref, defineEmits, toRef } from 'vue'
 
   export default {
@@ -49,31 +31,38 @@
       gambarProduk: String,
       namaProduk: String,
       descProduk: String,
-      hargaProduk: String,
+      hargaProduk: Number,
+      onClick: {
+        type: Function,
+        required: true,
+      },
     },
     setup(props, { emit }) {
       const count = ref(0)
-      const hargaProduk = toRef(props, 'hargaProduk')
-      const decrement = () => {
-        if (count.value > 0) {
-          count.value--
-          // defineEmits('quantityChanged', count.value)
-          emit('quantityChanged', count.value * hargaProduk.value)
-        }
-      }
-
-      const increment = () => {
-        count.value++
-        // defineEmits('quantityChanged', count.value)
-        emit('quantityChanged', count.value * parseFloat(hargaProduk.value))
-      }
-
+      // const hargaProduk = toRef(props, 'hargaProduk')
+      // const decrement = () => {
+      //   if (count.value > 0) {
+      //     count.value--
+      //     // defineEmits('quantityChanged', count.value)
+      //     emit('quantityChanged', count.value * hargaProduk.value)
+      //   }
+      // }
+      // const increment = () => {
+      //   count.value++
+      //   // defineEmits('quantityChanged', count.value)
+      //   emit('quantityChanged', count.value * parseFloat(hargaProduk.value))
+      // }
       return {
         count,
-        decrement,
-        increment,
+        cart: [] as { namaProduk: string; hargaProduk: number; qty: number }[],
+        // decrement,
+        // increment,
+        handleClick() {
+          props.onClick()
+        },
       }
     },
+    methods: {},
   }
 </script>
 

@@ -144,14 +144,15 @@
     <div class="flex flex-col gap-4 items-center">
       <p class="hidden">{{ subTotal }}</p>
       <div v-for="(card, index) in cardData" :key="index">
-        <!-- <CardUser
+        <CardUser
           :gambarProduk="`/src/assets/img/${card.gambarProduk}`"
           :namaProduk="card.namaProduk"
           :descProduk="card.descProduk"
           :hargaProduk="card.hargaProduk"
-          @quantityChanged="updateTotalPrice" /> -->
+          @quantityChanged="updateTotalPrice"
+          :onClick="() => addToCart(card)" />
 
-        <q-card class="card my-card text-white p-3 w-[380px]">
+        <!-- <q-card class="card my-card text-white p-3 w-[380px]">
           <q-card-section horizontal class="flex justify-between">
             <div class="tulisan">
               <div class="text-md pb-1 font-bold">{{ card.namaProduk }}</div>
@@ -192,7 +193,7 @@
               name="send"
               @click="addToCart(card)" />
           </q-card-actions>
-        </q-card>
+        </q-card> -->
       </div>
     </div>
   </div>

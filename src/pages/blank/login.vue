@@ -2,27 +2,27 @@
   <div class="flex items-center flex-col justify-center">
     <img src="../../assets/img/logoLingian.png" alt="" />
 
-    <q-form class="flex items-center flex-col mt-3 gap-4">
+    <q-form class="flex items-center flex-col mt-3 gap-4" @submit.prevent="login">
       <!-- <q-input
         rounded
         standout
         bottom-slots
-        v-model="username"
-        label="Username"
-        placeholder="Enter Username Here"
-        for="username"
+        v-model="Email"
+        label="Email"
+        placeholder="Enter Email Here"
+        for="Email"
         bg-color="white"
         color="dark"
         :dense="dense" /> -->
       <q-input
         rounded
         outlined
-        v-model="username"
+        v-model="email"
         color="dark"
         bg-color="white"
-        label="Username"
-        for="username"
-        placeholder="Enter Username Here">
+        label="Email"
+        for="email"
+        placeholder="Enter Email Here">
       </q-input>
       <q-input
         rounded
@@ -34,7 +34,14 @@
         for="password"
         type="password">
       </q-input>
-      <q-btn unelevated rounded color="green" label="Login" text-color="dark" class="px-8" />
+      <q-btn
+        unelevated
+        rounded
+        color="green"
+        label="Login"
+        text-color="dark"
+        class="px-8"
+        type="submit" />
     </q-form>
 
     <p class="mt-8" v-if="$route.path === '/mitra'">
@@ -44,29 +51,53 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
   import { ref, computed } from 'vue'
   import ButtonVue from '../../components/Button.vue'
   import CardMitra from 'src/components/CardMitra.vue'
   import CardUser from 'src/components/CardUser.vue'
   import CardMenu from 'src/components/CardMenu.vue'
   import { useRoute } from 'vue-router'
+  import axios from 'axios'
 
-  const username = ref('')
-  const pw = ref('')
-  const ph = ref('')
-  const dense = ref(false)
+  export default {
+    data() {
+      return {
+        email: '',
+        pw: '',
+        ph: '',
+        dense: false,
+      }
+    },
+    computed: {
+      $route() {
+        return useRoute()
+      },
+    },
+    methods: {
+      async login() {
+        try {
+          const response = await axios.post(
+            'http://localhost:8080/auth/login',
+            {
+              email: this.email,
+              password: this.pw,
+            },
+            {
+              withCredentials: true,
+            }
+          )
 
-  const $route = useRoute()
+          const token = response.data.data.accessToken
+          console.log(token)
 
-  const getRegistrationLink = computed(() => {
-    if ($route.path.startsWith('/admin')) {
-      return '/admin/register'
-    } else if ($route.path.startsWith('/mitra')) {
-      return '/mitra/register'
-    } else {
-      // Set a default link if not in the '/admin' or '/mitra' path
-      return '/default/register'
-    }
-  })
+          localStorage.setItem('token', token)
+
+          this.$router.push('/mitra/upload')
+        } catch (error) {
+          console.error('Login failed!', error.message)
+        }
+      },
+    },
+  }
 </script>
