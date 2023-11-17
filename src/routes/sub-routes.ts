@@ -10,7 +10,7 @@ import paymentLaundryVue from '../pages/checkout/paymentLaundry.vue'
 
 import mitraPageVue from '../pages/mitra/mitrapages1.vue'
 import about from 'src/pages/about/about.vue'
-import menuMitra from '../pages/mitra/menuMarket.vue'
+import menuMitra from '../pages/mitra/menumitra.vue'
 import menuOrderan from '../pages/mitra/menuOrderan.vue'
 import historyPageVue from '../pages/mitra/history.vue'
 import adminFoodBeverage from '../pages/admin/foodAdmin.vue'
@@ -22,6 +22,7 @@ import loginVue from '../layouts/login.vue'
 import checkoutLayout from '../layouts/checkout.vue'
 import mitraLayout from '../layouts/mitra.vue'
 import adminLayout from '../layouts/admin.vue'
+
 const subRoutes: RouteType[] = [
   {
     path: '/servicecenter',

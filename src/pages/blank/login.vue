@@ -1,8 +1,8 @@
 <template>
-  <div class="flex items-center flex-col justify-center">
-    <img src="../../assets/img/logoLingian.png" alt="" />
+  <div class="flex items-center flex-col justify-center gap-10 w-full">
+    <img src="../../assets/img/logoLingian.png" class="md:w-52" alt="" />
 
-    <q-form class="flex items-center flex-col mt-3 gap-4">
+    <q-form class="flex items-center flex-col mt-3 gap-6">
       <!-- <q-input
         rounded
         standout
@@ -15,14 +15,16 @@
         color="dark"
         :dense="dense" /> -->
       <q-input
-        rounded
         outlined
+        rounded
         v-model="username"
         color="dark"
         bg-color="white"
         label="Username"
         for="username"
-        placeholder="Enter Username Here">
+        placeholder="Enter Username Here"
+        clear-icon="backspace"
+        class="md:w-80 w-60 drop-shadow-sm">
       </q-input>
       <q-input
         rounded
@@ -32,9 +34,19 @@
         bg-color="white"
         label="Password"
         for="password"
-        type="password">
+        type="password"
+        class="md:w-80 w-60 drop-shadow-sm">
       </q-input>
-      <q-btn unelevated rounded color="green" label="Login" text-color="dark" class="px-8" />
+      <q-btn
+        text-color="dark"
+        unelevated
+        size="md"
+        rounded
+        padding="sm"
+        color="green"
+        label="login"
+        class="px-20 w-40 font-semibold items-center text-semibold">
+      </q-btn>
     </q-form>
 
     <p class="mt-8" v-if="$route.path === '/mitra'">

@@ -1,7 +1,9 @@
 <template>
-  <div class="bg-white -mt-4">
-    <div class="py-8 bg-[#069550]">
-      <q-card class="mx-2 rounded">
+  <div class="bg-white">
+    <div class="py-8 bg-[#069550] h-52 justify-center items-center px-auto"></div>
+
+    <div class="relative">
+      <q-card class="rounded absolute -top-34 w-[80%] left-1/2 transform -translate-x-1/2 px-2">
         <q-card-section
           class="bg-white text-black"
           style="
@@ -24,10 +26,7 @@
           </div>
         </q-card-section>
       </q-card>
-    </div>
-
-    <div class="bagiankedua mt-16">
-      <div class="flex items-center px-4 gap-2">
+      <div class="flex items-center px-4 gap-2 mt-20">
         <q-icon color="green" name="phone" size="20px" />
         <h2
           class="text-black open-sans font-bold"
@@ -186,8 +185,17 @@
         </q-card-section>
       </q-card>
     </div>
-    <div class="q-gutter-sm mx-auto mt-6 w-fit">
-      <q-btn unelevated rounded color="green" label="back" />
+    <div class="q-gutter-sm mx-auto my-6 w-fit">
+      <q-btn
+        text-color="white"
+        unelevated
+        size="md"
+        rounded
+        padding="md"
+        color="green"
+        label="login"
+        class="px-20 w-40 font-semibold items-center text-semibold">
+      </q-btn>
     </div>
   </div>
 </template>

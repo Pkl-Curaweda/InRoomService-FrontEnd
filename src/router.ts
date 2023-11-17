@@ -18,7 +18,7 @@ import mainRoutes from './routes/main-routes'
 import subRoutes from './routes/sub-routes'
 
 // pages mitra
-import menuMitra from './pages/mitra/menuMarket.vue'
+import menuMitra from './pages/mitra/menumitra.vue'
 export const routes: RouteType[] = [
   {
     path: '/home',
