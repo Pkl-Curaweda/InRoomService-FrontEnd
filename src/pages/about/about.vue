@@ -2,9 +2,8 @@
   <div class="h-full background sm:w-[50%] md:w-[40%] lg:w-[30%] xl:w-[25%] mx-auto">
     <div class="bg-[#00000090]">
 
-      <router-link to="/">
-        <q-btn flat round icon="o_arrow_back" class="opacity-80 hover:opacity-100 text-white" />
-      </router-link>
+      
+        <q-btn flat round icon="o_arrow_back" class="opacity-80 hover:opacity-100 text-white" @click="navigate.back()" />
 
       <div class=" text-[10px] pt-10">
         <div class="h-72 background-room relative mb-10">
@@ -45,6 +44,8 @@
 </template>
 
 <script>
+  import { useRouter } from 'vue-router'
+
 export default {
   data() {
     return {
@@ -53,7 +54,11 @@ export default {
       about1: "/src/assets/img/family-room.png",
       about2: "/src/assets/img/desdelux.png",
     };
-  }
+  },
+  setup(props) {
+      const navigate = useRouter()
+      return { navigate }
+    },
 };
 </script>
 

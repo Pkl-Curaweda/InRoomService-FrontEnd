@@ -1,18 +1,13 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import defaultVue from './layouts/default.vue'
 import indexUser from './pages/mainPages/index.vue'
-import loginPageVue from './pages/login/loginPages.vue'
-import mitraVue from './pages/login/mitra.vue'
-import regsiterPageVue from './pages/register/registerPages.vue'
 import minimarketVue from './pages/default/minimarket.vue'
 import foodbeverageVue from './pages/default/foodbeverage.vue'
 import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
-import customerserviceVue from './pages/default/customerservice.vue'
 import RouteType from './types/route'
-import indexVue from './pages/index.vue'
-// Tambahan untuk page payment doang
 import about from './pages/about/about.vue'
+<<<<<<< HEAD
 import profilePageVue from './pages/profile/profilepage.vue'
 import mitraPageVue from './pages/mitra/mitrapages1.vue'
 import adminPageVue from './pages/admin/adminpages1.vue'
@@ -26,15 +21,20 @@ import paymentFoodVue from './pages/checkout/paymentFood.vue'
 import paymentMinimarketVue from './pages/checkout/paymentminimarket.vue'
 import paymentLaundryVue from './pages/checkout/paymentLaundry.vue'
 
+=======
+>>>>>>> cf5a3a80d10611fb6626a2c5bf380a4f7528bb67
 // import layout utama
 import customerVue from './layouts/customer.vue'
-import loginVue from './layouts/login.vue'
 import navAbout from './layouts/about.vue'
-import checkoutLayout from './layouts/checkout.vue'
+
+import ListPartnerGoodsVue from './pages/admin/PartnerGoods.vue'
 
 import blankRoutes from './routes/blank-routes'
 import mainRoutes from './routes/main-routes'
 import subRoutes from './routes/sub-routes'
+
+// pages mitra
+import menuMitra from './pages/mitra/menuMarket.vue'
 export const routes: RouteType[] = [
   {
     path: '/home',
@@ -102,7 +102,9 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
+
   {
+<<<<<<< HEAD
     // create path about
     path: '/pembayaran',
     component: pembayaranPageVue,
@@ -117,9 +119,25 @@ export const routes: RouteType[] = [
     // create path about
     path: '/mitra/input',
     component: mitraPageVue,
+=======
+    path: '/servicecenter',
+    component: about,
+>>>>>>> cf5a3a80d10611fb6626a2c5bf380a4f7528bb67
     meta: {
       layout: navAbout,
-      title: 'About - Lingian Hotel',
+      title: 'Service Center - Lingian Hotel',
+      label: 'Service Center',
+      icon: 'support_agent',
+    },
+  },
+
+  {
+    // buat create path list partner goods
+    path: '/partnergoods',
+    component: ListPartnerGoodsVue,
+    meta: {
+      layout: navAbout,
+      title: 'List of Partner Goods - Lingian Hotel',
       label: '',
       icon: '',
     },

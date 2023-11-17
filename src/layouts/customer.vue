@@ -81,7 +81,7 @@
               <q-btn class="text-white" label="1" color="green" rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p>Add to Cart</p>
-                <p class="text-gray-400">choose your food</p>
+                <p class="text-gray-400">Choose Your Item</p>
               </div>
             </div>
 
@@ -96,7 +96,7 @@
                 rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p class="text-gray-400">Checkout</p>
-                <p class="text-gray-400">choose your food</p>
+                <p class="text-gray-400">To Make Payment</p>
               </div>
             </div>
           </div>
@@ -163,9 +163,9 @@
       </q-drawer>
 
       <q-page-container class="flex items-center justify-center h-screen overflow-hidden">
-        <Minimarket @total="marktUpdatePrice" v-if="$route.path === '/minimarket'" />
-        <FoodBeverage @total="foodUpdatePrice" v-if="$route.path === '/foodbeverage'" />
-        <!-- <router-view /> -->
+        <!-- <Minimarket @total="marktUpdatePrice" v-if="$route.path === '/minimarket'" />
+        <FoodBeverage @total="foodUpdatePrice" v-if="$route.path === '/foodbeverage'" /> -->
+        <router-view />
       </q-page-container>
     </q-layout>
   </div>

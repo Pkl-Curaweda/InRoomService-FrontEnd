@@ -55,21 +55,23 @@
       namaToko: 'Hotel Information',
       jam: '10 am - 12 pm',
       iconName: 'info',
-      link: '/information',
+      link: '/about',
     },
   ]
 
   const modifiedCardData = cardData.map((card) => {
     // Modify the card's link based on the current route
-    if (route.path === '/admin/home') {
-      return {
-        ...card,
-        link: `/admin${card.link}`,
-      }
-    } else if (route.path === '/mitra/home') {
-      return {
-        ...card,
-        link: `/mitra${card.link}`,
+    if (card.link !== '/about') {
+      if (route.path === '/admin/home') {
+        return {
+          ...card,
+          link: `/admin${card.link}`,
+        }
+      } else if (route.path === '/mitra/home') {
+        return {
+          ...card,
+          link: `/mitra${card.link}`,
+        }
       }
     }
     return card // If the route is neither '/admin/home' nor '/mitra/home', keep the original link
