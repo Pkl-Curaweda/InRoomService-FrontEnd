@@ -6,24 +6,20 @@
           <q-icon 
           color="green" 
           name="shopping_cart" 
-          size="20px " />
+          size="20px" />
           <h2
           class="text-black font-open-sans"
           style="font-size: 18px; 
           justify-content: left;">
           Typess of Goods</h2>
         </div>
-      <div class="q-gutter-y-md column">  
-        <q-select color="grey-3"
-         outlined label-color="green"
-         v-model="typegoods" :options="options"
-         label="Label">
-      <template v-slot:append>
-          <q-icon 
-          name="event" 
-          color="green" />
-      </template>
-        </q-select>
+        <div class="q-gutter-y-md column" >
+        <q-card>
+          <q-input 
+          standout="bg-teal text-white" 
+          v-model="typegoods" 
+           />
+        </q-card>   
       </div>
     </div>
     
@@ -44,7 +40,7 @@
           <q-input 
           standout="bg-teal text-white" 
           v-model="namegoods" 
-          label="Nama Pesanan" :dense="dense" />
+           />
         </q-card>   
       </div>
     </div>
@@ -68,7 +64,7 @@
           standout="bg-teal 
           text-white" 
           v-model="payments" 
-          label="Harga Pesanan" :dense="dense" />
+          />
         </q-card>
       </div>
     </div>
@@ -92,7 +88,7 @@
           type="textarea" 
           standout="bg-teal text-white"
           v-model="deskripsi" 
-          label="Deskripsi Pesanan" :dense="dense" />
+          />
         </q-card>
       </div>
     </div>
@@ -113,14 +109,10 @@
         
       <div class="q-gutter-sm row items-start" >
         <q-card>
-          <q-uploader
-        url="http://localhost:4444/upload"
-        label="Upload files"
-        color="green"
-        square
-        flat
-        bordered
-        style="max-width: 300px"
+          <q-img
+          src="../../assets/img/forbidden.svg"
+          class="ayam rounded-full w-70 h-70"
+       
       />
         </q-card>  
       </div>

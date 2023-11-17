@@ -15,7 +15,8 @@ import indexVue from './pages/index.vue'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
 import mitraPageVue from './pages/mitra/mitrapages1.vue'
-
+import adminPageVue from './pages/admin/adminpages1.vue'
+import pembayaranPageVue from './pages/pembayaran/pembayaranpages1.vue'
 // import admin payment pages
 import foodAdminVue from './pages/default/foodAdmin.vue'
 import marketAdminVue from './pages/default/minimarketadmin.vue'
@@ -103,8 +104,30 @@ export const routes: RouteType[] = [
   },
   {
     // create path about
+    path: '/pembayaran',
+    component: pembayaranPageVue,
+    meta: {
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    // create path about
     path: '/mitra/input',
     component: mitraPageVue,
+    meta: {
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    // create path about
+    path: '/admin/acc',
+    component: adminPageVue,
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
