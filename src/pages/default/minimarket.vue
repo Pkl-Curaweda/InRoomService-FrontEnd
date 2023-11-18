@@ -12,26 +12,26 @@
         cart: [] as { namaProduk: string; hargaProduk: number; qty: number }[],
         cardData: [
           {
-            gambarProduk: 'example.png',
-            namaProduk: 'Bakso Ngawi',
-            descProduk: 'Dibuat dari daging unta asli baghdad',
-            hargaProduk: 20000,
-          },
-          {
-            gambarProduk: 'example.png',
+            gambarProduk: 'crash.jpg',
             namaProduk: 'Bakso Baghdad',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: 20000,
           },
           {
-            gambarProduk: 'example.png',
+            gambarProduk: 'crash.jpg',
             namaProduk: 'Bakso Bogor',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: 20000,
           },
           {
-            gambarProduk: 'example.png',
+            gambarProduk: 'crash.jpg',
             namaProduk: 'Bakso Bagong',
+            descProduk: 'Dibuat dari daging unta asli baghdad',
+            hargaProduk: 20000,
+          },
+          {
+            gambarProduk: 'crash.jpg',
+            namaProduk: 'Bakso Baghdad',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: 20000,
           },
@@ -140,11 +140,10 @@
 </script>
 
 <template>
-  <div
-    class="h-full overflow-y-scroll scrollhide xl:px-96 lg:px-80 md:px-40 sm:px-30 px-5 m-2 w-screen">
+  <div class="h-full overflow-y-scroll scrollhide justify-center items-center mt-5">
     <div class="flex flex-col gap-4 items-center">
       <p class="hidden">{{ subTotal }}</p>
-      <div v-for="(card, index) in cardData" :key="index" class="mx-auto">
+      <div v-for="(card, index) in cardData" :key="index" class="mx-auto w-screen px-5">
         <CardUser
           :gambarProduk="`/src/assets/img/${card.gambarProduk}`"
           :namaProduk="card.namaProduk"
@@ -152,7 +151,7 @@
           :hargaProduk="card.hargaProduk"
           @quantityChanged="updateTotalPrice"
           :onClick="() => addToCart(card)"
-          class="w-full" />
+          class="mx-auto" />
 
         <!-- <q-card class="card my-card text-white p-3">
             <q-card-section horizontal class="flex justify-around">

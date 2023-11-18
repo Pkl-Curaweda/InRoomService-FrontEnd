@@ -64,9 +64,9 @@
                 label="Search"
                 for="search"
                 type="search"
-                color="dark w-56"
+                color="dark w-full"
                 bg-color="white"
-                class="">
+                class="w-56 sm:w-80 md:w-96">
                 <template v-slot:append class="">
                   <q-btn dense flat icon="search" color="green" rounded />
                 </template>
@@ -78,37 +78,40 @@
             style="font-size: 16px"
             class="flex flex-row items-center mt-6 flex-nowrap">
             <div class="flex items-start gap-2 flex-nowrap">
-              <q-btn class="text-white" label="1" color="green" rounded></q-btn>
+              <q-btn class="text-white my-auto" label="1" color="green" rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p>Add to Cart</p>
-                <p class="text-gray-400">Choose Your Item</p>
+                <p class="text-gray-400 text-sm">Choose Your Item</p>
               </div>
             </div>
-
+          
             <div
-              class="h-[2px] w-12 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
+              class="h-[2px] w-12 mx-2 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md">
+            </div>
+            
             <div class="flex items-start gap-2 flex-nowrap">
               <q-btn
-                class="text-gray-400"
+                class="text-gray-400 my-auto"
                 label="2"
                 color="dark"
                 text-color="grey-13"
                 rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p class="text-gray-400">Checkout</p>
-                <p class="text-gray-400">To Make Payment</p>
+                <p class="text-gray-400 text-sm">To Make Payment</p>
               </div>
             </div>
           </div>
         </q-toolbar>
       </q-header>
-      <q-footer reveal class="mx-1 mb-1 rounded-lg card">
-        <q-toolbar class="flex items-center justify-between">
-          <div class="flex items-center gap-1">
+      <q-footer reveal class=" mb-1 rounded-lg card w-full sm:w-[600px] xl:w-[700px] justify-center mx-auto">
+        <q-toolbar class="flex items-center ">
+          <div class="flex items-center gap-1 flex-nowrap">
             <q-icon name="o_shopping_cart" size="32px"></q-icon>
             <p v-if="$route.path === '/minimarket'">{{ minimarketPrices }}</p>
             <p v-if="$route.path === '/foodbeverage'">{{ foodBevPrices }}</p>
           </div>
+          <div class="flex justify-end gap-5 p-2 w-full">
           <q-btn
             class="bg-green w-28 rounded-full text-sm text-black font-bold"
             label="cancel"
@@ -117,6 +120,7 @@
             class="bg-green w-28 rounded-full text-sm text-black font-bold"
             label="continue"
             name="continue" />
+          </div>
         </q-toolbar>
       </q-footer>
       <q-drawer
@@ -173,7 +177,8 @@
 
 <style lang="scss" scoped>
   .card {
-    background-color: gray;
+    background-color: rgba(128, 128, 128, 0.171);
+    opacity: 0.25;
   }
   .my-bg {
     position: absolute;
