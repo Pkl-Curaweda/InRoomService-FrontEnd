@@ -7,7 +7,6 @@ import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
 import RouteType from './types/route'
 import about from './pages/about/about.vue'
-<<<<<<< HEAD
 import profilePageVue from './pages/profile/profilepage.vue'
 import mitraPageVue from './pages/mitra/mitrapages1.vue'
 import adminPageVue from './pages/admin/adminpages1.vue'
@@ -21,8 +20,6 @@ import paymentFoodVue from './pages/checkout/paymentFood.vue'
 import paymentMinimarketVue from './pages/checkout/paymentminimarket.vue'
 import paymentLaundryVue from './pages/checkout/paymentLaundry.vue'
 
-=======
->>>>>>> cf5a3a80d10611fb6626a2c5bf380a4f7528bb67
 // import layout utama
 import customerVue from './layouts/customer.vue'
 import navAbout from './layouts/about.vue'
@@ -104,7 +101,6 @@ export const routes: RouteType[] = [
   },
 
   {
-<<<<<<< HEAD
     // create path about
     path: '/pembayaran',
     component: pembayaranPageVue,
@@ -119,10 +115,6 @@ export const routes: RouteType[] = [
     // create path about
     path: '/mitra/input',
     component: mitraPageVue,
-=======
-    path: '/servicecenter',
-    component: about,
->>>>>>> cf5a3a80d10611fb6626a2c5bf380a4f7528bb67
     meta: {
       layout: navAbout,
       title: 'Service Center - Lingian Hotel',

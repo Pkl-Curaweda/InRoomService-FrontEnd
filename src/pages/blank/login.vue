@@ -15,6 +15,7 @@
         color="dark"
         :dense="dense" /> -->
       <q-input
+        rounded
         outlined
         v-model="email"
         color="dark"

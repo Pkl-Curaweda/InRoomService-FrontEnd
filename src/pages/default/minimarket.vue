@@ -144,63 +144,58 @@
     class="h-full overflow-y-scroll scrollhide xl:px-96 lg:px-80 md:px-40 sm:px-30 px-5 m-2 w-screen">
     <div class="flex flex-col gap-4 items-center">
       <p class="hidden">{{ subTotal }}</p>
-      <div v-for="(card, index) in cardData" :key="index" class="w-full">
+      <div v-for="(card, index) in cardData" :key="index" class="mx-auto">
         <CardUser
           :gambarProduk="`/src/assets/img/${card.gambarProduk}`"
           :namaProduk="card.namaProduk"
           :descProduk="card.descProduk"
           :hargaProduk="card.hargaProduk"
           @quantityChanged="updateTotalPrice"
-          :onClick="() => addToCart(card)" />
+          :onClick="() => addToCart(card)"
+          class="w-full" />
 
-<<<<<<< HEAD
-        <q-card class="card my-card text-white p-3">
-          <q-card-section horizontal class="flex justify-around">
-            <div class="tulisan my-auto">
-=======
-        <!-- <q-card class="card my-card text-white p-3 w-[380px]">
-          <q-card-section horizontal class="flex justify-between">
-            <div class="tulisan">
->>>>>>> 3a900e0e8b75addfc84d78bfed0495239d68672f
-              <div class="text-md pb-1 font-bold">{{ card.namaProduk }}</div>
-              <div class="text-xs text-justify">
-                {{ card.descProduk }}
-              </div>
-              <div class="flex flex-row items-center justify-between">
-                <div class="text-sm">
-                  {{ card.hargaProduk }}
+        <!-- <q-card class="card my-card text-white p-3">
+            <q-card-section horizontal class="flex justify-around">
+              <div class="tulisan my-auto">
+                <div class="text-md pb-1 font-bold">{{ card.namaProduk }}</div>
+                <div class="text-xs text-justify">
+                  {{ card.descProduk }}
                 </div>
+                <div class="flex flex-row items-center justify-between">
+                  <div class="text-sm">
+                    {{ card.hargaProduk }}
+                  </div>
 
+                  <q-card-actions>
+                    <q-btn
+                      @click="decrement(card)"
+                      class="border-[#16A75C] text-black border-2"
+                      round
+                      color="white"
+                      icon="remove"
+                      size="sm" />
+
+                    <p class="mx-1 px-2">{{ getQuantity(card) }}</p>
+                    <q-btn
+                      @click="increment(card)"
+                      class="border-[#16A75C] text-black border-2"
+                      round
+                      color="white"
+                      icon="add"
+                      size="sm" />
+                  </q-card-actions>
+                </div>
                 <q-card-actions>
                   <q-btn
-                    @click="decrement(card)"
-                    class="border-[#16A75C] text-black border-2"
-                    round
-                    color="white"
-                    icon="remove"
-                    size="sm" />
-
-                  <p class="mx-1 px-2">{{ getQuantity(card) }}</p>
-                  <q-btn
-                    @click="increment(card)"
-                    class="border-[#16A75C] text-black border-2"
-                    round
-                    color="white"
-                    icon="add"
-                    size="sm" />
+                    class="bg-green w-32 rounded-full text-sm text-black font-bold"
+                    label="Send"
+                    name="send"
+                    @click="addToCart(card)" />
                 </q-card-actions>
               </div>
-              <q-card-actions>
-                <q-btn
-                  class="bg-green w-32 rounded-full text-sm text-black font-bold"
-                  label="Send"
-                  name="send"
-                  @click="addToCart(card)" />
-              </q-card-actions>
-            </div>
-            <q-img :src="`/src/assets/img/${card.gambarProduk}`" class="col-4" ratio="1" />
-          </q-card-section>
-        </q-card>
+              <q-img :src="`/src/assets/img/${card.gambarProduk}`" class="col-4" ratio="1" />
+            </q-card-section>
+          </q-card> -->
       </div>
     </div>
   </div>
