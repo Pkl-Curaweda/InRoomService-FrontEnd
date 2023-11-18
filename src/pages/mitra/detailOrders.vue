@@ -1,10 +1,10 @@
 <template>
   <div class="bg-white q-pa-md">
-    <div class="bagianpertama mt-16">
+    <div class="bagianpertama mt-4">
       <div class="flex items-center px-1 gap-2">
         <q-icon color="green" name="shopping_cart" size="20px " />
         <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
-          Typess of Goods
+          Types of Goods
         </h2>
       </div>
       <div class="q-gutter-y-md column">
@@ -15,9 +15,6 @@
           v-model="typegoods"
           :options="options"
           label="Label">
-          <template v-slot:append>
-            <q-icon name="event" color="green" />
-          </template>
         </q-select>
       </div>
     </div>
@@ -35,7 +32,7 @@
             standout="bg-teal text-white"
             v-model="namegoods"
             bg-color="white"
-            label="Nama Pesanan"
+            label="Name"
             :dense="dense" />
         </q-card>
       </div>
@@ -52,10 +49,10 @@
         <q-card>
           <q-input
             standout="bg-teal 
-          text-white"
+              text-white"
             v-model="payments"
             bg-color="white"
-            label="Harga Pesanan"
+            label="Price"
             :dense="dense" />
         </q-card>
       </div>
@@ -64,50 +61,47 @@
     <div class="bagiankeempat mt-6">
       <div class="flex items-center px-1 gap-2">
         <q-icon color="green" name="edit_note" size="20px" />
-        <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left"></h2>
+        <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
+          Description
+        </h2>
       </div>
       <div class="q-gutter-y-md column">
         <q-card>
           <q-input
             type="textarea"
             standout="bg-teal text-white"
+            bg-color="white"
             v-model="deskripsi"
-            label="Deskripsi Pesanan"
+            label="Description"
             :dense="dense" />
         </q-card>
       </div>
 
-      <div class="q-gutter-sm row items-start">
-        <q-card>
-          <q-uploader
-            url="http://localhost:4444/upload"
-            label="Upload files"
-            color="green"
-            square
-            flat
-            bordered
-            style="max-width: 300px" />
-        </q-card>
+      <div class="mt-6">
         <div class="flex items-center px-1 gap-2">
           <q-icon color="green" name="folder" size="20px" />
           <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
-            Masukan File
+            Image
           </h2>
         </div>
-        <div class="q-gutter-md" style="max-width: 300px">
-          <q-card>
-            <q-file filled v-model="file" label="Click To Upload" max-files="1">
-              <template v-slot:before>
-                <q-icon name="folder_open" />
-              </template>
-            </q-file>
-          </q-card>
+        <div class="q-gutter-sm row items-start">
+          <QImg src="../../assets/img/minimarket.png" ratio="1" />
         </div>
       </div>
 
+      <!-- <div class="q-gutter-md" style="max-width: 300px">
+              <q-card>
+                <q-file filled v-model="file" label="Click To Upload" max-files="1">
+                  <template v-slot:before>
+                    <q-icon name="folder_open" />
+                  </template>
+                </q-file>
+              </q-card>
+            </div> -->
+
       <div class="q-gutter-sm mx-auto mt-6 w-fit">
-        <q-btn unelevated rounded color="green" label="SEND" @click="sendData()" />
-        <q-btn outline rounded color="green" label="BACK" @click="tes()" />
+        <q-btn unelevated rounded color="green" label="Accept" />
+        <q-btn outline rounded color="green" label="reject" />
       </div>
     </div>
   </div>
@@ -115,7 +109,9 @@
 
 <script>
   import axios from 'axios'
+  import { useRouter } from 'vue-router'
   import { ref } from 'vue'
+  import { QImg } from 'quasar'
   console.log(document.cookie)
   export default {
     setup() {
@@ -128,7 +124,6 @@
       //     description: this.deskripsi,
       //     file: this.file,
       //   }
-
       //   // Send data to the server using axios (replace the URL with your actual API endpoint)
       //   axios
       //     .post('http://localhost:8080/productReq', data)
@@ -150,8 +145,8 @@
         deskripsi: ref(''),
         payments: ref(''),
         namegoods: ref(''),
+        navigate: useRouter(),
         typegoods: ref(''),
-
         options: ['Food', 'Drink', 'Laundry', 'Cleaning Tool'],
       }
     },
@@ -159,35 +154,7 @@
       tes() {
         console.log(this.model)
       },
-      sendData() {
-        const data = {
-          title: this.namegoods,
-          type: this.model,
-          desc: this.deskripsi,
-          price: this.payments,
-          picture: this.file,
-        }
-
-        axios
-          .post('http://localhost:8080/productReq/create', data, {
-            withCredentials: true,
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-          })
-          .then((response) => {
-            console.log('Data sent successfully:', response.data)
-            // Reset form fields if needed
-            this.model = null
-            this.namegoods = ''
-            this.payments = ''
-            this.deskripsi = ''
-            this.file = ''
-          })
-          .catch((error) => {
-            console.error('Error sending data:', error)
-          })
-      },
     },
+    components: { QImg },
   }
 </script>
