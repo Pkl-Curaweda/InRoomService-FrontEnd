@@ -1,7 +1,7 @@
 <template>
   <div class="justify-center mx-auto">
     <q-layout view="lHh lpR fFf">
-      <q-header reveal>
+      <q-header>
         <q-toolbar class="bg-[#069550] text-white pt-1" v-if="$route.path !== '/mitra/minimarket'">
           <q-toolbar-title class="text-capitalize font-semibold">
             <!-- {{ route.meta.label }} -->

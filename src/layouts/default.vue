@@ -21,7 +21,7 @@
 <template>
   <div class="sm:w-[50%] md:w-[40%] lg:w-[30%] xl:w-[25%] justify-center mx-auto">
     <q-layout view="lHh lpR fFf">
-      <q-header reveal elevated class="bg-white text-black">
+      <q-header elevated class="bg-white text-black">
         <q-toolbar>
           <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 

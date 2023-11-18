@@ -26,6 +26,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/servicecenter',
     component: about,
+    name: '/servicecenter',
     meta: {
       layout: navAbout,
       title: 'Service Center - Lingian Hotel',
@@ -36,6 +37,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/admin/home',
     component: dashboardUserVue, // dashboard
+    name: '/admin/home',
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
@@ -46,6 +48,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/admin/foodbeverage',
     component: adminFoodBeverage, // dashboard
+    name: '/admin/foodbeverage',
     meta: {
       layout: adminLayout,
       title: 'Food & Beverage - Lingian Hotel',
@@ -56,6 +59,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/admin/minimarket',
     component: adminMinimarket, // dashboard
+    name: '/admin/minimarket',
     meta: {
       layout: adminLayout,
       title: 'Mini Market - Lingian Hotel',
@@ -66,6 +70,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/admin/partners',
     component: partnersVue, // dashboard
+    name: '/admin/partners',
     meta: {
       layout: adminLayout,
       title: 'Partners - Lingian Hotel',
@@ -76,6 +81,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/mitra/register',
     component: regsiterPageVue, // dashboard
+    name: '/mitra/register',
     meta: {
       layout: loginVue,
       title: 'Register - Lingian Hotel',
@@ -86,6 +92,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/mitra/home',
     component: dashboardUserVue, // dashboard
+    name: '/mitra/home',
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
@@ -97,6 +104,7 @@ const subRoutes: RouteType[] = [
     // create path about
     path: '/mitra/upload',
     component: mitraPageVue,
+    name: '/mitra/upload',
     meta: {
       layout: mitraLayout,
       title: 'Input - Lingian Hotel',
@@ -107,6 +115,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/mitra/minimarket',
     component: menuMitra,
+    name: '/mitra/minimarket',
     meta: {
       layout: mitraLayout,
       title: 'Minimarket - Lingian Hotel',
@@ -117,6 +126,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/mitra/customer',
     component: menuOrderan,
+    name: '/mitra/customer',
     meta: {
       layout: mitraLayout,
       title: 'Minimarket - Lingian Hotel',
@@ -127,6 +137,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/mitra/history',
     component: historyPageVue,
+    name: '/mitra/history',
     meta: {
       layout: mitraLayout,
       title: 'Minimarket - Lingian Hotel',
@@ -138,6 +149,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/checkout/minimarket',
     component: paymentMinimarketVue,
+    name: '/checkout/minimarket',
     meta: {
       layout: checkoutLayout,
       title: 'Mini Market - Lingian Hotel',
@@ -148,6 +160,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/checkout/foodbeverage',
     component: paymentFoodVue,
+    name: '/checkout/foodbeverage',
     meta: {
       layout: checkoutLayout,
       title: 'Mini Market - Lingian Hotel',
@@ -158,6 +171,7 @@ const subRoutes: RouteType[] = [
   {
     path: '/checkout/laundry',
     component: paymentLaundryVue,
+    name: '/checkout/laundry',
     meta: {
       layout: checkoutLayout,
       title: 'Mini Market - Lingian Hotel',
@@ -165,16 +179,16 @@ const subRoutes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    path: '/logout',
-    component: '',
-    meta: {
-      layout: '',
-      title: 'Logout - Lingian Hotel',
-      label: 'logout',
-      icon: 'logout',
-    },
-  },
+  // {
+  //   path: '/logout',
+  //   component: '',
+  //   meta: {
+  //     layout: '',
+  //     title: 'Logout - Lingian Hotel',
+  //     label: 'logout',
+  //     icon: 'logout',
+  //   },
+  // },
 ]
 
 export default subRoutes

@@ -1,7 +1,7 @@
 <template>
   <div class="justify-center mx-auto">
     <q-layout view="lHh lpR fFf">
-      <q-header reveal="false" class="bg-[#069550] text-white py-1">
+      <q-header class="bg-[#069550] text-white py-1">
         <q-toolbar>
           <q-toolbar-title class="text-capitalize font-semibold">
             <!-- {{ route.meta.label }} -->

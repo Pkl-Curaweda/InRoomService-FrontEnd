@@ -8,18 +8,20 @@ import loginVue from '../layouts/login.vue'
 
 const blankRoutes: RouteType[] = [
   {
-    path: '/',
+    path: '/login',
     component: loginPagesVue, // dashboard
+    name: '/login',
     meta: {
       layout: loginVue,
       title: 'Login - Lingian Hotel',
-      label: '',
+      label: 'Login',
       icon: '',
     },
   },
   {
     path: '/forbidden',
     component: forbiddenPageVue, // dashboard
+    name: '/forbidden',
     meta: {
       layout: loginVue,
       title: 'Not Allowed - Lingian Hotel',
@@ -30,6 +32,7 @@ const blankRoutes: RouteType[] = [
   {
     path: '/:pathMatch(.*)*',
     component: notFoundPageVue, // dashboard
+    name: '/:pathMatch(.*)*',
     meta: {
       layout: loginVue,
       title: 'Not Found - Lingian Hotel',

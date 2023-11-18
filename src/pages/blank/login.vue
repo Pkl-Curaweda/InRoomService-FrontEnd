@@ -1,8 +1,33 @@
 <template>
   <div class="flex items-center flex-col justify-center">
     <img src="../../assets/img/logoLingian.png" alt="" />
+    <div v-if="$route.path !== '/admin'">
+      <div v-if="!display" class="w-full flex justify-center items-center">
+        <q-select
+          rounded
+          outlined
+          v-model="model"
+          :options="options"
+          label="Login As"
+          color="dark"
+          class="outline-none focus:bg-none active:bg-none w-full"
+          bg-color="white" />
 
-    <q-form class="flex items-center flex-col mt-3 gap-4" @submit.prevent="login">
+        <q-btn
+          unelevated
+          rounded
+          color="green"
+          label="Next"
+          text-color="dark"
+          class="px-8 mt-4"
+          @click="handleNext" />
+      </div>
+    </div>
+
+    <q-form
+      class="flex items-center flex-col mt-3 gap-4"
+      @submit.prevent="login"
+      v-if="display || $route.path === '/admin'">
       <!-- <q-input
         rounded
         standout
@@ -19,6 +44,7 @@
         outlined
         v-model="email"
         color="dark"
+        class="outline-none focus:bg-none active:bg-none"
         bg-color="white"
         label="Email"
         for="email"
@@ -59,6 +85,8 @@
   import CardMenu from 'src/components/CardMenu.vue'
   import { useRoute } from 'vue-router'
   import axios from 'axios'
+  import api from 'src/AxiosInterceptors'
+  import { Cookies } from 'quasar'
 
   export default {
     data() {
@@ -67,6 +95,9 @@
         pw: '',
         ph: '',
         dense: false,
+        model: null,
+        options: ['User', 'Mitra'],
+        display: false,
       }
     },
     computed: {
@@ -75,27 +106,64 @@
       },
     },
     methods: {
+      // async login() {
+      //   if (this.$route.path === '/admin') {
+      //     try {
+      //       const response = await axios.post(
+      //         'http://localhost:8080/auth/login',
+      //         {
+      //           email: this.email,
+      //           password: this.pw,
+      //         },
+      //         {
+      //           withCredentials: true,
+      //         }
+      //       )
+
+      //       const token = response.data.data.accessToken
+      //       console.log(token)
+
+      //       localStorage.setItem('token', token)
+
+      //       this.$router.push('/mitra/upload')
+      //     } catch (error) {
+      //       console.error('Login failed!', error.message)
+      //     }
+      //   }
+      // },
+
       async login() {
-        try {
-          const response = await axios.post(
-            'http://localhost:8080/auth/login',
-            {
-              email: this.email,
-              password: this.pw,
-            },
-            {
-              withCredentials: true,
-            }
-          )
+        if (this.$route.path === '/admin') {
+          try {
+            const response = await api.post(
+              '/auth/login',
+              { email: this.email, password: this.pw },
+              { withCredentials: true }
+            )
 
-          const token = response.data.data.accessToken
-          console.log(token)
+            const token = response.data.data.accessToken
+            console.log(token)
+            console.log('berhasil login')
+            const refreshToken = Cookies.get('refreshToken')
 
-          localStorage.setItem('token', token)
+            console.log(refreshToken)
+            // localStorage.setItem('auth', true)
+            localStorage.setItem('token', token)
 
-          this.$router.push('/mitra/upload')
-        } catch (error) {
-          console.error('Login failed!', error.message)
+            this.$router.push('/mitra/home')
+          } catch (error) {
+            console.error('Login failed', error.message)
+          }
+        }
+      },
+
+      handleNext() {
+        if (this.model === 'User') {
+          this.display = true
+          console.log('tes')
+        } else if (this.model === 'Mitra') {
+          this.display = true
+          this.$router.push('/mitra')
         }
       },
     },

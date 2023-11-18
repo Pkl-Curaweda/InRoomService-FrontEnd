@@ -104,7 +104,7 @@
 <template>
   <div class="my-bg">
     <q-layout view="lHh lpR fFf" class="text-white max-h-screen min-h-screen">
-      <q-header reveal class="bg-transparent border-0 border-transparent">
+      <q-header class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-end">
           <q-btn
             v-if="$route.path === '/' && !openCamera"

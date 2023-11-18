@@ -23,6 +23,7 @@ export const routes: RouteType[] = [
   {
     path: '/home',
     component: indexUser, // dashboard
+    name: '/home',
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
@@ -34,6 +35,7 @@ export const routes: RouteType[] = [
   {
     path: '/minimarket',
     component: minimarketVue,
+    name: '/minimarket',
     meta: {
       layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
@@ -45,6 +47,7 @@ export const routes: RouteType[] = [
   {
     path: '/foodbeverage',
     component: foodbeverageVue,
+    name: '/foodbeverage',
     meta: {
       layout: customerVue,
       title: 'Food & Beverage - Lingian Hotel',
@@ -56,6 +59,7 @@ export const routes: RouteType[] = [
   {
     path: '/promotoday',
     component: promotodayVue,
+    name: '/promotoday',
     meta: {
       layout: defaultVue,
       title: 'Promo Today - Lingian Hotel',
@@ -66,6 +70,7 @@ export const routes: RouteType[] = [
   {
     path: '/laundry',
     component: laundryVue,
+    name: '/laundry',
     meta: {
       layout: customerVue,
       title: 'Laundry - Lingian Hotel',
@@ -79,6 +84,7 @@ export const routes: RouteType[] = [
     // create path about
     path: '/about',
     component: about,
+    name: '/about',
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
@@ -90,6 +96,7 @@ export const routes: RouteType[] = [
   {
     path: '/servicecenter',
     component: about,
+    name: '/servicecenter',
     meta: {
       layout: navAbout,
       title: 'Service Center - Lingian Hotel',
@@ -102,6 +109,7 @@ export const routes: RouteType[] = [
     // buat create path list partner goods
     path: '/partnergoods',
     component: ListPartnerGoodsVue,
+    name: '/partnergoods',
     meta: {
       layout: navAbout,
       title: 'List of Partner Goods - Lingian Hotel',
@@ -109,16 +117,7 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    path: '/logout',
-    component: '',
-    meta: {
-      layout: '',
-      title: 'Logout - Lingian Hotel',
-      label: 'logout',
-      icon: 'logout',
-    },
-  },
+
   // Tambahan untuk page minimarket admin doang
 ]
 
@@ -127,7 +126,15 @@ const router = createRouter({
   routes: [...routes, ...blankRoutes, ...mainRoutes, ...subRoutes] as unknown as RouteRecordRaw[],
 })
 
-router.beforeEach((_to, _from, next) => {
+const isAuthenticated = false
+
+router.beforeEach((to, from, next) => {
+  // if (to.name !== '/login' && !isAuthenticated) next({ path: '/login' })
+  // if (to.name === '/login' && isAuthenticated) next({ path: '/home' })
+  // if (to.name !== '/admin' && !isAuthenticated) next({ path: '/admin' })
+  // if (to.name === '/admin' && isAuthenticated) next({ path: '/admin/home' })
+  // if (to.name !== '/mitra' && !isAuthenticated) next({ path: '/mitra' })
+  // if (to.name === '/mitra' && isAuthenticated) next({ path: '/mitra/home' })
   next()
 })
 export default router

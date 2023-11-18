@@ -36,7 +36,7 @@
 <template>
   <div class="my-bg bg1">
     <q-layout view="lHh lpR fFf" class="text-white max-h-screen min-h-screen">
-      <q-header reveal class="bg-transparent border-0 border-transparent">
+      <q-header class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-between">
           <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="text-white" />
 
@@ -102,7 +102,7 @@
           </div>
         </q-toolbar>
       </q-header>
-      <q-footer reveal class="mx-1 mb-1 rounded-lg card">
+      <q-footer class="mx-1 mb-1 rounded-lg card">
         <q-toolbar class="flex items-center justify-between">
           <div class="flex items-center gap-1">
             <q-icon name="o_shopping_cart" size="32px"></q-icon>

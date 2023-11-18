@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white q-pa-md flex justify-center items-start flex-col">
+  <q-form
+    class="bg-white q-pa-md flex justify-center items-start flex-col"
+    @submit.prevent="sendData">
     <div class="bagianpertama mt-16">
       <div class="flex items-center px-1 gap-2">
         <q-icon color="green" name="shopping_cart" size="20px " />
@@ -99,12 +101,13 @@
       <q-btn unelevated rounded color="green" label="SEND" @click="sendData()" />
       <q-btn outline rounded color="green" label="BACK" @click="tes()" />
     </div>
-  </div>
+  </q-form>
 </template>
 
 <script>
   import axios from 'axios'
   import { ref } from 'vue'
+  import api from 'src/AxiosInterceptors'
   console.log(document.cookie)
   export default {
     setup() {
@@ -135,47 +138,61 @@
       //     })
       // }
       return {
-        model: ref(2),
-        deskripsi: ref('a'),
-        payments: ref(22),
-        namegoods: ref('a'),
+        model: ref(null),
+        deskripsi: ref(''),
+        payments: ref(''),
+        namegoods: ref(''),
         file: ref(undefined),
 
-        options: ['Food', 'Drink', 'Laundry', 'Cleaning Tool'],
+        options: [1, 2, 3, 4],
       }
     },
     methods: {
       tes() {
         console.log(this.model)
       },
-      sendData() {
-        const data = {
-          title: this.namegoods,
-          type: this.model,
-          desc: this.deskripsi,
-          price: this.payments,
-          picture: this.file,
+      async sendData() {
+        const formData = new FormData()
+        formData.append('title', this.namegoods)
+        formData.append('typeId', this.model)
+        formData.append('desc', this.deskripsi)
+        formData.append('price', this.payments)
+        formData.append('picture', this.file)
+        // for (const pair of formData.entries()) {
+        //   console.log(pair[0], pair[1])
+        // }
+        try {
+          const response = await api
+            .post(
+              'http://localhost:8080/productReq/create',
+              {
+                title: this.namegoods,
+                typeId: this.model,
+                desc: this.deskripsi,
+                price: this.payments,
+                picture: this.file,
+              },
+              {
+                withCredentials: true,
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+                data: {
+                  title: this.namegoods,
+                  typeId: this.model,
+                  desc: this.deskripsi,
+                  price: this.payments,
+                  picture: this.file,
+                },
+              }
+            )
+            .then((response) => {
+              const responseData = response.data.data
+              console.log(responseData)
+            })
+        } catch (error) {
+          console.log(error.message)
         }
-
-        axios
-          .post('http://localhost:8080/productReq/create', data, {
-            withCredentials: true,
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-          })
-          .then((response) => {
-            console.log('Data sent successfully:', response.data)
-            // Reset form fields if needed
-            this.model = null
-            this.namegoods = ''
-            this.payments = ''
-            this.deskripsi = ''
-            this.file = ''
-          })
-          .catch((error) => {
-            console.error('Error sending data:', error)
-          })
       },
     },
   }

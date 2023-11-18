@@ -60,11 +60,9 @@
         rounded
         padding="sm"
         color="green"
-        class="px-8 font-semibold items-center text-semibold"
-        ><q-icon
-          name="o_add"
-          class="mr-5 w-2 h-2 items-center h-full"
-          @click="navigate.push('/mitra/upload')" />
+        class="px-8 font-semibold flex justify-center items-center text-semibold"
+        @click="navigate.push('/mitra/upload')"
+        ><q-icon name="o_add" class="mr-5 w-2 h-2 items-center h-full" />
         <span class="font-bold">Upload</span>
       </q-btn>
     </div>

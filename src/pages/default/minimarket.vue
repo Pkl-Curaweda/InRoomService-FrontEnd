@@ -1,7 +1,7 @@
 <script lang="ts">
   import CardUser from 'src/components/CardUser.vue'
   import { defineProps, ref, defineEmits, toRef } from 'vue'
-
+  import axios from 'axios'
   export default {
     components: {
       CardUser,
@@ -37,7 +37,11 @@
           },
         ],
         price: 0,
+        data: [] as { title: string; price: number; desc: string; picture: string }[],
       }
+    },
+    mounted() {
+      this.getDataFromApi()
     },
     setup(props, { emit }) {
       const count = ref(0)
@@ -63,6 +67,21 @@
       }
     },
     methods: {
+      async getDataFromApi() {
+        try {
+          const response = await axios.get('http://localhost:8080/productReq/', {
+            withCredentials: true,
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          console.log(response.data)
+          this.data = response.data.data
+        } catch (error) {
+          console.error('Error fetching data:', error)
+        }
+      },
       updateTotalPrice(value: any) {
         console.log(value)
         this.price = value
@@ -143,12 +162,12 @@
   <div class="h-full overflow-scroll">
     <div class="flex flex-col gap-4 items-center">
       <p class="hidden">{{ subTotal }}</p>
-      <div v-for="(card, index) in cardData" :key="index">
+      <div v-for="(card, index) in data" :key="index">
         <CardUser
-          :gambarProduk="`/src/assets/img/${card.gambarProduk}`"
-          :namaProduk="card.namaProduk"
-          :descProduk="card.descProduk"
-          :hargaProduk="card.hargaProduk"
+          :gambarProduk="`${card.picture}`"
+          :namaProduk="card.title"
+          :descProduk="card.desc"
+          :hargaProduk="card.price"
           @quantityChanged="updateTotalPrice"
           :onClick="() => addToCart(card)" />
 

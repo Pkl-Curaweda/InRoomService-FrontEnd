@@ -1,7 +1,7 @@
 <template>
   <div class="justify-center mx-auto">
     <q-layout view="lHh lpR fFf">
-      <q-header reveal>
+      <q-header>
         <q-toolbar class="bg-[#069550] text-white pt-1" v-if="$route.path !== '/mitra/minimarket'">
           <q-toolbar-title class="text-capitalize font-semibold">
             <!-- {{ route.meta.label }} -->
@@ -122,6 +122,14 @@
                 </q-item>
               </template>
             </template>
+            <q-item clickable v-ripple @click="logout">
+              <q-item-section avatar>
+                <q-icon name="o_logout" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Logout</p>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>
@@ -132,21 +140,53 @@
   </div>
 </template>
 
-<script setup>
+<script>
   import { useRoute, useRouter } from 'vue-router'
-  import { computed, ref, watch } from 'vue'
+  import { ref, computed, watch } from 'vue'
   import { mainRoutes } from '../routes/main-routes'
   import { routes } from 'src/router'
   import subRoutes from '../routes/sub-routes'
+  import api from 'src/AxiosInterceptors'
+  import { Cookies } from 'quasar'
 
-  const leftDrawerOpen = ref(false)
-  function toggleLeftDrawer() {
-    leftDrawerOpen.value = !leftDrawerOpen.value
+  export default {
+    data() {
+      return {
+        routes: routes,
+        leftDrawerOpen: false,
+        router: useRouter(),
+        search: '',
+      }
+    },
+    methods: {
+      toggleLeftDrawer() {
+        this.leftDrawerOpen = !this.leftDrawerOpen
+      },
+
+      async logout() {
+        const refreshToken = Cookies.get('refreshToken')
+
+        try {
+          await api.get(
+            '/auth/logout',
+            // { req: Cookies.get('refreshToken') },
+            { withCredentials: true }
+          )
+          localStorage.removeItem('token')
+
+          this.router.push('/admin')
+        } catch (error) {
+          console.error('Logout failed', error.message)
+        }
+      },
+    },
+    computed: {
+      // Add computed properties here if needed
+    },
+    watch: {
+      // Add watchers here if needed
+    },
   }
-
-  const route = useRoute()
-  const router = useRouter()
-  const search = ref('')
 </script>
 
 <style lang="scss" scoped></style>
