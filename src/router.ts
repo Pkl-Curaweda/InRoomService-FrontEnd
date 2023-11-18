@@ -8,7 +8,7 @@ import laundryVue from './pages/default/laundry.vue'
 import RouteType from './types/route'
 import about from './pages/about/about.vue'
 import profilePageVue from './pages/profile/profilepage.vue'
-import mitraPageVue from './pages/mitra/mitrapages1.vue'
+import mitraPageVue from './pages/mitra/mitraUpload.vue'
 import adminPageVue from './pages/admin/adminpages1.vue'
 import pembayaranPageVue from './pages/pembayaran/pembayaranpages1.vue'
 // import admin payment pages

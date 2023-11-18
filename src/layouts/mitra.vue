@@ -24,7 +24,7 @@
         </q-toolbar>
         <div class="bg-white text-black">
           <q-toolbar-title
-            class="text-capitalize font-semibold mx-4"
+            class="text-capitalize font-semibold mx-4 pt-4"
             v-if="$route.path == '/mitra/minimarket'">
             Minimarket
           </q-toolbar-title>

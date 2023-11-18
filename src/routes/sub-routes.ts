@@ -8,7 +8,7 @@ import paymentMinimarketVue from '../pages/checkout/paymentminimarket.vue'
 import paymentFoodVue from '../pages/checkout/paymentFood.vue'
 import paymentLaundryVue from '../pages/checkout/paymentLaundry.vue'
 
-import mitraPageVue from '../pages/mitra/mitrapages1.vue'
+import mitraPageVue from '../pages/mitra/mitraUpload.vue'
 import about from 'src/pages/about/about.vue'
 import menuMitra from '../pages/mitra/menumitra.vue'
 import menuOrderan from '../pages/mitra/menuOrderan.vue'
@@ -16,6 +16,9 @@ import historyPageVue from '../pages/mitra/history.vue'
 import adminFoodBeverage from '../pages/admin/foodAdmin.vue'
 import adminMinimarket from '../pages/admin/minimarketadmin.vue'
 import partnersVue from '../pages/admin/partners.vue'
+import mitraEditVue from '../pages/mitra/mitraEdit.vue'
+import detailOrderanVue from '../pages/mitra/detailOrders.vue'
+
 // layout
 import navAbout from '../layouts/about.vue'
 import loginVue from '../layouts/login.vue'
@@ -106,6 +109,17 @@ const subRoutes: RouteType[] = [
     },
   },
   {
+    // create path about
+    path: '/mitra/edit',
+    component: mitraEditVue,
+    meta: {
+      layout: mitraLayout,
+      title: 'Edit - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/mitra/minimarket',
     component: menuMitra,
     meta: {
@@ -123,6 +137,16 @@ const subRoutes: RouteType[] = [
       title: 'Minimarket - Lingian Hotel',
       label: 'Customer Order',
       icon: 'shopping_cart',
+    },
+  },
+  {
+    path: '/mitra/customer/order/',
+    component: detailOrderanVue,
+    meta: {
+      layout: mitraLayout,
+      title: 'Minimarket - Lingian Hotel',
+      label: '',
+      icon: '',
     },
   },
   {

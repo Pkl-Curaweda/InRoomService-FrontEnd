@@ -1,23 +1,54 @@
-<script setup>
+<script>
   import { defineProps } from 'vue'
-  const props = defineProps({
-    gambarProduk: String,
-    namaProduk: String,
-    descProduk: String,
-    hargaProduk: String,
-  })
+
+  export default {
+    props: {
+      gambarProduk: String,
+      namaProduk: String,
+      descProduk: String,
+      hargaProduk: Number,
+      onClick: {
+        type: Function,
+        required: true,
+      },
+    },
+    setup(props) {
+      return {
+        handleClick() {
+          props.onClick()
+        },
+      }
+    },
+  }
 </script>
 
 <template>
-  <q-card class="my-card bg-[#999999EB] text-white p-3 h-40 w-[380px]">
-    <q-card-section horizontal>
-      <q-card-section>
-        <div class="text-h6 text-bold mb-3 text-sm">{{ namaProduk }}</div>
-        <div class="text-subtitle2 mb-3">{{ descProduk }}</div>
-        <div class="text-subtitle3 mb-3">{{ hargaProduk }}</div>
-      </q-card-section>
-
-      <q-img class="col-5" :src="gambarProduk" ratio="1" />
+  <q-card class="card my-card text-white p-3 w-[80%] md:w-md m-auto my-5">
+    <q-card-section horizontal class="flex justify-between">
+      <div class="block relative w-32">
+        <div class="text-md pb-1 font-bold">{{ namaProduk }}</div>
+        <div class="text-xs text-justify">
+          {{ descProduk }}
+        </div>
+        <div class="flex flex-row items-center justify-between mb-2">
+          <div class="text-sm">
+            {{ hargaProduk }}
+          </div>
+        </div>
+        <div class="flex">
+          <q-btn
+            size="sm"
+            rounded
+            padding="xs"
+            color="green"
+            @click="handleClick"
+            class="sm:px-2 w-24 flex justify-center items-center font-semibold sm:py-2"
+            ><q-icon name="o_edit" class="mr-5 w-2 items-center h-full" />
+            <span>Edit</span>
+          </q-btn>
+        </div>
+      </div>
+      <q-img :src="`/src/assets/img/${gambarProduk}`" class="w-24" ratio="1" />
     </q-card-section>
   </q-card>
 </template>
