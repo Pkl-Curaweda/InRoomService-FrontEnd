@@ -99,10 +99,10 @@
               </q-card>
             </div> -->
 
-      <div class="q-gutter-sm mx-auto mt-6 w-fit">
+      <!-- <div class="q-gutter-sm mx-auto mt-6 w-fit">
         <q-btn unelevated rounded color="green" label="Accept" />
         <q-btn outline rounded color="green" label="reject" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

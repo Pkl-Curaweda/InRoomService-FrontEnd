@@ -81,7 +81,7 @@
         <div class="flex items-center px-1 gap-2">
           <q-icon color="green" name="folder" size="20px" />
           <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
-            Upload Image
+            Image
           </h2>
         </div>
         <div class="q-gutter-sm row items-start">
@@ -109,7 +109,7 @@
           </div> -->
 
       <div class="q-gutter-sm mx-auto mt-6 w-fit">
-        <q-btn unelevated rounded color="green" label="SEND" @click="sendData()" />
+        <q-btn unelevated rounded color="green" label="save" @click="sendData()" />
         <q-btn outline rounded color="green" label="BACK" @click="navigate.back()" />
       </div>
     </div>

@@ -7,12 +7,6 @@
         <ListPartner :namaPartner="data.namaPartner" />
       </div>
     </div>
-
-    <!-- BUTTON BACK -->
-    <q-btn
-      class="mb-10 mx-auto bg-green w-32 rounded-full text-sm text-black font-bold absolute-bottom q-mb-md"
-      label="back"
-      name="back" />
   </div>
 </template>
 

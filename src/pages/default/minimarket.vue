@@ -9,7 +9,12 @@
 
     data() {
       return {
-        cart: [] as { namaProduk: string; hargaProduk: number; qty: number }[],
+        cart: [] as {
+          namaProduk: string
+          hargaProduk: number
+          gambarProduk: string
+          qty: number
+        }[],
         cardData: [
           {
             gambarProduk: 'crash.jpg',
@@ -69,6 +74,10 @@
         this.$emit('total', value)
       },
 
+      saveCartToLocalStorage() {
+        localStorage.setItem('cart', JSON.stringify(this.cart))
+      },
+
       addToCart(card: any) {
         const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
 
@@ -76,8 +85,11 @@
           this.cart.push({
             namaProduk: card.namaProduk,
             hargaProduk: card.hargaProduk,
+            gambarProduk: card.gambarProduk,
             qty: 1,
           })
+
+          this.saveCartToLocalStorage()
         }
 
         console.log(this.cart)
