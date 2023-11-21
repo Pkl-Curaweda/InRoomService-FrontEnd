@@ -1,15 +1,17 @@
 <template>
-  <Receipt
-    items="Betadine"
-    totalitems="2"
-    subtotal="2000"
-    ppn="1000"
-    servicefees="200"
-    total="3200" />
+  <CardLaundry
+  namaProduk="overall"
+  hargaProduk = '20'
+  descProduk = 'lorem ipsum'
+  gambarProduk = 'room1.jpg'
+  />
 </template>
 
 <script setup>
-  import Receipt from 'src/components/Receipt.vue'
+import CardLaundry from "src/components/CardLaundry.vue";
+
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+</style>
+
