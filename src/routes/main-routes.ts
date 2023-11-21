@@ -14,6 +14,7 @@ import about from 'src/pages/about/about.vue'
 import loginVue from '../layouts/login.vue'
 import navAbout from '../layouts/about.vue'
 import customerVue from '../layouts/customer.vue'
+import cardLaundry from '../default/laundry.vue'
 
 export const mainRoutes: RouteType[] = [
   {

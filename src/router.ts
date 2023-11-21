@@ -7,6 +7,18 @@ import promotodayVue from './pages/default/promotoday.vue'
 import laundryVue from './pages/default/laundry.vue'
 import RouteType from './types/route'
 import about from './pages/about/about.vue'
+import profilePageVue from './pages/profile/profilepage.vue'
+import mitraPageVue from './pages/mitra/mitraUpload.vue'
+import adminPageVue from './pages/admin/adminpages1.vue'
+// import admin payment pages
+import foodAdminVue from './pages/default/foodAdmin.vue'
+import marketAdminVue from './pages/default/minimarketadmin.vue'
+
+// import checkout
+import paymentFoodVue from './pages/checkout/paymentFood.vue'
+import paymentMinimarketVue from './pages/checkout/paymentminimarket.vue'
+import paymentLaundryVue from './pages/checkout/paymentLaundry.vue'
+
 // import layout utama
 import customerVue from './layouts/customer.vue'
 import navAbout from './layouts/about.vue'
@@ -18,7 +30,7 @@ import mainRoutes from './routes/main-routes'
 import subRoutes from './routes/sub-routes'
 
 // pages mitra
-import menuMitra from './pages/mitra/menuMarket.vue'
+import menuMitra from './pages/mitra/menumitra.vue'
 export const routes: RouteType[] = [
   {
     path: '/home',
@@ -94,9 +106,9 @@ export const routes: RouteType[] = [
   },
 
   {
-    path: '/servicecenter',
-    component: about,
-    name: '/servicecenter',
+    // create path about
+    path: '/mitra/input',
+    component: mitraPageVue,
     meta: {
       layout: navAbout,
       title: 'Service Center - Lingian Hotel',
@@ -117,7 +129,27 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-
+  {
+    // create path about
+    path: '/admin/acc',
+    component: adminPageVue,
+    meta: {
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/logout',
+    component: '',
+    meta: {
+      layout: '',
+      title: 'Logout - Lingian Hotel',
+      label: 'logout',
+      icon: 'logout',
+    },
+  },
   // Tambahan untuk page minimarket admin doang
 ]
 

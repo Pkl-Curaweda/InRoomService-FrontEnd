@@ -48,7 +48,9 @@
         bg-color="white"
         label="Email"
         for="email"
-        placeholder="Enter Email Here">
+        placeholder="Enter Email Here"
+        clear-icon="backspace"
+        class="md:w-80 w-60 drop-shadow-sm">
       </q-input>
       <q-input
         rounded
@@ -58,16 +60,19 @@
         bg-color="white"
         label="Password"
         for="password"
-        type="password">
+        type="password"
+        class="md:w-80 w-60 drop-shadow-sm">
       </q-input>
       <q-btn
-        unelevated
-        rounded
-        color="green"
-        label="Login"
         text-color="dark"
-        class="px-8"
-        type="submit" />
+        unelevated
+        size="md"
+        rounded
+        padding="sm"
+        color="green"
+        label="login"
+        class="px-20 w-40 font-semibold items-center text-semibold">
+      </q-btn>
     </q-form>
 
     <p class="mt-8" v-if="$route.path === '/mitra'">

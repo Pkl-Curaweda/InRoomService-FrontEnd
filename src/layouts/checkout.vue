@@ -72,6 +72,7 @@
                 <q-btn
                   class="text-gray-400"
                   label="1"
+                  @click="back()"
                   color="dark"
                   text-color="grey-13"
                   rounded></q-btn>
@@ -156,6 +157,16 @@
   const route = useRoute()
   const router = useRouter()
   const search = ref('')
+
+  function back() {
+    if (route.path === '/checkout/minimarket') {
+      router.push('/minimarket')
+    } else if (route.path === '/checkout/foodbeverage') {
+      router.push('/foodbeverage')
+    } else if (route.path === '/checkout/laundry') {
+      router.push('/laundry')
+    }
+  }
 </script>
 
 <style lang="scss" scoped></style>

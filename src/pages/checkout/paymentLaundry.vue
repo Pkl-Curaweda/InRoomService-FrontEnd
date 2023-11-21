@@ -98,7 +98,7 @@
       <q-btn
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
         label="back"
-        name="back" />
+        @click="$router.push('/laundry')" />
 
       <DialogModalVue />
       <!-- <q-btn

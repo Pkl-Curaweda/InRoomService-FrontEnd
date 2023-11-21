@@ -14,7 +14,12 @@
           hargaProduk: Number,
           qty: Number,
         },
-        cart: [] as { namaProduk: string; hargaProduk: number; qty: number }[],
+        cart: [] as {
+          namaProduk: string
+          hargaProduk: number
+          gambarProduk: string
+          qty: number
+        }[],
         cardData: [
           {
             gambarProduk: 'desdelux.png',
@@ -75,17 +80,51 @@
       },
 
       addToCart(card: any) {
-        const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
+        const existingProductIndex = this.cart.findIndex(
+          (item) => item.namaProduk === card.namaProduk
+        )
 
-        if (!existingProduct) {
+        if (existingProductIndex === -1) {
+          // If the product is not in the cart, add a new entry
           this.cart.push({
             namaProduk: card.namaProduk,
             hargaProduk: card.hargaProduk,
+            gambarProduk: card.gambarProduk,
             qty: 1,
           })
+        } else {
+          // If the product is already in the cart, update the quantity
+          this.cart[existingProductIndex].qty += 1
         }
 
+        // Save the updated cart to localStorage
+        this.saveCartToLocalStorage()
+
         console.log(this.cart)
+      },
+
+      saveCartToLocalStorage() {
+        // Retrieve the existing cart from localStorage
+        const existingCart = JSON.parse(localStorage.getItem('cartFood') || '[]')
+
+        // Update the existing cart with the current cart from the component
+        for (const newItem of this.cart) {
+          const existingProductIndex = existingCart.findIndex(
+            (item: { namaProduk: string }) => item.namaProduk === newItem.namaProduk
+          )
+
+          if (existingProductIndex === -1) {
+            // If the product is not in the existing cart, add a new entry
+            existingCart.push({ ...newItem })
+          } else {
+            // If the product is already in the existing cart, update the quantity
+            // existingCart[existingProductIndex].qty += newItem.qty
+            console.log('item sudah ada')
+          }
+        }
+
+        // Save the updated cart to localStorage
+        localStorage.setItem('cartFood', JSON.stringify(existingCart))
       },
 
       increment(card: any) {
@@ -148,15 +187,17 @@
   <div class="h-full overflow-scroll">
     <div class="flex flex-col gap-4 items-center">
       <p class="hidden">{{ subTotal }}</p>
-      <div v-for="(card, index) in cardData" :key="index">
-        <!-- <CardUser
+      <div v-for="(card, index) in cardData" :key="index" class="mx-auto w-screen px-5">
+        <CardUser
           :gambarProduk="`/src/assets/img/${card.gambarProduk}`"
           :namaProduk="card.namaProduk"
           :descProduk="card.descProduk"
           :hargaProduk="card.hargaProduk"
-          @quantityChanged="updateTotalPrice" /> -->
+          @quantityChanged="updateTotalPrice"
+          :onClick="() => addToCart(card)"
+          class="mx-auto" />
 
-        <q-card class="card my-card text-white p-3 w-[380px]">
+        <!-- <q-card class="card my-card text-white p-3 w-[380px]">
           <q-card-section horizontal class="flex justify-between">
             <div class="tulisan">
               <div class="text-md pb-1 font-bold">{{ card.namaProduk }}</div>
@@ -197,7 +238,7 @@
               name="send"
               @click="addToCart(card)" />
           </q-card-actions>
-        </q-card>
+        </q-card> -->
       </div>
     </div>
   </div>

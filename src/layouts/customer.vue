@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue'
+  import { computed, onMounted, ref, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { routes } from '../router'
   import { useHead } from '@vueuse/head'
@@ -19,17 +19,48 @@
     // other meta tags or properties
   })
 
-  const minimarketPrices = ref(0) // Receive total price
-  const foodBevPrices = ref(0) // Receive total price
+  const item = ref([])
+  const length = ref(0)
+  onMounted(() => {
+    const cartItem = localStorage.getItem('cart')
+    item.value = cartItem ? JSON.parse(cartItem) : []
 
-  const marktUpdatePrice = (value: number) => {
-    minimarketPrices.value = value // Update the price with the value emitted from CardUser
+    length.value = item.value.length
+  })
+
+  watch(item, (newItems) => {
+    length.value = newItems.length
+  })
+
+  function estimated() {
+    if (route.path === '/minimarket') {
+      router.push('/estimated/minimarket')
+    } else if (route.path === '/foodbeverage') {
+      router.push('/estimated/foodbeverage')
+    } else if (route.path === '/laundry') {
+      router.push('/estimated/laundry')
+    }
   }
 
-  const foodUpdatePrice = (value: number) => {
-    foodBevPrices.value = value
+  function checkout() {
+    if (route.path === '/minimarket') {
+      router.push('/checkout/minimarket')
+    } else if (route.path === '/foodbeverage') {
+      router.push('/checkout/foodbeverage')
+    } else if (route.path === '/laundry') {
+      router.push('/checkout/laundry')
+    }
   }
 
+  function cancel() {
+    if (route.path === '/minimarket') {
+      localStorage.removeItem('cart')
+    } else if (route.path === '/foodbeverage') {
+      localStorage.removeItem('cartFood')
+    } else if (route.path === '/laundry') {
+      router.push('/estimated/laundry')
+    }
+  }
   console.log()
 </script>
 
@@ -47,7 +78,7 @@
 
         <q-toolbar class="flex flex-col w-screen">
           <div class="flex items-center gap-2 flex-row">
-            <q-btn dense flat round icon="chat" @click="toggleLeftDrawer" class="text-white" />
+            <q-btn dense flat round icon="timeline" @click="estimated()" class="text-white" />
             <q-btn dense flat round icon="person" @click="toggleLeftDrawer" class="text-white" />
             <q-btn
               dense
@@ -64,9 +95,9 @@
                 label="Search"
                 for="search"
                 type="search"
-                color="dark w-56"
+                color="dark w-full"
                 bg-color="white"
-                class="">
+                class="w-56 sm:w-80 md:w-96">
                 <template v-slot:append class="">
                   <q-btn dense flat icon="search" color="green" rounded />
                 </template>
@@ -78,45 +109,52 @@
             style="font-size: 16px"
             class="flex flex-row items-center mt-6 flex-nowrap">
             <div class="flex items-start gap-2 flex-nowrap">
-              <q-btn class="text-white" label="1" color="green" rounded></q-btn>
+              <q-btn class="text-white my-auto" label="1" color="green" rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p>Add to Cart</p>
-                <p class="text-gray-400">Choose Your Item</p>
+                <p class="text-gray-400 text-sm">Choose Your Item</p>
               </div>
             </div>
 
             <div
-              class="h-[2px] w-12 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
+              class="h-[2px] w-12 mx-2 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
+
             <div class="flex items-start gap-2 flex-nowrap">
               <q-btn
-                class="text-gray-400"
+                class="text-gray-400 my-auto"
                 label="2"
+                @click="checkout()"
                 color="dark"
                 text-color="grey-13"
                 rounded></q-btn>
               <div class="flex flex-col items-start">
                 <p class="text-gray-400">Checkout</p>
-                <p class="text-gray-400">To Make Payment</p>
+                <p class="text-gray-400 text-sm">To Make Payment</p>
               </div>
             </div>
           </div>
         </q-toolbar>
       </q-header>
-      <q-footer class="mx-1 mb-1 rounded-lg card">
-        <q-toolbar class="flex items-center justify-between">
-          <div class="flex items-center gap-1">
+      <q-footer
+        reveal
+        class="mb-1 rounded-lg bg-[#9F9F9F] w-full sm:w-[600px] xl:w-[700px] justify-center mx-auto">
+        <q-toolbar class="flex items-center">
+          <div class="flex items-center gap-1 flex-nowrap">
             <q-icon name="o_shopping_cart" size="32px"></q-icon>
-            <p v-if="$route.path === '/minimarket'">{{ minimarketPrices }}</p>
-            <p v-if="$route.path === '/foodbeverage'">{{ foodBevPrices }}</p>
+            <p>{{ length }}</p>
           </div>
-          <q-btn
-            class="bg-green w-28 rounded-full text-sm text-black font-bold"
-            label="cancel"
-            name="cancel" />
-          <q-btn
-            class="bg-green w-28 rounded-full text-sm text-black font-bold"
-            label="continue"
-            name="continue" />
+          <div class="flex justify-end gap-5 p-2 w-full">
+            <q-btn
+              class="bg-green w-28 rounded-full text-sm text-black font-bold"
+              label="cancel"
+              name="cancel"
+              @click="cancel()" />
+            <q-btn
+              class="bg-green w-28 rounded-full text-sm text-black font-bold"
+              label="continue"
+              name="continue"
+              @click="checkout()" />
+          </div>
         </q-toolbar>
       </q-footer>
       <q-drawer
@@ -173,7 +211,7 @@
 
 <style lang="scss" scoped>
   .card {
-    background-color: gray;
+    background-color: rgba(153, 153, 153, 0.92);
   }
   .my-bg {
     position: absolute;

@@ -1,44 +1,54 @@
 <template>
   <div class="w-full h-full px-5 pb-5 bg-gray-500">
     <!-- Produk -->
-    <div>
-      <h1 class="text-lg text-white font-bold m-0">{{ items }}</h1>
-      <div class="flex flex-row justify-around">
-        <q-img :src="gambaritems" alt="gambaritems" class="w-36 h-36" />
-        <q-card-actions>
-          <q-btn
-            @click="decrement"
-            class="border-[#16A75C] text-black border-2"
-            round
-            color="white"
-            icon="remove"
-            size="sm" />
-          <p class="mx-1 px-2">{{ count }}</p>
-          <q-btn
-            @click="increment"
-            class="border-[#16A75C] text-black border-2"
-            round
-            color="white"
-            icon="add"
-            size="sm" />
-        </q-card-actions>
+    <div v-for="(cartItem, index) in cart" :key="index">
+      <div>
+        <input
+          type="checkbox"
+          v-model="cartItem.selected"
+          @change="updateFinalSelected(cartItem)" />
+        <h1 class="text-lg text-white font-bold m-0">{{ cartItem.namaProduk }}</h1>
+        <div class="flex flex-row justify-around">
+          <q-img
+            :src="`/src/assets/img/${cartItem.gambarProduk}`"
+            alt="gambaritems"
+            class="w-36 h-36" />
+          <q-card-actions>
+            <q-btn
+              @click="decrem(cartItem)"
+              class="border-[#16A75C] text-black border-2"
+              round
+              color="white"
+              icon="remove"
+              size="sm" />
+            <p class="mx-1 px-2">{{ getQuantity(cartItem) }}</p>
+            <q-btn
+              @click="increm(cartItem)"
+              class="border-[#16A75C] text-black border-2"
+              round
+              color="white"
+              icon="add"
+              size="sm" />
+          </q-card-actions>
+        </div>
       </div>
+
+      <!-- HARGA -->
+      <q-item>
+        <q-item-section class="text-white">
+          <q-item-label>Rp. {{ cartItem.hargaProduk }}</q-item-label>
+        </q-item-section>
+      </q-item>
     </div>
-
-    <!-- HARGA -->
-    <q-item>
-      <q-item-section class="text-white">
-        <q-item-label>{{ hargaitems }}</q-item-label>
-      </q-item-section>
-    </q-item>
-
     <!-- Deskripsi Harga -->
     <q-item class="-mt-4">
       <q-item-section>
-        <q-item-label class="text-white">Subtotal Order</q-item-label>
+        <q-item-label class="text-white"
+          >Subtotal Order ({{ finalSelected.length }} menu)</q-item-label
+        >
       </q-item-section>
       <q-item-section side class="text-white">
-        <q-item-label>{{ subtotal }}</q-item-label>
+        <q-item-label>{{ subTotal }}</q-item-label>
       </q-item-section>
     </q-item>
     <q-item class="-mt-4">
@@ -62,7 +72,7 @@
         <q-item-label class="font-bold text-white">TOTAL</q-item-label>
       </q-item-section>
       <q-item-section side class="text-white">
-        <q-item-label>{{ total }}</q-item-label>
+        <q-item-label>{{ grandTotal }}</q-item-label>
       </q-item-section>
     </q-item>
     <!-- Pembayaran -->
@@ -84,16 +94,24 @@
 
     <q-card-actions class="flex justify-around">
       <q-btn
-        class="bg-green w-32 rounded-full text-sm text-black font-bold"
+        class="bg-green w-32 left-0 rounded-full text-sm text-black font-bold"
         label="back"
-        name="back" />
-
+        @click="$router.push('/minimarket')" />
       <DialogModalVue />
       <!-- <q-btn
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
         label="payment"
         name="payment" /> -->
     </q-card-actions>
+
+    <!-- <div>
+      <h2>Selected Items:</h2>
+      <ul>
+        <li v-for="(selectedItem, index) in finalSelected" :key="index">
+          {{ selectedItem.namaProduk }}
+        </li>
+      </ul>
+    </div> -->
   </div>
 </template>
 
@@ -101,13 +119,22 @@
   import { defineProps, ref } from 'vue'
   import DialogModalVue from '../../components/DialogModal.vue'
   export default {
+    data() {
+      return {
+        cart: [],
+        ppn: 3950,
+        servicefees: 1000,
+        finalSelected: [],
+      }
+    },
+    mounted() {
+      this.getCartFromLocalStorage()
+    },
     props: {
       items: String,
       gambaritems: String,
       hargaitems: String,
       subtotal: Number,
-      ppn: Number,
-      servicefees: Number,
       total: Number,
     },
     setup() {
@@ -135,6 +162,75 @@
       }
     },
     components: { DialogModalVue },
+    methods: {
+      increm(cartItem) {
+        const existProduct = this.finalSelected.find(
+          (item) => item.namaProduk === cartItem.namaProduk
+        )
+
+        if (existProduct) {
+          existProduct.qty++
+        } else {
+          // this.finalSelected.push(cartItem)
+        }
+      },
+      decrem(cartItem) {
+        const existProduct = this.finalSelected.find(
+          (item) => item.namaProduk === cartItem.namaProduk
+        )
+
+        if (existProduct) {
+          if (existProduct.qty > 1) {
+            existProduct.qty--
+          } else {
+            existProduct.qty = 0
+            existProduct.selected = false
+          }
+        }
+
+        console.log(this.finalSelected)
+      },
+      getQuantity(cartItem) {
+        const existProduct = this.finalSelected.find(
+          (item) => item.namaProduk === cartItem.namaProduk
+        )
+        return existProduct ? existProduct.qty : 0
+      },
+      getCartFromLocalStorage() {
+        const cartString = localStorage.getItem('cart')
+        if (cartString) {
+          this.cart = JSON.parse(cartString)
+        } else {
+          this.cart = []
+        }
+      },
+      updateFinalSelected(cartItem) {
+        if (cartItem.selected) {
+          this.finalSelected.push(cartItem)
+        } else {
+          const index = this.finalSelected.findIndex((item) => item === cartItem)
+          if (index !== -1) {
+            this.finalSelected.splice(index, 1)
+          }
+        }
+
+        console.log(this.finalSelected)
+      },
+    },
+    computed: {
+      subTotal() {
+        var subCost = 0
+        for (var items in this.finalSelected) {
+          var individualItem = this.finalSelected[items]
+          subCost += individualItem.qty * individualItem.hargaProduk
+        }
+
+        return subCost
+      },
+      grandTotal() {
+        return this.subTotal + this.ppn + this.servicefees
+      },
+    },
   }
 </script>
 
