@@ -10,7 +10,7 @@ const blankRoutes: RouteType[] = [
   {
     path: '/login',
     component: loginPagesVue, // dashboard
-    name: '/login',
+    // name: '/login',
     meta: {
       layout: loginVue,
       title: 'Login - Lingian Hotel',
@@ -21,7 +21,7 @@ const blankRoutes: RouteType[] = [
   {
     path: '/forbidden',
     component: forbiddenPageVue, // dashboard
-    name: '/forbidden',
+    // name: '/forbidden',
     meta: {
       layout: loginVue,
       title: 'Not Allowed - Lingian Hotel',
@@ -32,7 +32,7 @@ const blankRoutes: RouteType[] = [
   {
     path: '/:pathMatch(.*)*',
     component: notFoundPageVue, // dashboard
-    name: '/:pathMatch(.*)*',
+    // name: '/:pathMatch(.*)*',
     meta: {
       layout: loginVue,
       title: 'Not Found - Lingian Hotel',

@@ -97,14 +97,6 @@
         this.$emit('total', value)
       },
 
-      getCartFromLocalStorage() {
-        const cartString = localStorage.getItem('cart')
-        if (cartString) {
-          this.cartLocal = JSON.parse(cartString)
-        } else {
-          this.cartLocal = []
-        }
-      },
       // saveCartToLocalStorage() {
       //   if (localStorage.getItem('cart') === null) {
       //     localStorage.setItem('cart', JSON.stringify([]))
@@ -132,16 +124,14 @@
       //   console.log(this.cartLocal)
       // },
       addToCart(card: any) {
-        const existingProductIndex = this.cart.findIndex(
-          (item) => item.namaProduk === card.namaProduk
-        )
+        const existingProductIndex = this.cart.findIndex((item) => item.namaProduk === card.title)
 
         if (existingProductIndex === -1) {
           // If the product is not in the cart, add a new entry
           this.cart.push({
-            namaProduk: card.namaProduk,
-            hargaProduk: card.hargaProduk,
-            gambarProduk: card.gambarProduk,
+            namaProduk: card.title,
+            hargaProduk: card.price,
+            gambarProduk: card.picture,
             qty: 1,
           })
         } else {

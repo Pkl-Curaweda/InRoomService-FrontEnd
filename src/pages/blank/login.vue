@@ -44,13 +44,12 @@
         outlined
         v-model="email"
         color="dark"
-        class="outline-none focus:bg-none active:bg-none"
         bg-color="white"
         label="Email"
         for="email"
         placeholder="Enter Email Here"
         clear-icon="backspace"
-        class="md:w-80 w-60 drop-shadow-sm">
+        class="md:w-80 w-60 drop-shadow-sm outline-none focus:bg-none active:bg-none">
       </q-input>
       <q-input
         rounded
@@ -69,6 +68,7 @@
         size="md"
         rounded
         padding="sm"
+        @click="login"
         color="green"
         label="login"
         class="px-20 w-40 font-semibold items-center text-semibold">

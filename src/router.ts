@@ -35,7 +35,7 @@ export const routes: RouteType[] = [
   {
     path: '/home',
     component: indexUser, // dashboard
-    name: '/home',
+    // name: '/home',
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
@@ -47,7 +47,7 @@ export const routes: RouteType[] = [
   {
     path: '/minimarket',
     component: minimarketVue,
-    name: '/minimarket',
+    // name: '/minimarket',
     meta: {
       layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
@@ -59,7 +59,7 @@ export const routes: RouteType[] = [
   {
     path: '/foodbeverage',
     component: foodbeverageVue,
-    name: '/foodbeverage',
+    // name: '/foodbeverage',
     meta: {
       layout: customerVue,
       title: 'Food & Beverage - Lingian Hotel',
@@ -71,7 +71,7 @@ export const routes: RouteType[] = [
   {
     path: '/promotoday',
     component: promotodayVue,
-    name: '/promotoday',
+    // name: '/promotoday',
     meta: {
       layout: defaultVue,
       title: 'Promo Today - Lingian Hotel',
@@ -82,7 +82,7 @@ export const routes: RouteType[] = [
   {
     path: '/laundry',
     component: laundryVue,
-    name: '/laundry',
+    // name: '/laundry',
     meta: {
       layout: customerVue,
       title: 'Laundry - Lingian Hotel',
@@ -96,7 +96,7 @@ export const routes: RouteType[] = [
     // create path about
     path: '/about',
     component: about,
-    name: '/about',
+    // name: '/about',
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',
@@ -121,7 +121,7 @@ export const routes: RouteType[] = [
     // buat create path list partner goods
     path: '/partnergoods',
     component: ListPartnerGoodsVue,
-    name: '/partnergoods',
+    // name: '/partnergoods',
     meta: {
       layout: navAbout,
       title: 'List of Partner Goods - Lingian Hotel',

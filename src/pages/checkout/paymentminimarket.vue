@@ -9,10 +9,7 @@
           @change="updateFinalSelected(cartItem)" />
         <h1 class="text-lg text-white font-bold m-0">{{ cartItem.namaProduk }}</h1>
         <div class="flex flex-row justify-around">
-          <q-img
-            :src="`/src/assets/img/${cartItem.gambarProduk}`"
-            alt="gambaritems"
-            class="w-36 h-36" />
+          <q-img :src="`${cartItem.gambarProduk}`" alt="gambaritems" class="w-36 h-36" />
           <q-card-actions>
             <q-btn
               @click="decrem(cartItem)"

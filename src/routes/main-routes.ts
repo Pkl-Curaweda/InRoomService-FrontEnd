@@ -20,7 +20,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/admin',
     component: loginPagesVue, // dashboard
-    name: 'Admin',
+    // name: 'Admin',
     meta: {
       layout: loginVue,
       title: 'Login - Lingian Hotel',
@@ -31,7 +31,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/mitra',
     component: loginPagesVue, // dashboard
-    name: 'Mitra',
+    // name: 'Mitra',
     meta: {
       layout: loginVue,
       title: 'Login - Lingian Hotel',
@@ -42,7 +42,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/profile',
     component: profilePageVue, // dashboard
-    name: 'Profile',
+    // name: 'Profile',
     meta: {
       layout: navAbout,
       title: 'Profile - Lingian Hotel',
@@ -53,7 +53,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/home',
     component: dashboardUserVue, // dashboard
-    name: 'Home',
+    // name: 'Home',
     meta: {
       layout: navAbout,
       title: 'Home - Lingian Hotel',
@@ -64,7 +64,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/minimarket',
     component: minimarketUserVue,
-    name: 'Minimarket',
+    // name: 'Minimarket',
     meta: {
       layout: customerVue,
       title: 'Mini Market - Lingian Hotel',
@@ -75,7 +75,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/foodbeverage',
     component: foodBeverageUserVue,
-    name: 'Food & Beverage',
+    // name: 'Food & Beverage',
     meta: {
       layout: customerVue,
       title: 'Food & Beverage - Lingian Hotel',
@@ -86,7 +86,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/promotoday',
     component: promoTodayUserVue,
-    name: 'Promo Today',
+    // name: 'Promo Today',
     meta: {
       layout: customerVue,
       title: 'Promo Today - Lingian Hotel',
@@ -97,7 +97,7 @@ export const mainRoutes: RouteType[] = [
   {
     path: '/laundry',
     component: laundryUserVue,
-    name: 'Laundry',
+    // name: 'Laundry',
     meta: {
       layout: customerVue,
       title: 'Laundry - Lingian Hotel',
@@ -110,7 +110,7 @@ export const mainRoutes: RouteType[] = [
     // create path about
     path: '/about',
     component: about,
-    name: 'About',
+    // name: 'About',
     meta: {
       layout: navAbout,
       title: 'About - Lingian Hotel',

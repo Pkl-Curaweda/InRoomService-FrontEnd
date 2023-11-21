@@ -11,5 +11,4 @@ export default interface RouteType {
   path: string
   component: Component
   meta: RouteMetaType
-  name: string
 }
