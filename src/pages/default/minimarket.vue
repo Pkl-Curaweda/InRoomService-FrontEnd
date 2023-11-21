@@ -1,10 +1,14 @@
 <script lang="ts">
   import CardUser from 'src/components/CardUser.vue'
+  import DialogModal from 'src/components/DialogModal.vue'
+  import pembayaranModal from 'src/components/pembayaranpages1.vue'
   import { defineProps, ref, defineEmits, toRef } from 'vue'
 
   export default {
     components: {
       CardUser,
+      DialogModal,
+      pembayaranModal,
     },
 
     data() {
@@ -36,12 +40,14 @@
           },
           {
             gambarProduk: 'crash.jpg',
-            namaProduk: 'Bakso Baghdad',
+            namaProduk: 'Bakso arab',
             descProduk: 'Dibuat dari daging unta asli baghdad',
             hargaProduk: 20000,
           },
         ],
         price: 0,
+        cartLocal: [],
+        submit: JSON.parse(localStorage.getItem('cart')) || [],
       }
     },
     setup(props, { emit }) {
@@ -74,27 +80,87 @@
         this.$emit('total', value)
       },
 
-      saveCartToLocalStorage() {
-        localStorage.setItem('cart', JSON.stringify(this.cart))
+      getCartFromLocalStorage() {
+        const cartString = localStorage.getItem('cart')
+        if (cartString) {
+          this.cartLocal = JSON.parse(cartString)
+        } else {
+          this.cartLocal = []
+        }
       },
+      // saveCartToLocalStorage() {
+      //   if (localStorage.getItem('cart') === null) {
+      //     localStorage.setItem('cart', JSON.stringify([]))
+      //   }
+      // },
+      // addToCart(card: any) {
+      //   const existingProduct = this.cart.findIndex((item) => item.namaProduk === card.namaProduk)
 
+      //   if (existingProduct === -1) {
+      //     // Item does not exist in the cart, add it
+      //     this.cart.push({
+      //       namaProduk: card.namaProduk,
+      //       hargaProduk: card.hargaProduk,
+      //       gambarProduk: card.gambarProduk,
+      //       qty: 1,
+      //     })
+      //   } else {
+      //     // Item already exists in the cart, increment quantity
+      //     this.cart[existingProduct].qty += 1
+      //   }
+      //   this.submit.push(this.cart)
+      //   // localStorage.setItem('cart', JSON.stringify(this.cart))
+
+      //   console.log(this.cart)
+      //   console.log(this.cartLocal)
+      // },
       addToCart(card: any) {
-        const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
+        const existingProductIndex = this.cart.findIndex(
+          (item) => item.namaProduk === card.namaProduk
+        )
 
-        if (!existingProduct) {
+        if (existingProductIndex === -1) {
+          // If the product is not in the cart, add a new entry
           this.cart.push({
             namaProduk: card.namaProduk,
             hargaProduk: card.hargaProduk,
             gambarProduk: card.gambarProduk,
             qty: 1,
           })
-
-          this.saveCartToLocalStorage()
+        } else {
+          // If the product is already in the cart, update the quantity
+          this.cart[existingProductIndex].qty += 1
         }
+
+        // Save the updated cart to localStorage
+        this.saveCartToLocalStorage()
 
         console.log(this.cart)
       },
 
+      saveCartToLocalStorage() {
+        // Retrieve the existing cart from localStorage
+        const existingCart = JSON.parse(localStorage.getItem('cart') || '[]')
+
+        // Update the existing cart with the current cart from the component
+        for (const newItem of this.cart) {
+          const existingProductIndex = existingCart.findIndex(
+            (item: { namaProduk: string }) => item.namaProduk === newItem.namaProduk
+          )
+
+          if (existingProductIndex === -1) {
+            // If the product is not in the existing cart, add a new entry
+            existingCart.push({ ...newItem })
+          } else {
+            // If the product is already in the existing cart, update the quantity
+            // existingCart[existingProductIndex].qty += newItem.qty
+            console.log('item sudah ada')
+          }
+        }
+
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(existingCart))
+      },
       increment(card: any) {
         const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
 
@@ -136,6 +202,10 @@
         return cartItem ? cartItem.qty : 0
       },
     },
+    // mounted() {
+    //   this.saveCartToLocalStorage(), localStorage.setItem('cart', JSON.stringify(this.submit))
+    // },
+    watch: {},
     computed: {
       subTotal() {
         var subCost = 0
@@ -152,9 +222,9 @@
 </script>
 
 <template>
-  <div class="h-full overflow-y-scroll scrollhide justify-center items-center mt-5">
+  <div class="h-full overflow-y-scroll scrollhide justify-center items-center mb-5">
     <div class="flex flex-col gap-4 items-center">
-      <p class="hidden">{{ subTotal }}</p>
+      <!-- <pembayaranModal /> -->
       <div v-for="(card, index) in cardData" :key="index" class="mx-auto w-screen px-5">
         <CardUser
           :gambarProduk="`/src/assets/img/${card.gambarProduk}`"

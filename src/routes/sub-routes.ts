@@ -19,6 +19,7 @@ import partnersVue from '../pages/admin/partners.vue'
 import mitraEditVue from '../pages/mitra/mitraEdit.vue'
 import detailOrderanVue from '../pages/mitra/detailOrders.vue'
 
+import estimatedVue from '../pages/estimated/estimated.vue'
 // layout
 import navAbout from '../layouts/about.vue'
 import loginVue from '../layouts/login.vue'
@@ -186,6 +187,36 @@ const subRoutes: RouteType[] = [
     meta: {
       layout: checkoutLayout,
       title: 'Mini Market - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/estimated/minimarket',
+    component: estimatedVue,
+    meta: {
+      layout: navAbout,
+      title: 'Estimated - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/estimated/foodbeverage',
+    component: estimatedVue,
+    meta: {
+      layout: navAbout,
+      title: 'Estimated - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/estimated/laundry',
+    component: estimatedVue,
+    meta: {
+      layout: navAbout,
+      title: 'Estimated - Lingian Hotel',
       label: '',
       icon: '',
     },

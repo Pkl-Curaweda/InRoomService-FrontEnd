@@ -94,10 +94,9 @@
 
     <q-card-actions class="flex justify-around">
       <q-btn
-        class="bg-green w-32 rounded-full text-sm text-black font-bold"
+        class="bg-green w-32 left-0 rounded-full text-sm text-black font-bold"
         label="back"
-        name="back" />
-
+        @click="$router.push('/minimarket')" />
       <DialogModalVue />
       <!-- <q-btn
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
