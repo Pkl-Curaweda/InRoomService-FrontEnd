@@ -15,7 +15,7 @@ import menuOrderan from '../pages/mitra/menuOrderan.vue'
 import historyPageVue from '../pages/mitra/history.vue'
 import adminFoodBeverage from '../pages/admin/foodAdmin.vue'
 import adminMinimarket from '../pages/admin/minimarketadmin.vue'
-import partnersVue from '../pages/admin/partners.vue'
+import partnersVue from '../pages/admin/historypartners.vue'
 import mitraEditVue from '../pages/mitra/mitraEdit.vue'
 import detailOrderanVue from '../pages/mitra/detailOrders.vue'
 
