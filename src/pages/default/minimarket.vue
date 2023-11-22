@@ -4,6 +4,7 @@
   import pembayaranModal from 'src/components/pembayaranpages1.vue'
   import { defineProps, ref, defineEmits, toRef } from 'vue'
   import axios from 'axios'
+  import api from 'src/AxiosInterceptors'
   export default {
     components: {
       CardUser,
@@ -78,12 +79,8 @@
     methods: {
       async getDataFromApi() {
         try {
-          const response = await axios.get('http://localhost:8080/productReq/', {
+          const response = await api.get('/productReq/', {
             withCredentials: true,
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-              'Content-Type': 'multipart/form-data',
-            },
           })
           console.log(response.data)
           this.data = response.data.data

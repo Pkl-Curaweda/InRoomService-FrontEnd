@@ -146,8 +146,8 @@ export const routes: RouteType[] = [
     meta: {
       layout: '',
       title: 'Logout - Lingian Hotel',
-      label: 'logout',
-      icon: 'logout',
+      label: '',
+      icon: '',
     },
   },
   // Tambahan untuk page minimarket admin doang
