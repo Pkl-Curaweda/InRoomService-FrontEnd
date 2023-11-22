@@ -196,6 +196,14 @@
                 </q-item>
               </template>
             </template>
+            <q-item clickable v-ripple @click="logout">
+              <q-item-section avatar>
+                <q-icon name="o_logout" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Logout</p>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>

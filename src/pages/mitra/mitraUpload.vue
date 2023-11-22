@@ -120,6 +120,7 @@
   import axios from 'axios'
   import { useRouter } from 'vue-router'
   import { ref } from 'vue'
+  import api from 'src/AxiosInterceptors'
   console.log(document.cookie)
   export default {
     setup() {
@@ -156,13 +157,28 @@
         namegoods: ref(''),
         navigate: useRouter(),
         typegoods: ref(''),
-
+        filihan: [],
         options: ['Food', 'Drink', 'Laundry', 'Cleaning Tool'],
       }
+    },
+    mounted() {
+      this.getServiceType()
     },
     methods: {
       tes() {
         console.log(this.model)
+      },
+      async getServiceType() {
+        try {
+          const response = await api.get('/services/1/1', {
+            withCredentials: true,
+          })
+
+          console.log(response.data)
+          this.filihan = response.data.data
+        } catch (error) {
+          console.error('Error fetching data : ', error)
+        }
       },
       sendData() {
         const data = {

@@ -47,7 +47,7 @@
           },
         ],
         price: 0,
-        data: [] as { title: string; price: number; desc: string; picture: string }[],
+        data: [] as { name: string; price: number; desc: string; picture: string }[],
       }
     },
     mounted() {
@@ -79,7 +79,7 @@
     methods: {
       async getDataFromApi() {
         try {
-          const response = await api.get('/productReq/', {
+          const response = await api.get('/services/1', {
             withCredentials: true,
           })
           console.log(response.data)
@@ -126,7 +126,7 @@
         if (existingProductIndex === -1) {
           // If the product is not in the cart, add a new entry
           this.cart.push({
-            namaProduk: card.title,
+            namaProduk: card.name,
             hargaProduk: card.price,
             gambarProduk: card.picture,
             qty: 1,
@@ -232,7 +232,7 @@
       <div v-for="(card, index) in data" :key="index" class="mx-auto w-screen px-5">
         <CardUser
           :gambarProduk="`${card.picture}`"
-          :namaProduk="card.title"
+          :namaProduk="card.name"
           :descProduk="card.desc"
           :hargaProduk="card.price"
           @quantityChanged="updateTotalPrice"
