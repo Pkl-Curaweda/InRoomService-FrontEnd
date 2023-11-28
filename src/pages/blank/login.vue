@@ -149,16 +149,16 @@
             const token = response.data.data.accessToken
             console.log(token)
             console.log('berhasil login')
-            console.log(response.message)
+            console.log(response.data.message)
             const refreshToken = Cookies.get('refreshToken')
 
             console.log(refreshToken)
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 
-            this.$router.push('/mitra/home')
+            this.$router.push('/admin/home')
           } catch (error) {
-            console.error('Login failed', error.message)
+            console.error('Login failed', error)
           }
         } else if (this.$route.path === '/login') {
           try {
@@ -178,6 +178,27 @@
             localStorage.setItem('token', token)
 
             this.$router.push('/home')
+          } catch (error) {
+            console.error('Login failed', error.message)
+          }
+        } else if (this.$route.path === '/mitra') {
+          try {
+            const response = await api.post(
+              '/auth/login',
+              { email: this.email, password: this.pw },
+              { withCredentials: true }
+            )
+
+            const token = response.data.data.accessToken
+            console.log(token)
+            console.log('berhasil login')
+            const refreshToken = Cookies.get('refreshToken')
+
+            console.log(refreshToken)
+            // localStorage.setItem('auth', true)
+            localStorage.setItem('token', token)
+
+            this.$router.push('/mitra/home')
           } catch (error) {
             console.error('Login failed', error.message)
           }

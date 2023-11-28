@@ -1,22 +1,26 @@
 <script>
   import { defineProps } from 'vue'
-
+  import { useRouter, useRoute } from 'vue-router'
+  import router from 'src/router'
   export default {
     props: {
       gambarProduk: String,
       namaProduk: String,
       descProduk: String,
       hargaProduk: Number,
-      onClick: {
-        type: Function,
-        required: true,
-      },
+      // onClick: {
+      //   type: Function,
+      //   required: true,
+      // },
+      onClick: Promise,
     },
     setup(props) {
+      const navigate = useRouter()
       return {
-        handleClick() {
-          props.onClick()
-        },
+        navigate,
+        // handleClick() {
+        //   props.onClick()
+        // },
       }
     },
   }
@@ -31,9 +35,7 @@
           {{ descProduk }}
         </div>
         <div class="flex flex-row items-center justify-between mb-2">
-          <div class="text-sm">
-            {{ hargaProduk }}
-          </div>
+          <p class="text-sm">Rp. {{ hargaProduk }}</p>
         </div>
         <div class="flex">
           <q-btn
@@ -41,14 +43,14 @@
             rounded
             padding="xs"
             color="green"
-            @click="handleClick"
+            @click="navigate.push('/mitra/edit/' + onClick)"
             class="sm:px-2 w-24 flex justify-center items-center font-semibold sm:py-2"
             ><q-icon name="o_edit" class="mr-5 w-2 items-center h-full" />
             <span>Edit</span>
           </q-btn>
         </div>
       </div>
-      <q-img :src="`/src/assets/img/${gambarProduk}`" class="w-24" ratio="1" />
+      <q-img :src="`${gambarProduk}`" class="w-24" ratio="1" />
     </q-card-section>
   </q-card>
 </template>

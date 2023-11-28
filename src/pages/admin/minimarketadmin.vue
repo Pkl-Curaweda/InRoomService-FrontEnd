@@ -78,7 +78,8 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import api from 'src/AxiosInterceptors'
   import { ref, computed } from 'vue'
 
   const columns = [
@@ -87,8 +88,8 @@
       required: true,
       label: 'Image',
       align: 'left',
-      field: (row) => row.name,
-      format: (val) => `${val}`,
+      field: (row: { name: any }) => row.name,
+      format: (val: any) => `${val}`,
       sortable: true,
       style: 'width: 15px; border-radius: 10px 0 0 10px;',
     },
@@ -100,7 +101,7 @@
       field: 'price',
       sortable: true,
       align: 'center',
-      sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+      sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
     },
 
     {
@@ -170,6 +171,7 @@
     },
   ]
 
+  const data = [] as { image: String; id: any; name: String; price: Number; detail: String }[]
   const detailOptions = [
     { id: 1, label: 'Medicine' },
     { id: 2, label: 'Food' },
@@ -196,7 +198,7 @@
         }
       })
 
-      const onItemClick = (option) => {
+      const onItemClick = (option: any) => {
         // Handle item click based on the selected option
         // You can access the selected option using 'option'
       }
@@ -208,6 +210,17 @@
         detailOptions,
         onItemClick,
       }
+    },
+    methods: {
+      async getData() {
+        try {
+          const response = await api.get('/productReq/status/ACCEPTED', { withCredentials: true })
+          console.log(response.data.data)
+          this.$data = response.data.data
+        } catch (error) {
+          console.error(error)
+        }
+      },
     },
   }
 </script>

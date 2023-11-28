@@ -6,13 +6,11 @@ const api = axios.create({
   baseURL: 'http://localhost:8080',
 })
 
-const refreshToken = Cookies.get('refreshToken')
-
 api.interceptors.request.use(
   (config) => {
-    const refreshToken = Cookies.get('refreshToken')
     const token = localStorage.getItem('token')
-    if (token) {
+    console.log(token)
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
@@ -33,17 +31,17 @@ api.interceptors.response.use(
       originalRequest._retry = true
 
       try {
-        const newToken = await api.post('/auth/refresh', {
-          refreshToken: refreshToken,
+        const newToken = await api.get('/auth/refresh', {
+          withCredentials: true,
         })
-
-        originalRequest.headers.Authorization = `Bearer ${newToken.data.token}`
-
+        console.log('token', newToken)
+        originalRequest.headers.Authorization = `Bearer ${newToken.data.data.accessToken}`
+        localStorage.setItem('token', newToken.data.data.accessToken)
         return api(originalRequest)
       } catch (refreshError) {
         console.error('Token refresh failed', refreshError)
-
-        router.push('/admin')
+        localStorage.removeItem('token')
+        router.push('/login')
         return Promise.reject(refreshError)
       }
     }

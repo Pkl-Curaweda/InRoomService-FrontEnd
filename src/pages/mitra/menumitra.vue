@@ -2,58 +2,46 @@
   // import { defineProps, ref, defineEmits, toRef } from 'vue'
   import { useRouter } from 'vue-router'
   import CardMitra from 'src/components/CardMitra.vue'
+  import api from 'src/AxiosInterceptors'
+  import router from 'src/router'
   export default {
     components: { CardMitra },
 
     data() {
       return {
         cart: [] as { namaProduk: string; hargaProduk: number; qty: number }[],
-        cardData: [
-          {
-            gambarProduk: 'example.png',
-            namaProduk: 'Betadine',
-            descProduk: '5ml',
-            hargaProduk: 20000,
-          },
-          {
-            gambarProduk: 'example.png',
-            namaProduk: 'Betadine',
-            descProduk: '5ml',
-            hargaProduk: 20000,
-          },
 
-          {
-            gambarProduk: 'example.png',
-            namaProduk: 'Betadine',
-            descProduk: '5ml',
-            hargaProduk: 20000,
-          },
-
-          {
-            gambarProduk: 'example.png',
-            namaProduk: 'Betadine',
-            descProduk: '5ml',
-            hargaProduk: 20000,
-          },
-
-          {
-            gambarProduk: 'example.png',
-            namaProduk: 'Betadine',
-            descProduk: '5ml',
-            hargaProduk: 20000,
-          },
-        ],
         price: 0,
+        data: [] as {
+          id: string
+          title: string
+          price: number
+          desc: string
+          picture: string
+          serviceType: number
+          typeId: number
+        }[],
       }
+    },
+    mounted() {
+      this.getDataFromApi()
+    },
+    methods: {
+      async getDataFromApi() {
+        try {
+          const response = await api.get('/productReq', {
+            withCredentials: true,
+          })
+          console.log(response.data)
+          this.data = response.data.data
+        } catch (error) {
+          console.error('error fetching data: ', error)
+        }
+      },
     },
     setup(props) {
       const navigate = useRouter()
       return { navigate }
-    },
-    methods: {
-      edit() {
-        this.$router.push('/mitra/edit')
-      },
     },
   }
 </script>
@@ -74,13 +62,13 @@
     </div>
     <div class="max-h-xl overflow-scroll custom-scrollbar text-lg mt-10">
       <div class="block w-full gap-4 items-center">
-        <div v-for="(card, index) in cardData" :key="index">
+        <div v-for="(card, index) in data" :key="index">
           <card-mitra
-            :nama-produk="card.namaProduk"
-            :desc-produk="card.descProduk"
-            :harga-produk="card.hargaProduk"
-            :gambar-produk="card.gambarProduk"
-            :onClick="edit" />
+            :nama-produk="card.title"
+            :desc-produk="card.desc"
+            :harga-produk="card.price"
+            :gambar-produk="card.picture"
+            :onClick="card.id" />
         </div>
       </div>
     </div>

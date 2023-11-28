@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <q-page>
     <input
       :value="modelValue"
@@ -17,4 +17,4 @@
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped></style> -->

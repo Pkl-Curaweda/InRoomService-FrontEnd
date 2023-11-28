@@ -27,10 +27,11 @@ import ListPartnerGoodsVue from './pages/admin/PartnerGoods.vue'
 
 import blankRoutes from './routes/blank-routes'
 import mainRoutes from './routes/main-routes'
-import subRoutes from './routes/sub-routes'
+import { subRoutes } from './routes/sub-routes'
 
 // pages mitra
 import menuMitra from './pages/mitra/menumitra.vue'
+import tableReportVue from './pages/admin/tableReport.vue'
 export const routes: RouteType[] = [
   {
     path: '/home',
@@ -106,18 +107,6 @@ export const routes: RouteType[] = [
   },
 
   {
-    // create path about
-    path: '/mitra/input',
-    component: mitraPageVue,
-    meta: {
-      layout: navAbout,
-      title: 'Service Center - Lingian Hotel',
-      label: 'Service Center',
-      icon: 'support_agent',
-    },
-  },
-
-  {
     // buat create path list partner goods
     path: '/partnergoods',
     component: ListPartnerGoodsVue,
@@ -141,16 +130,16 @@ export const routes: RouteType[] = [
     },
   },
   {
-    path: '/logout',
-    component: '',
+    // create path about
+    path: '/admin/table',
+    component: tableReportVue,
     meta: {
-      layout: '',
-      title: 'Logout - Lingian Hotel',
+      layout: navAbout,
+      title: 'About - Lingian Hotel',
       label: '',
       icon: '',
     },
   },
-  // Tambahan untuk page minimarket admin doang
 ]
 
 const router = createRouter({

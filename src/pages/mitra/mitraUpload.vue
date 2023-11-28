@@ -2,6 +2,23 @@
   <div class="bg-white q-pa-md">
     <div class="bagianpertama mt-16">
       <div class="flex items-center px-1 gap-2">
+        <q-icon color="green" name="storefront" size="20px " />
+        <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
+          Service Types
+        </h2>
+      </div>
+      <div class="q-gutter-y-md column">
+        <q-select
+          outlined
+          label-color="green"
+          v-model="typeService"
+          :options="typeServiceOptions"
+          label="Label">
+        </q-select>
+      </div>
+    </div>
+    <div class="bagianpertama mt-6">
+      <div class="flex items-center px-1 gap-2">
         <q-icon color="green" name="shopping_cart" size="20px " />
         <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
           Types of Goods
@@ -9,11 +26,10 @@
       </div>
       <div class="q-gutter-y-md column">
         <q-select
-          color="grey-3"
           outlined
           label-color="green"
           v-model="typegoods"
-          :options="options"
+          :options="typeOptions"
           label="Label">
         </q-select>
       </div>
@@ -84,17 +100,21 @@
             Upload Image
           </h2>
         </div>
-        <div class="q-gutter-sm row items-start">
+        <div class="q-gutter-y-md" style="max-width: 300px">
           <q-card>
-            <q-uploader
-              url="http://localhost:4444/upload"
-              color="green"
-              square
-              flat
-              bordered
+            <q-file
+              filled
+              v-model="img"
+              label="Click To Upload"
+              :placeholder="img"
+              bg-color="white"
               max-files="1"
-              style="max-width: 300px" />
+              @update:model-value="handleUpload()"
+              type="file">
+            </q-file>
           </q-card>
+
+          <q-img :src="imgURL" />
         </div>
       </div>
 
@@ -124,6 +144,14 @@
   console.log(document.cookie)
   export default {
     setup() {
+      const imgURL = ref('')
+      const img = ref(null)
+      const handleUpload = () => {
+        console.log('handleUpload is triggered')
+        if (img.value) {
+          imgURL.value = URL.createObjectURL(img.value)
+        }
+      }
       // const sendData = () => {
       //   // Prepare data object
       //   const data = {
@@ -155,16 +183,39 @@
         deskripsi: ref(''),
         payments: ref(''),
         namegoods: ref(''),
+        imgURL,
+        img,
+        handleUpload,
         navigate: useRouter(),
-        typegoods: ref(''),
         filihan: [],
         options: ['Food', 'Drink', 'Laundry', 'Cleaning Tool'],
+      }
+    },
+    data() {
+      return {
+        typeService: null,
+        typeServiceOptions: [
+          { value: 1, label: 'Mini Market' },
+          { value: 2, label: 'Food Beverage' },
+        ],
+        typegoods: null,
+        typeOptions: [
+          { value: 1, label: 'Drink' },
+          { value: 2, label: 'Food' },
+          { value: 3, label: 'Cleaning Tool' },
+          { value: 4, label: 'Medicine' },
+          // Add more options as needed
+        ],
+        selectedService: ref(''),
       }
     },
     mounted() {
       this.getServiceType()
     },
     methods: {
+      handleService(id) {
+        this.selectedService = id
+      },
       tes() {
         console.log(this.model)
       },
@@ -181,19 +232,18 @@
         }
       },
       sendData() {
-        const data = {
-          title: this.namegoods,
-          type: this.model,
-          desc: this.deskripsi,
-          price: this.payments,
-          picture: this.file,
-        }
-
-        axios
-          .post('http://localhost:8080/productReq/create', data, {
+        const formData = new FormData()
+        formData.append('title', this.namegoods)
+        formData.append('serviceTypeId', this.typeService.value)
+        formData.append('typeId', this.typegoods.value)
+        formData.append('desc', this.deskripsi)
+        formData.append('price', this.payments)
+        formData.append('picture', this.img)
+        api
+          .post('/productReq/create', formData, {
             withCredentials: true,
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              'Content-Type': 'multipart/form-data',
             },
           })
           .then((response) => {
@@ -203,7 +253,7 @@
             this.namegoods = ''
             this.payments = ''
             this.deskripsi = ''
-            this.file = ''
+            this.imgURL = ''
           })
           .catch((error) => {
             console.error('Error sending data:', error)

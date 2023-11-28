@@ -50,9 +50,7 @@
         data: [] as { name: string; price: number; desc: string; picture: string }[],
       }
     },
-    mounted() {
-      this.getDataFromApi()
-    },
+
     setup(props, { emit }) {
       const count = ref(0)
       const hargaProduk = ref(0)
@@ -75,6 +73,9 @@
         // decrement,
         // increment,
       }
+    },
+    mounted() {
+      this.getDataFromApi()
     },
     methods: {
       async getDataFromApi() {

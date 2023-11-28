@@ -5,6 +5,7 @@
   import { useHead } from '@vueuse/head'
   import Minimarket from 'src/pages/default/minimarket.vue'
   import FoodBeverage from 'src/pages/default/foodbeverage.vue'
+  import api from 'src/AxiosInterceptors'
 
   const leftDrawerOpen = ref(false)
   function toggleLeftDrawer() {
@@ -62,6 +63,18 @@
     }
   }
   console.log()
+
+  async function logout() {
+    try {
+      await api.get('/auth/logout', { withCredentials: true })
+
+      localStorage.removeItem('token')
+
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout failed', error.message)
+    }
+  }
 </script>
 
 <template>
@@ -196,6 +209,14 @@
                 </q-item>
               </template>
             </template>
+            <q-item clickable v-ripple @click="logout">
+              <q-item-section avatar>
+                <q-icon name="o_support_agent" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Whatsapp</p>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-ripple @click="logout">
               <q-item-section avatar>
                 <q-icon name="o_logout" />

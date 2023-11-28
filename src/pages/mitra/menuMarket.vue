@@ -1,5 +1,6 @@
 <script lang="ts">
   // import { defineProps, ref, defineEmits, toRef } from 'vue'
+  import api from 'src/AxiosInterceptors'
   import { useRouter } from 'vue-router'
   export default {
     components: {},
@@ -43,11 +44,28 @@
           },
         ],
         price: 0,
+        data: [] as { name: string; price: number; desc: string; picture: string }[],
       }
     },
     setup(props) {
       const navigate = useRouter()
       return { navigate }
+    },
+    mounted() {
+      this.getDataFromApi()
+    },
+    methods: {
+      async getDataFromApi() {
+        try {
+          const response = await api.get('/productReq', {
+            withCredentials: true,
+          })
+          console.log(response.data)
+          this.data = response.data.data
+        } catch (error) {
+          console.error('error fetching data: ', error)
+        }
+      },
     },
   }
 </script>
@@ -62,7 +80,7 @@
         color="green"
         class="px-8 font-semibold flex justify-center items-center text-semibold"
         @click="navigate.push('/mitra/upload')"
-        ><q-icon name="o_add" class="mr-5 w-2 h-2 items-center h-full" />
+        ><q-icon name="o_add" class="mr-5 w-2 items-center h-full" />
         <span class="font-bold">Upload</span>
       </q-btn>
     </div>

@@ -118,17 +118,6 @@ export const mainRoutes: RouteType[] = [
       icon: '',
     },
   },
-  // {
-  //   path: '/logout',
-  //   component: '',
-  // name:
-  //   meta: {
-  //     layout: '',
-  //     title: 'Logout - Lingian Hotel',
-  //     label: 'logout',
-  //     icon: 'logout',
-  //   },
-  // },
 ]
 
 export default mainRoutes

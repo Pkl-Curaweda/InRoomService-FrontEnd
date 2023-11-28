@@ -145,7 +145,7 @@
   import { ref, computed, watch } from 'vue'
   import { mainRoutes } from '../routes/main-routes'
   import { routes } from 'src/router'
-  import subRoutes from '../routes/sub-routes'
+  import { subRoutes } from '../routes/sub-routes'
   import api from 'src/AxiosInterceptors'
   import { Cookies } from 'quasar'
 

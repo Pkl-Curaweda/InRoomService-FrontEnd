@@ -15,7 +15,7 @@ import menuOrderan from '../pages/mitra/menuOrderan.vue'
 import historyPageVue from '../pages/mitra/history.vue'
 import adminFoodBeverage from '../pages/admin/foodAdmin.vue'
 import adminMinimarket from '../pages/admin/minimarketadmin.vue'
-import partnersVue from '../pages/admin/historypartners.vue'
+import partnersVue from '../pages/admin/pendingpartners.vue'
 import mitraEditVue from '../pages/mitra/mitraEdit.vue'
 import detailOrderanVue from '../pages/mitra/detailOrders.vue'
 
@@ -27,7 +27,7 @@ import checkoutLayout from '../layouts/checkout.vue'
 import mitraLayout from '../layouts/mitra.vue'
 import adminLayout from '../layouts/admin.vue'
 
-const subRoutes: RouteType[] = [
+export const subRoutes: RouteType[] = [
   {
     path: '/servicecenter',
     component: about,
@@ -119,7 +119,7 @@ const subRoutes: RouteType[] = [
   },
   {
     // create path about
-    path: '/mitra/edit',
+    path: '/mitra/edit/:id',
     component: mitraEditVue,
     meta: {
       layout: mitraLayout,
@@ -235,16 +235,4 @@ const subRoutes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    path: '/logout',
-    component: '',
-    meta: {
-      layout: '',
-      title: 'Logout - Lingian Hotel',
-      label: 'logout',
-      icon: 'logout',
-    },
-  },
 ]
-
-export default subRoutes
