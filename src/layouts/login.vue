@@ -103,7 +103,7 @@
 </script>
 <template>
   <div class="my-bg">
-    <q-layout view="lHh lpR fFf" class="text-white max-h-screen min-h-screen">
+    <q-layout view="lHh lpR fFf" class="text-white">
       <q-header class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-end">
           <q-btn
@@ -143,7 +143,7 @@
       <p @click="turnCameraOff">kanjut</p>
       <p>{{ textInfo }}</p> -->
       <q-page-container
-        class="flex items-center justify-center h-screen"
+        class="flex items-center justify-center h-fit py-10"
         :class="{ hidden: openCamera }">
         <router-view />
       </q-page-container>
