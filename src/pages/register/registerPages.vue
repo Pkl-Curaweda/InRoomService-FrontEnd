@@ -189,7 +189,7 @@
         genderError: '',
         showError: false,
         shadow: true,
-        role: 1,
+        role: '1',
         nik: '',
         nikError: '',
         selectedGender: null,

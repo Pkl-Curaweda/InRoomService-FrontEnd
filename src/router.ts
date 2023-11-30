@@ -141,6 +141,17 @@ export const routes: RouteType[] = [
     },
   },
   {
+    // create path about
+    path: '/profile',
+    component: profilePageVue,
+    meta: {
+      layout: navAbout,
+      title: 'Profile - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/logout',
     component: '',
     meta: {

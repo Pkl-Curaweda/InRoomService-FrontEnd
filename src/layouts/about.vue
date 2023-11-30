@@ -18,7 +18,7 @@
             <q-btn flat round icon="o_mail" class="opacity-80 hover:opacity-100" />
           </router-link>
 
-          <router-link to="/src/layouts/about.vue">
+          <router-link to="/profile">
             <q-btn flat round icon="o_account_circle" class="opacity-80 hover:opacity-100" />
           </router-link>
         </q-toolbar>
