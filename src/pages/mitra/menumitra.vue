@@ -33,7 +33,7 @@
             withCredentials: true,
           })
           console.log(response.data)
-          this.data = response.data.data
+          this.data = response.data.data.data
         } catch (error) {
           console.error('error fetching data: ', error)
         }

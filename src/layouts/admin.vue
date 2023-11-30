@@ -122,6 +122,14 @@
                 </q-item>
               </template>
             </template>
+            <q-item clickable v-ripple @click="$router.push('/admin/partners')">
+              <q-item-section avatar>
+                <q-icon name="o_checklist" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Pending</p>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-ripple @click="logout">
               <q-item-section avatar>
                 <q-icon name="o_logout" />

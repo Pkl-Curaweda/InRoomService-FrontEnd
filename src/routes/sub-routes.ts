@@ -18,6 +18,7 @@ import adminMinimarket from '../pages/admin/minimarketadmin.vue'
 import partnersVue from '../pages/admin/pendingpartners.vue'
 import mitraEditVue from '../pages/mitra/mitraEdit.vue'
 import detailOrderanVue from '../pages/mitra/detailOrders.vue'
+import detailPartnerVue from '../pages/admin/detail.vue'
 
 import estimatedVue from '../pages/estimated/estimated.vue'
 // layout
@@ -75,6 +76,17 @@ export const subRoutes: RouteType[] = [
   {
     path: '/admin/partners',
     component: partnersVue, // dashboard
+    // name: '/admin/partners',
+    meta: {
+      layout: adminLayout,
+      title: 'Partners - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/admin/partners/:id',
+    component: detailPartnerVue, // dashboard
     // name: '/admin/partners',
     meta: {
       layout: adminLayout,

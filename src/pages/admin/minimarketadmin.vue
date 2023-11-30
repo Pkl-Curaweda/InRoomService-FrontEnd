@@ -1,29 +1,18 @@
 <template>
   <div class="min-w-full p-3 min-h-full bg-white mt-10">
     <q-card class="p-3 rounded-xl shadow-md overflow-x-hidden">
+      <div v-for="(card, index) in data" :key="index">
+        <p>{{ card.title }} {{ card.price }}</p>
+      </div>
       <!-- START OF TABLE -->
       <q-table
         class="my-table table-rounded"
         flat
         bordered
         title=""
-        :rows="filteredRows"
+        :rows="filteredData"
         :columns="columns"
         row-key="name">
-        <!-- rounded -->
-        <!-- <template v-slot:body-row="props">
-          <q-tr :props="props" class="rounded-row" />
-        </template> -->
-        <!-- 
-        <template v-slot:top-row>
-          <q-tr>
-            <q-th v-for="column in columns" :key="column.name">
-              {{ column.label }}
-            </q-th>
-          </q-tr>
-        </template> -->
-
-        <!-- SEARCH BAR -->
         <template v-slot:top-right>
           <div class="bg-gray-100 px-2 rounded-md">
             <q-input
@@ -43,21 +32,22 @@
         <!-- DETAIL ACTION -->
         <template v-slot:body-cell-detailaction="props">
           <q-td :props="props">
-            <q-btn-dropdown class="text-white bg-green text-semibold round" label="detail">
-              <q-list>
-                <q-item
+            <!-- <q-btn-dropdown class="text-white bg-green text-semibold round" label="detail">
+              <q-list> -->
+            <!-- <q-item
                   class="bg-green text-white m-2 rounded-sm px-10"
-                  v-for="option in detailOptions"
-                  :key="option.id"
+                  v-for="option in typeServiceOptions"
+                  :key="option.value"
                   clickable
                   v-close-popup
                   @click="onItemClick(option)">
                   <q-item-section>
                     <q-item-label>{{ option.label }}</q-item-label>
                   </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
+                </q-item> -->
+            <!-- </q-list>
+            </q-btn-dropdown> -->
+            {{ getService(props.row.typeId) }}
           </q-td>
         </template>
       </q-table>
@@ -88,13 +78,14 @@
       required: true,
       label: 'Image',
       align: 'left',
-      field: (row: { name: any }) => row.name,
-      format: (val: any) => `${val}`,
-      sortable: true,
+      field: 'picture', // Assuming 'image' is the property in your data object that contains the image URL
+      format: (val: string) =>
+        `<img src="${val}" style="width: 100px; height: auto; border-radius: 10px;" />`,
+      sortable: false, // Assuming you don't want to sort based on the image
       style: 'width: 15px; border-radius: 10px 0 0 10px;',
     },
     { name: 'id', align: 'center', label: 'ID', field: 'id', sortable: true },
-    { name: 'name', align: 'center', label: 'Name', field: 'name', sortable: true },
+    { name: 'title', align: 'center', label: 'Name', field: 'title', sortable: true },
     {
       name: 'price',
       label: 'Price',
@@ -108,70 +99,11 @@
       name: 'detailaction',
       label: 'Detail',
       align: 'center',
+      field: 'typeId',
       style: 'width: 15px; border-radius: 0 10px 10px 0;',
     },
   ]
 
-  const rows = [
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 111,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 222,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 333,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 444,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 555,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 666,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 777,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 98.500',
-      detail: 'Detail',
-    },
-    {
-      image: 'Ayam Taliwang.jpg',
-      id: 888,
-      name: 'Ayam Taliwang',
-      price: 'Rp. 100.500',
-      detail: 'Detail',
-    },
-  ]
-
-  const data = [] as { image: String; id: any; name: String; price: Number; detail: String }[]
   const detailOptions = [
     { id: 1, label: 'Medicine' },
     { id: 2, label: 'Food' },
@@ -181,22 +113,20 @@
 
   export default {
     setup() {
-      const filter = ref('')
-
-      const filteredRows = computed(() => {
-        const searchTerm = filter.value.toLowerCase().trim()
-        if (!searchTerm) {
-          return rows
-        } else {
-          return rows.filter((row) => {
-            return (
-              row.name.toLowerCase().includes(searchTerm) ||
-              row.price.toLowerCase().includes(searchTerm) ||
-              row.id.toString().includes(searchTerm)
-            )
-          })
-        }
-      })
+      // const filter = ref('')
+      // const data = ref()
+      // const filteredRows = computed(() => {
+      //   const searchTerm = filter.value.toLowerCase().trim()
+      //   if (!searchTerm) {
+      //     return data
+      //   } else {
+      //     return data.filter((row) => {
+      //       return (
+      //         row.title.toLowerCase().includes(searchTerm) || row.id.toString().includes(searchTerm)
+      //       )
+      //     })
+      //   }
+      // })
 
       const onItemClick = (option: any) => {
         // Handle item click based on the selected option
@@ -205,21 +135,70 @@
 
       return {
         columns,
-        filteredRows,
-        filter,
+        // filteredRows,
+        // filter,
         detailOptions,
         onItemClick,
       }
+    },
+    data() {
+      return {
+        typegoods: null,
+        typeOptions: [
+          { value: 1, label: 'Drink' },
+          { value: 2, label: 'Food' },
+          { value: 3, label: 'Cleaning Tool' },
+          { value: 4, label: 'Medicine' },
+          // Add more options as needed
+        ],
+        data: [] as {
+          id: any
+          picture: String
+          title: String
+          price: Number
+          typeId: Number
+          serviceTypeId: Number
+          user: {
+            name: String
+          }
+        }[],
+        filter: '',
+      }
+    },
+    mounted() {
+      this.getData()
+    },
+    computed: {
+      filteredData() {
+        const lowerCaseFilter = this.filter.toLowerCase()
+        return this.data.filter(
+          (item) =>
+            item.title.toLowerCase().includes(lowerCaseFilter) ||
+            item.user.name.toLowerCase().includes(lowerCaseFilter) ||
+            this.getService(item.typeId).toLowerCase().includes(lowerCaseFilter)
+        )
+      },
     },
     methods: {
       async getData() {
         try {
           const response = await api.get('/productReq/status/ACCEPTED', { withCredentials: true })
+          this.data = response.data.data.filter((item) => item.serviceTypeId === 1)
           console.log(response.data.data)
-          this.$data = response.data.data
         } catch (error) {
           console.error(error)
         }
+      },
+
+      getService(typeId: any) {
+        const labels = {
+          1: 'Drink',
+          2: 'Food',
+          3: 'Cleaning Tool',
+          4: 'Medicine',
+        }
+
+        return labels[typeId] || 'Unknown'
       },
     },
   }

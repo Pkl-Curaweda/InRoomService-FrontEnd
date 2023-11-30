@@ -10,9 +10,11 @@
       <div class="q-gutter-y-md column">
         <q-select
           outlined
+          name="serviceTypeId"
           label-color="green"
           v-model="typeService"
           :options="typeServiceOptions"
+          @update:model-value="updateServiceId"
           label="Label">
         </q-select>
       </div>
@@ -26,9 +28,11 @@
       </div>
       <div class="q-gutter-y-md column">
         <q-select
+          name="typeId"
           outlined
           label-color="green"
           v-model="typegoods"
+          @update:model-value="updateTypeId"
           :options="typeOptions"
           label="Label">
         </q-select>
@@ -55,7 +59,7 @@
 
     <div class="bagianketiga mt-6">
       <div class="flex items-center px-1 gap-2">
-        <q-icon color="green" name="price" size="20px" />
+        <q-icon color="green" name="attach_money" size="20px" />
         <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
           Price
         </h2>
@@ -116,6 +120,7 @@
               v-model="img"
               label="Click To Upload"
               :placeholder="img"
+              accept="image/*"
               max-files="1"
               @update:model-value="handleUpload()"
               type="file">
@@ -131,7 +136,12 @@
 
       <div class="q-gutter-sm mx-auto mt-6 w-fit">
         <q-btn unelevated rounded color="green" label="save" @click="updateData" />
-        <q-btn outline rounded color="green" label="BACK" @click="navigate.back()" />
+        <q-btn
+          outline
+          rounded
+          color="green"
+          label="BACK"
+          @click="navigate.push('/mitra/minimarket')" />
       </div>
     </div>
   </div>
@@ -156,31 +166,7 @@
       }
       const route = useRoute()
       const id = route.params.id
-      // const sendData = () => {
-      //   // Prepare data object
-      //   const data = {
-      //     type: this.model,
-      //     name: this.namegoods,
-      //     price: this.price,
-      //     description: this.deskripsi,
-      //     file: this.file,
-      //   }
-      //   // Send data to the server using axios (replace the URL with your actual API endpoint)
-      //   axios
-      //     .post('http://localhost:8080/productReq', data)
-      //     .then((response) => {
-      //       console.log('Data sent successfully:', response.data)
-      //       // Reset form fields if needed
-      //       this.model = null
-      //       this.namegoods = ''
-      //       this.price = ''
-      //       this.deskripsi = ''
-      //       this.file = ''
-      //     })
-      //     .catch((error) => {
-      //       console.error('Error sending data:', error)
-      //     })
-      // }
+
       return {
         model: ref(null),
         deskripsi: ref(''),
@@ -197,24 +183,33 @@
     },
     data() {
       return {
-        typeService: null,
+        typeService: {} as { value: Number; label: String },
         typeServiceOptions: [
           { value: 1, label: 'Mini Market' },
           { value: 2, label: 'Food Beverage' },
         ],
-        typegoods: null,
+        serviceId: '',
+        typegoods: {} as { value: Number; label: String },
+        typeId: '',
         typeOptions: [
           { value: 1, label: 'Drink' },
           { value: 2, label: 'Food' },
           { value: 3, label: 'Cleaning Tool' },
           { value: 4, label: 'Medicine' },
-          // Add more options as needed
         ],
       }
     },
     mounted() {
       this.getData()
     },
+    // watch: {
+    //   serviceId(newValue) {
+    //     const selectedService = this.typeServiceOptions.find((option) => option.value === newValue)
+    //     if (selectedService) {
+    //       this.serviceId = selectedService.value
+    //     }
+    //   },
+    // },
     methods: {
       tes() {
         console.log(this.model)
@@ -230,37 +225,70 @@
           this.deskripsi = response.data.data.desc
           this.imgURL = response.data.data.picture
           this.typegoods = this.getTypeLabel(response.data.data.typeId)
+          this.typeId = response.data.data.typeId
+          this.serviceId = response.data.data.serviceTypeId
           this.typeService = this.getServiceLabel(response.data.data.serviceTypeId)
           console.log(response.data.data.picture)
         } catch (error) {
           console.error('error fetching data', error)
         }
       },
-
-      async updateData() {
-        try {
-          const updatedData = {
-            title: this.namegoods,
-            serviceTypeId: this.typeService.value,
-            typeId: this.typegoods.value,
-            desc: this.deskripsi,
-            price: this.price,
-            picture: this.img,
-          }
-          await api
-            .put(`/productReq/update/${this.id}`, updatedData, {
-              withCredentials: true,
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-            .then((response) => {
-              console.log('Data updated successfully', response.data)
-            })
-        } catch (error) {
-          console.error('Error update data', error)
-        }
+      updateServiceId() {
+        this.serviceId = this.typeService.value
+        console.log('tes')
       },
+      updateTypeId() {
+        this.typeId = this.typegoods.value
+      },
+      updateData() {
+        const formData = new FormData()
+
+        formData.append('title', this.namegoods)
+        formData.append('serviceTypeId', this.serviceId) // ngambil dari select
+        formData.append('typeId', this.typeId) // ngambil dari yang duh di set di database
+        formData.append('desc', this.deskripsi)
+        formData.append('price', this.price)
+        formData.append('picture', this.img)
+        console.log(this.typeService.value)
+        api
+          .put(`/productReq/update/${this.id}`, formData, {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((response) => {
+            console.log('Data updated successfully', response.data)
+          })
+          .catch((error) => {
+            console.error('Error update data:', error)
+          })
+      },
+      // async updateData() {
+      //   try {
+      //     const updatedData = {
+      //       title: this.namegoods,
+      //       serviceTypeId: this.typeService.value,
+      //       typeId: this.typegoods.value,
+      //       desc: this.deskripsi,
+      //       price: this.price,
+      //       picture: this.img,
+      //     }
+      //     await api
+      //       .put(`/productReq/update/${this.id}`, updatedData, {
+      //         withCredentials: true,
+      //         headers: {
+      //           'Content-Type': 'multipart/form-data',
+      //         },
+      //       })
+      //       .then((response) => {
+      //         console.log('Data updated successfully', response.data)
+      //       })
+      //   } catch (error) {
+      //     console.log(this.typeService.value)
+      //     console.error('Error update data', error)
+      //   }
+      // },
       getTypeLabel(typeId: any) {
         const typeOption = this.typeOptions.find((option) => option.value === typeId)
         return typeOption ? typeOption.label : null
@@ -271,35 +299,8 @@
         )
         return typeServiceOption ? typeServiceOption.label : null
       },
-      sendData() {
-        const data = {
-          title: this.namegoods,
-          type: this.model,
-          desc: this.deskripsi,
-          price: this.price,
-          // picture: this.file,
-        }
-        axios
-          .post('http://localhost:8080/productReq/create', data, {
-            withCredentials: true,
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-          })
-          .then((response) => {
-            console.log('Data sent successfully:', response.data)
-            // Reset form fields if needed
-            this.model = null
-            this.namegoods = ''
-            this.price = ''
-            this.deskripsi = ''
-            // this.file = ''
-          })
-          .catch((error) => {
-            console.error('Error sending data:', error)
-          })
-      },
     },
+
     components: { QInput },
   }
 </script>

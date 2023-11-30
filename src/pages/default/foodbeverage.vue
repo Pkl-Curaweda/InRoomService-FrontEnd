@@ -16,32 +16,6 @@
           gambarProduk: string
           qty: number
         }[],
-        cardData: [
-          {
-            gambarProduk: 'crash.jpg',
-            namaProduk: 'Bakso Baghdad',
-            descProduk: 'Dibuat dari daging unta asli baghdad',
-            hargaProduk: 20000,
-          },
-          {
-            gambarProduk: 'crash.jpg',
-            namaProduk: 'Bakso Bogor',
-            descProduk: 'Dibuat dari daging unta asli baghdad',
-            hargaProduk: 20000,
-          },
-          {
-            gambarProduk: 'crash.jpg',
-            namaProduk: 'Bakso Bagong',
-            descProduk: 'Dibuat dari daging unta asli baghdad',
-            hargaProduk: 20000,
-          },
-          {
-            gambarProduk: 'crash.jpg',
-            namaProduk: 'Bakso Baghdad',
-            descProduk: 'Dibuat dari daging unta asli baghdad',
-            hargaProduk: 20000,
-          },
-        ],
         price: 0,
         data: [] as { name: string; price: number; desc: string; picture: string }[],
       }
@@ -81,7 +55,7 @@
           console.log('Response status:', response.status)
           console.log('Response data:', response.data)
           console.log(response.data)
-          this.data = response.data.data
+          this.data = response.data.data.data
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -92,62 +66,40 @@
         this.$emit('total', value)
       },
 
-      saveCartToLocalStorage() {
-        localStorage.setItem('cart', JSON.stringify(this.cart))
-      },
-
       addToCart(card: any) {
-        const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
+        const existingProductIndex = this.cart.findIndex((item) => item.namaProduk === card.name)
 
-        if (!existingProduct) {
+        if (existingProductIndex === -1) {
           this.cart.push({
-            namaProduk: card.namaProduk,
-            hargaProduk: card.hargaProduk,
-            gambarProduk: card.gambarProduk,
+            namaProduk: card.name,
+            hargaProduk: card.price,
+            gambarProduk: card.picture,
             qty: 1,
           })
-
-          this.saveCartToLocalStorage()
+        } else {
+          this.cart[existingProductIndex].qty += 1
         }
 
+        this.saveCartToLocalStorage()
         console.log(this.cart)
       },
 
-      increment(card: any) {
-        const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
+      saveCartToLocalStorage() {
+        const existingCart = JSON.parse(localStorage.getItem('cartFood') || '[]')
 
-        if (existingProduct) {
-          existingProduct.qty++ // Increase the quantity for the specific product card in the cart
-        } else {
-          this.addToCart(card) // If the product is not in the cart, add it to the cart
-        }
-        console.log('halo')
-      },
-      // decrement(card: any) {
-      //   const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
+        for (const newItem of this.cart) {
+          const existingProductIndex = existingCart.findIndex(
+            (item: { namaProduk: string }) => item.namaProduk === newItem.namaProduk
+          )
 
-      //   if (existingProduct) {
-      //     if (existingProduct.qty >= 0) {
-      //       existingProduct.qty-- // Decrease the quantity for the specific product card in the cart
-      //       // if (existingProduct.qty === 0) {
-      //       //   this.cart.splice(this.cart.indexOf(card), 1)
-      //       // }
-      //     }
-      //   }
-      // },
-      removeFromCart(card: any) {
-        this.cart = this.cart.filter((item) => item.namaProduk !== card.namaProduk)
-      },
-      decrement(card: any) {
-        const existingProduct = this.cart.find((item) => item.namaProduk === card.namaProduk)
-
-        if (existingProduct) {
-          if (existingProduct.qty > 1) {
-            existingProduct.qty-- // Decrease the quantity for the specific product card in the cart
+          if (existingProductIndex === -1) {
+            existingCart.push({ ...newItem })
           } else {
-            this.removeFromCart(card) // If the quantity reaches zero, remove the product from the cart
+            console.log('item sudah ada')
           }
         }
+
+        localStorage.setItem('cartFood', JSON.stringify(existingCart))
       },
       getQuantity(card: any) {
         const cartItem = this.cart.find((item) => item.namaProduk === card.namaProduk)

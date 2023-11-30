@@ -30,10 +30,10 @@
   <q-card class="card my-card text-white p-3 w-[80%] md:w-md m-auto my-5">
     <q-card-section horizontal class="flex justify-between">
       <div class="block relative w-32">
-        <div class="text-md pb-1 font-bold">{{ namaProduk }}</div>
-        <div class="text-xs text-justify">
+        <h4 class="text-md font-bold">{{ namaProduk }}</h4>
+        <p class="text-xs">
           {{ descProduk }}
-        </div>
+        </p>
         <div class="flex flex-row items-center justify-between mb-2">
           <p class="text-sm">Rp. {{ hargaProduk }}</p>
         </div>
@@ -50,7 +50,7 @@
           </q-btn>
         </div>
       </div>
-      <q-img :src="`${gambarProduk}`" class="w-24" ratio="1" />
+      <q-img :src="`${gambarProduk}`" class="w-28" ratio="1" />
     </q-card-section>
   </q-card>
 </template>

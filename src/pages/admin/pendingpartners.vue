@@ -4,7 +4,7 @@
 
     <div class="">
       <div v-for="(daata, index) in data" :key="index">
-        <ListPartner :namaPartner="daata.user.name" :onClick="index + 1" />
+        <ListPartner :namaPartner="daata.user.name" :onClick="daata.id" />
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
     },
     data() {
       return {
-        data: [] as { user: { name: String } }[],
+        data: [] as { id: any; user: { name: String } }[],
       }
     },
     setup() {

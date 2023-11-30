@@ -9,6 +9,7 @@
       </div>
       <div class="q-gutter-y-md column">
         <q-select
+          readonly
           outlined
           label-color="green"
           v-model="typeService"
@@ -26,6 +27,7 @@
       </div>
       <div class="q-gutter-y-md column">
         <q-select
+          readonly
           outlined
           label-color="green"
           v-model="typegoods"
@@ -45,18 +47,18 @@
       <div class="q-gutter-y-md column">
         <q-card>
           <q-input
+            readonly
             standout="bg-teal text-white"
             v-model="namegoods"
             bg-color="white"
-            label="Name"
-            :dense="dense" />
+            label="Name" />
         </q-card>
       </div>
     </div>
 
     <div class="bagianketiga mt-6">
       <div class="flex items-center px-1 gap-2">
-        <q-icon color="green" name="payments" size="20px" />
+        <q-icon color="green" name="price" size="20px" />
         <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
           Price
         </h2>
@@ -64,12 +66,12 @@
       <div class="q-gutter-y-md column">
         <q-card>
           <q-input
+            readonly
             standout="bg-teal 
-          text-white"
-            v-model="payments"
+              text-white"
+            v-model="price"
             bg-color="white"
-            label="Price"
-            :dense="dense" />
+            label="Price" />
         </q-card>
       </div>
     </div>
@@ -84,12 +86,12 @@
       <div class="q-gutter-y-md column">
         <q-card>
           <q-input
+            readonly
             type="textarea"
             standout="bg-teal text-white"
             bg-color="white"
             v-model="deskripsi"
-            label="Description"
-            :dense="dense" />
+            label="Description" />
         </q-card>
       </div>
 
@@ -97,50 +99,41 @@
         <div class="flex items-center px-1 gap-2">
           <q-icon color="green" name="folder" size="20px" />
           <h2 class="text-black font-open-sans" style="font-size: 18px; justify-content: left">
-            Upload Image
+            Image
           </h2>
         </div>
+        <!-- <div class="q-gutter-sm row items-start">
+            <q-card>
+              <q-uploader
+                url="http://localhost:4444/upload"
+                color="green"
+                square
+                flat
+                bordered
+                max-files="1"
+                style="max-width: 300px" />
+            </q-card>
+          </div> -->
         <div class="q-gutter-y-md" style="max-width: 300px">
-          <q-card>
-            <q-file
-              filled
-              v-model="img"
-              label="Click To Upload"
-              :placeholder="img"
-              bg-color="white"
-              max-files="1"
-              @update:model-value="handleUpload()"
-              type="file">
-            </q-file>
-          </q-card>
-
           <q-img :src="imgURL" />
         </div>
       </div>
 
-      <!-- <div class="q-gutter-md" style="max-width: 300px">
-          <q-card>
-            <q-file filled v-model="file" label="Click To Upload" max-files="1">
-              <template v-slot:before>
-                <q-icon name="folder_open" />
-              </template>
-            </q-file>
-          </q-card>
-        </div> -->
-
       <div class="q-gutter-sm mx-auto mt-6 w-fit">
-        <q-btn unelevated rounded color="green" label="SEND" @click="sendData()" />
-        <q-btn outline rounded color="green" label="BACK" @click="navigate.back()" />
+        <q-btn unelevated rounded color="green" label="accept" @click="updateData" />
+        <q-btn unelevated rounded color="red" label="reject" @click="reject" />
+        <q-btn outline rounded color="green" label="back" @click="navigate.back()" />
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import axios from 'axios'
-  import { useRouter } from 'vue-router'
+  import { useRouter, useRoute } from 'vue-router'
   import { ref } from 'vue'
   import api from 'src/AxiosInterceptors'
+  import { QInput } from 'quasar'
   console.log(document.cookie)
   export default {
     setup() {
@@ -152,16 +145,17 @@
           imgURL.value = URL.createObjectURL(img.value)
         }
       }
+      const route = useRoute()
+      const id = route.params.id
       // const sendData = () => {
       //   // Prepare data object
       //   const data = {
       //     type: this.model,
       //     name: this.namegoods,
-      //     price: this.payments,
+      //     price: this.price,
       //     description: this.deskripsi,
       //     file: this.file,
       //   }
-
       //   // Send data to the server using axios (replace the URL with your actual API endpoint)
       //   axios
       //     .post('http://localhost:8080/productReq', data)
@@ -170,7 +164,7 @@
       //       // Reset form fields if needed
       //       this.model = null
       //       this.namegoods = ''
-      //       this.payments = ''
+      //       this.price = ''
       //       this.deskripsi = ''
       //       this.file = ''
       //     })
@@ -181,13 +175,14 @@
       return {
         model: ref(null),
         deskripsi: ref(''),
-        payments: ref(''),
+        price: ref(''),
         namegoods: ref(''),
+        navigate: useRouter(),
         imgURL,
         img,
         handleUpload,
-        navigate: useRouter(),
-        filihan: [],
+        route,
+        id,
         options: ['Food', 'Drink', 'Laundry', 'Cleaning Tool'],
       }
     },
@@ -206,60 +201,74 @@
           { value: 4, label: 'Medicine' },
           // Add more options as needed
         ],
-        selectedService: ref(''),
       }
     },
     mounted() {
-      this.getServiceType()
+      this.getData()
     },
     methods: {
-      handleService(id) {
-        this.selectedService = id
-      },
       tes() {
         console.log(this.model)
       },
-      async getServiceType() {
+      async getData() {
         try {
-          const response = await api.get('/services/1/1', {
+          const response = await api.get(`/productReq/${this.id}`, {
             withCredentials: true,
           })
-
           console.log(response.data)
-          this.filihan = response.data.data
+          this.namegoods = response.data.data.title
+          this.price = response.data.data.price
+          this.deskripsi = response.data.data.desc
+          this.imgURL = response.data.data.picture
+          this.typegoods = this.getTypeLabel(response.data.data.typeId)
+          this.typeService = this.getServiceLabel(response.data.data.serviceTypeId)
+          console.log(response.data.data.picture)
         } catch (error) {
-          console.error('Error fetching data : ', error)
+          console.error('error fetching data', error)
         }
       },
-      sendData() {
-        const formData = new FormData()
-        formData.append('title', this.namegoods)
-        formData.append('serviceTypeId', this.typeService.value)
-        formData.append('typeId', this.typegoods.value)
-        formData.append('desc', this.deskripsi)
-        formData.append('price', this.payments)
-        formData.append('picture', this.img)
-        api
-          .post('/productReq/create', formData, {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then((response) => {
-            console.log('Data sent successfully:', response.data)
-            this.$router.push('/mitra/minimarket')
-            // Reset form fields if needed
-            this.model = null
-            this.namegoods = ''
-            this.payments = ''
-            this.deskripsi = ''
-            this.imgURL = ''
-          })
-          .catch((error) => {
-            console.error('Error sending data:', error)
-          })
+
+      async updateData() {
+        try {
+          await api
+            .post(`/productReq/accept/${this.id}`, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              console.log('Data updated successfully', response.data)
+            })
+
+          this.$router.push('/admin/partners')
+        } catch (error) {
+          console.error('Error update data', error)
+        }
+      },
+      async reject() {
+        try {
+          await api
+            .post(`/productReq/accept/${this.id}`, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              console.log('Data updated successfully', response.data)
+            })
+
+          this.$router.push('/admin/partners')
+        } catch (error) {
+          console.error('Error updated data', error)
+        }
+      },
+      getTypeLabel(typeId: any) {
+        const typeOption = this.typeOptions.find((option) => option.value === typeId)
+        return typeOption ? typeOption.label : null
+      },
+      getServiceLabel(serviceId: any) {
+        const typeServiceOption = this.typeServiceOptions.find(
+          (option) => option.value === serviceId
+        )
+        return typeServiceOption ? typeServiceOption.label : null
       },
     },
+    components: { QInput },
   }
 </script>
