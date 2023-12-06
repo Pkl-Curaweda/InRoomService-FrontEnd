@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
   import { computed, onMounted, ref, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { routes } from '../router'
@@ -72,8 +72,95 @@
 
       router.push('/login')
     } catch (error) {
-      console.error('Logout failed', error.message)
+      console.error('Logout failed', error)
     }
+  }
+</script> -->
+
+<script lang="ts">
+  import { useRoute, useRouter } from 'vue-router'
+  import { ref, computed, watch } from 'vue'
+  import { routes } from '../router'
+  import { subRoutes } from '../routes/sub-routes'
+  import api from 'src/AxiosInterceptors'
+  import { Cookies, useQuasar } from 'quasar'
+
+  export default {
+    setup() {
+      const $q = useQuasar()
+
+      return {
+        showNotif() {
+          $q.notify({
+            message: 'Logout successful!',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        errorNotif() {
+          $q.notify({
+            message: 'Login Failed!',
+            color: 'red',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+      }
+    },
+    data() {
+      return {
+        routes: routes,
+        leftDrawerOpen: false,
+        router: useRouter(),
+        route: useRoute(),
+        search: '',
+      }
+    },
+    methods: {
+      toggleLeftDrawer() {
+        this.leftDrawerOpen = !this.leftDrawerOpen
+      },
+
+      async logout() {
+        const refreshToken = Cookies.get('refreshToken')
+
+        try {
+          await api.get(
+            '/auth/logout',
+            // { req: Cookies.get('refreshToken') },
+            { withCredentials: true }
+          )
+          localStorage.removeItem('token')
+
+          this.showNotif()
+          this.$nextTick(() => {
+            this.router.push('/login')
+          })
+        } catch (error) {
+          this.errorNotif()
+          console.error('Logout failed', error)
+        }
+      },
+    },
   }
 </script>
 
@@ -87,65 +174,6 @@
           <q-toolbar-title class="text-capitalize font-bold">
             {{ route.meta.label }}
           </q-toolbar-title>
-        </q-toolbar>
-
-        <q-toolbar class="flex flex-col w-screen">
-          <div class="flex items-center gap-2 flex-row">
-            <q-btn dense flat round icon="timeline" @click="estimated()" class="text-white" />
-            <q-btn dense flat round icon="person" @click="toggleLeftDrawer" class="text-white" />
-            <q-btn
-              dense
-              flat
-              round
-              icon="shopping_cart"
-              @click="toggleLeftDrawer"
-              class="text-white" />
-
-            <q-form>
-              <q-input
-                outlined
-                v-model="search"
-                label="Search"
-                for="search"
-                type="search"
-                color="dark w-full"
-                bg-color="white"
-                class="w-56 sm:w-80 md:w-96">
-                <template v-slot:append class="">
-                  <q-btn dense flat icon="search" color="green" rounded />
-                </template>
-              </q-input>
-            </q-form>
-          </div>
-          <div
-            active-color="white"
-            style="font-size: 16px"
-            class="flex flex-row items-center mt-6 flex-nowrap">
-            <div class="flex items-start gap-2 flex-nowrap">
-              <q-btn class="text-white my-auto" label="1" color="green" rounded></q-btn>
-              <div class="flex flex-col items-start">
-                <p>Add to Cart</p>
-                <p class="text-gray-400 text-sm">Choose Your Item</p>
-              </div>
-            </div>
-
-            <div
-              class="h-[2px] w-12 mx-2 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
-
-            <div class="flex items-start gap-2 flex-nowrap">
-              <q-btn
-                class="text-gray-400 my-auto"
-                label="2"
-                @click="checkout()"
-                color="dark"
-                text-color="grey-13"
-                rounded></q-btn>
-              <div class="flex flex-col items-start">
-                <p class="text-gray-400">Checkout</p>
-                <p class="text-gray-400 text-sm">To Make Payment</p>
-              </div>
-            </div>
-          </div>
         </q-toolbar>
       </q-header>
       <q-footer
@@ -230,8 +258,6 @@
       </q-drawer>
 
       <q-page-container class="flex items-center justify-center h-screen overflow-hidden">
-        <!-- <Minimarket @total="marktUpdatePrice" v-if="$route.path === '/minimarket'" />
-        <FoodBeverage @total="foodUpdatePrice" v-if="$route.path === '/foodbeverage'" /> -->
         <router-view />
       </q-page-container>
     </q-layout>

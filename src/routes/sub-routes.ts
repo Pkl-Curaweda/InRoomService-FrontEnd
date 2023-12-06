@@ -27,6 +27,7 @@ import loginVue from '../layouts/login.vue'
 import checkoutLayout from '../layouts/checkout.vue'
 import mitraLayout from '../layouts/mitra.vue'
 import adminLayout from '../layouts/admin.vue'
+import tableReportVue from 'src/pages/admin/tableReport.vue'
 
 export const subRoutes: RouteType[] = [
   {
@@ -80,6 +81,17 @@ export const subRoutes: RouteType[] = [
     meta: {
       layout: adminLayout,
       title: 'Partners - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
+    path: '/admin/summarize',
+    component: tableReportVue, // dashboard
+    // name: '/admin/partners',
+    meta: {
+      layout: adminLayout,
+      title: 'Report Data - Lingian Hotel',
       label: '',
       icon: '',
     },

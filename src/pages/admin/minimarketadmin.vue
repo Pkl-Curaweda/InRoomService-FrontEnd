@@ -1,9 +1,6 @@
 <template>
   <div class="min-w-full p-3 min-h-full bg-white mt-10">
     <q-card class="p-3 rounded-xl shadow-md overflow-x-hidden">
-      <div v-for="(card, index) in data" :key="index">
-        <p>{{ card.title }} {{ card.price }}</p>
-      </div>
       <!-- START OF TABLE -->
       <q-table
         class="my-table table-rounded"
@@ -11,7 +8,9 @@
         bordered
         title=""
         :rows="filteredData"
+        :loading="loading"
         :columns="columns"
+        v-model:pagination="pagination"
         row-key="name">
         <template v-slot:top-right>
           <div class="bg-gray-100 px-2 rounded-md">
@@ -28,7 +27,12 @@
             </q-input>
           </div>
         </template>
-
+        <!-- img -->
+        <template v-slot:body-cell-image="props">
+          <q-td :props="props">
+            <q-img :src="props.row.picture" class="w-[75px] h-auto rounded-xl" />
+          </q-td>
+        </template>
         <!-- DETAIL ACTION -->
         <template v-slot:body-cell-detailaction="props">
           <q-td :props="props">
@@ -48,6 +52,7 @@
             <!-- </q-list>
             </q-btn-dropdown> -->
             {{ getService(props.row.typeId) }}
+            <!-- <q-img :src="props.row.picture"  style="width: 100px; height: auto; border-radius: 10px;" /> -->
           </q-td>
         </template>
       </q-table>
@@ -55,16 +60,6 @@
     </q-card>
 
     <!-- BUTTON ACTION -->
-    <q-card-actions class="flex justify-end gap-5 mt-5">
-      <q-btn
-        class="bg-green w-32 rounded-full text-sm text-white font-bold"
-        label="back"
-        name="back" />
-      <q-btn
-        class="bg-green w-32 rounded-full text-sm text-white font-bold"
-        label="next"
-        name="next" />
-    </q-card-actions>
   </div>
 </template>
 
@@ -72,38 +67,50 @@
   import api from 'src/AxiosInterceptors'
   import { ref, computed } from 'vue'
 
-  const columns = [
+  const rows = [
     {
-      name: 'image',
-      required: true,
-      label: 'Image',
-      align: 'left',
-      field: 'picture', // Assuming 'image' is the property in your data object that contains the image URL
-      format: (val: string) =>
-        `<img src="${val}" style="width: 100px; height: auto; border-radius: 10px;" />`,
-      sortable: false, // Assuming you don't want to sort based on the image
-      style: 'width: 15px; border-radius: 10px 0 0 10px;',
+      image: 'Ayam Taliwang.jpg',
+      id: 111,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
     },
-    { name: 'id', align: 'center', label: 'ID', field: 'id', sortable: true },
-    { name: 'title', align: 'center', label: 'Name', field: 'title', sortable: true },
     {
-      name: 'price',
-      label: 'Price',
-      field: 'price',
-      sortable: true,
-      align: 'center',
-      sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+      image: 'Ayam Taliwang.jpg',
+      id: 222,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
     },
-
     {
-      name: 'detailaction',
-      label: 'Detail',
-      align: 'center',
-      field: 'typeId',
-      style: 'width: 15px; border-radius: 0 10px 10px 0;',
+      image: 'Ayam Taliwang.jpg',
+      id: 333,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
+    },
+    {
+      image: 'Ayam Taliwang.jpg',
+      id: 444,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
+    },
+    {
+      image: 'Ayam Taliwang.jpg',
+      id: 555,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
+    },
+    {
+      image: 'Ayam Taliwang.jpg',
+      id: 666,
+      name: 'Ayam Taliwang',
+      price: 'Rp. 98.500',
+      detail: 'Detail',
     },
   ]
-
   const detailOptions = [
     { id: 1, label: 'Medicine' },
     { id: 2, label: 'Food' },
@@ -113,6 +120,34 @@
 
   export default {
     setup() {
+      const columns = [
+        {
+          name: 'image',
+          label: 'Image',
+          align: 'center',
+          field: 'picture',
+          sortable: false,
+          style: 'width: 15px; border-radius: 10px 0 0 10px;',
+        },
+        { name: 'id', align: 'center', label: 'ID', field: 'id', sortable: true },
+        { name: 'title', align: 'center', label: 'Name', field: 'title', sortable: true },
+        {
+          name: 'price',
+          label: 'Price',
+          field: 'price',
+          sortable: true,
+          align: 'center',
+          sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+        },
+
+        {
+          name: 'detailaction',
+          label: 'Detail',
+          align: 'center',
+          field: 'typeId',
+          style: 'width: 15px; border-radius: 0 10px 10px 0;',
+        },
+      ]
       // const filter = ref('')
       // const data = ref()
       // const filteredRows = computed(() => {
@@ -132,11 +167,40 @@
         // Handle item click based on the selected option
         // You can access the selected option using 'option'
       }
+      const pagination = ref({
+        sortBy: 'id',
+        descending: false,
+        page: 1,
+        rowsPerPage: 3,
+      })
+      const market = ref(
+        [] as {
+          id: any
+          picture: String
+          title: String
+          price: Number
+          typeId: Number
+          serviceTypeId: Number
+          user: {
+            name: String
+          }
+        }[]
+      )
 
+      api.get('/productReq/status/ACCEPTED', { withCredentials: true }).then((response) => {
+        market.value = response.data.data.filter(
+          (item: { serviceTypeId: number }) => item.serviceTypeId === 1
+        )
+      })
+      const loading = ref(true)
       return {
         columns,
+        loading,
+        pagination,
         // filteredRows,
         // filter,
+        rows,
+        market,
         detailOptions,
         onItemClick,
       }
@@ -168,22 +232,13 @@
     mounted() {
       this.getData()
     },
-    computed: {
-      filteredData() {
-        const lowerCaseFilter = this.filter.toLowerCase()
-        return this.data.filter(
-          (item) =>
-            item.title.toLowerCase().includes(lowerCaseFilter) ||
-            item.user.name.toLowerCase().includes(lowerCaseFilter) ||
-            this.getService(item.typeId).toLowerCase().includes(lowerCaseFilter)
-        )
-      },
-    },
     methods: {
       async getData() {
         try {
           const response = await api.get('/productReq/status/ACCEPTED', { withCredentials: true })
-          this.data = response.data.data.filter((item) => item.serviceTypeId === 1)
+          this.data = response.data.data.filter(
+            (item: { serviceTypeId: number }) => item.serviceTypeId === 1
+          )
           console.log(response.data.data)
         } catch (error) {
           console.error(error)
@@ -199,6 +254,17 @@
         }
 
         return labels[typeId] || 'Unknown'
+      },
+    },
+    computed: {
+      filteredData() {
+        const lowerCaseFilter = this.filter.toLowerCase()
+        return this.market.filter(
+          (item) =>
+            item.title.toLowerCase().includes(lowerCaseFilter) ||
+            item.user.name.toLowerCase().includes(lowerCaseFilter) ||
+            this.getService(item.typeId).toLowerCase().includes(lowerCaseFilter)
+        )
       },
     },
   }

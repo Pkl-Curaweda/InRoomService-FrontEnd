@@ -147,9 +147,49 @@
   import { routes } from 'src/router'
   import { subRoutes } from '../routes/sub-routes'
   import api from 'src/AxiosInterceptors'
-  import { Cookies } from 'quasar'
+  import { Cookies, useQuasar } from 'quasar'
 
   export default {
+    setup() {
+      const $q = useQuasar()
+
+      return {
+        showNotif() {
+          $q.notify({
+            message: 'Logout successful!',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        errorNotif() {
+          $q.notify({
+            message: 'Login Failed!',
+            color: 'red',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+      }
+    },
     data() {
       return {
         routes: routes,
@@ -175,8 +215,12 @@
           )
           localStorage.removeItem('token')
 
-          this.router.push('/login')
+          this.showNotif()
+          this.$nextTick(() => {
+            this.router.push('/login')
+          })
         } catch (error) {
+          this.errorNotif()
           console.error('Logout failed', error.message)
         }
       },

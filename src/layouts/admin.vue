@@ -130,6 +130,14 @@
                 <p class="text-bold">Pending</p>
               </q-item-section>
             </q-item>
+            <q-item clickable v-ripple @click="$router.push('/admin/summarize')">
+              <q-item-section avatar>
+                <q-icon name="o_summarize" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Report Data</p>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-ripple @click="logout">
               <q-item-section avatar>
                 <q-icon name="o_logout" />
@@ -155,9 +163,49 @@
   import { routes } from 'src/router'
   import { subRoutes } from '../routes/sub-routes'
   import api from 'src/AxiosInterceptors'
-  import { Cookies } from 'quasar'
+  import { Cookies, useQuasar } from 'quasar'
 
   export default {
+    setup() {
+      const $q = useQuasar()
+
+      return {
+        showNotif() {
+          $q.notify({
+            message: 'Logout successful!',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        errorNotif() {
+          $q.notify({
+            message: 'Login Failed!',
+            color: 'red',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+      }
+    },
     data() {
       return {
         routes: routes,
@@ -182,17 +230,15 @@
           )
           localStorage.removeItem('token')
 
-          this.router.push('/admin')
+          this.showNotif()
+          this.$nextTick(() => {
+            this.router.push('/admin')
+          })
         } catch (error) {
+          this.errorNotif()
           console.error('Logout failed', error.message)
         }
       },
-    },
-    computed: {
-      // Add computed properties here if needed
-    },
-    watch: {
-      // Add watchers here if needed
     },
   }
 </script>

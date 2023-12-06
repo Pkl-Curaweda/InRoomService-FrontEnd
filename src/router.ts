@@ -131,11 +131,11 @@ export const routes: RouteType[] = [
   },
   {
     // create path about
-    path: '/admin/table',
-    component: tableReportVue,
+    path: '/profile',
+    component: profilePageVue,
     meta: {
       layout: navAbout,
-      title: 'About - Lingian Hotel',
+      title: 'Profile - Lingian Hotel',
       label: '',
       icon: '',
     },

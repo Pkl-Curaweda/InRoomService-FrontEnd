@@ -18,6 +18,7 @@
         }[],
         price: 0,
         data: [] as { name: string; price: number; desc: string; picture: string }[],
+        search: '',
       }
     },
     mounted() {
@@ -25,25 +26,9 @@
     },
     setup(props, { emit }) {
       const count = ref(0)
-      const hargaProduk = ref(0)
-      // const decrement = () => {
-      //   if (count.value > 0) {
-      //     count.value--
-      //     // defineEmits('quantityChanged', count.value)
-      //     // emit('quantityChanged', count.value * hargaProduk.value)
-      //   }
-      // }
-
-      // const increment = () => {
-      //   count.value++
-      //   // defineEmits('quantityChanged', count.value)
-      //   // emit('quantityChanged', count.value * parseFloat(hargaProduk.value))
-      // }
 
       return {
         count,
-        // decrement,
-        // increment,
       }
     },
     methods: {
@@ -105,8 +90,31 @@
         const cartItem = this.cart.find((item) => item.namaProduk === card.namaProduk)
         return cartItem ? cartItem.qty : 0
       },
+      estimated() {
+        if (this.$route.path === '/minimarket') {
+          this.$router.push('/estimated/minimarket')
+        } else if (this.$route.path === '/foodbeverage') {
+          this.$router.push('/estimated/foodbeverage')
+        } else if (this.$route.path === '/laundry') {
+          this.$router.push('/estimated/laundry')
+        }
+      },
+
+      checkout() {
+        if (this.$route.path === '/minimarket') {
+          this.$router.push('/checkout/minimarket')
+        } else if (this.$route.path === '/foodbeverage') {
+          this.$router.push('/checkout/foodbeverage')
+        } else if (this.$route.path === '/laundry') {
+          this.$router.push('/checkout/laundry')
+        }
+      },
     },
     computed: {
+      filteredData() {
+        const lowerCaseFilter = this.search.toLocaleLowerCase()
+        return this.data.filter((item) => item.name.toLocaleLowerCase().includes(lowerCaseFilter))
+      },
       subTotal() {
         var subCost = 0
         for (var items in this.cart) {
@@ -122,10 +130,60 @@
 </script>
 
 <template>
-  <div class="h-full overflow-y-scroll scrollhide justify-center items-center mt-5">
+  <q-toolbar class="flex flex-col w-screen">
+    <div class="flex items-center gap-2 flex-row">
+      <q-btn dense flat round icon="timeline" @click="estimated()" class="text-white" />
+      <q-btn dense flat round icon="person" class="text-white" />
+      <q-btn dense flat round icon="shopping_cart" @click="checkout()" class="text-white" />
+
+      <q-input
+        outlined
+        v-model="search"
+        label="Search"
+        for="search"
+        type="search"
+        color="dark w-full"
+        bg-color="white"
+        class="w-56 sm:w-80 md:w-96">
+        <template v-slot:append class="">
+          <q-btn dense flat icon="search" color="green" rounded />
+        </template>
+      </q-input>
+    </div>
+    <div
+      active-color="white"
+      style="font-size: 16px"
+      class="flex flex-row items-center mt-6 flex-nowrap">
+      <div class="flex items-start gap-2 flex-nowrap">
+        <q-btn class="text-white my-auto" label="1" color="green" rounded></q-btn>
+        <div class="flex flex-col items-start">
+          <p>Add to Cart</p>
+          <p class="text-gray-400 text-sm">Choose Your Item</p>
+        </div>
+      </div>
+
+      <div
+        class="h-[2px] w-12 mx-2 bg-[#20A95A] rounded-2xl border-2 border-[#20A95A] z-10 shadow-md"></div>
+
+      <div class="flex items-start gap-2 flex-nowrap">
+        <q-btn
+          class="text-gray-400 my-auto"
+          label="2"
+          @click="checkout()"
+          color="dark"
+          text-color="grey-13"
+          rounded></q-btn>
+        <div class="flex flex-col items-start">
+          <p class="text-gray-400">Checkout</p>
+          <p class="text-gray-400 text-sm">To Make Payment</p>
+        </div>
+      </div>
+    </div>
+  </q-toolbar>
+  <div class="h-[550px] overflow-y-scroll scrollhide justify-center items-center">
     <div class="flex flex-col gap-4 items-center">
       <p class="hidden">{{ subTotal }}</p>
-      <div v-for="(card, index) in data" :key="index" class="mx-auto w-screen px-5">
+      <div v-for="(card, index) in filteredData" :key="index" class="mx-auto w-screen px-5">
         <CardUser
           :gambarProduk="`${card.picture}`"
           :namaProduk="card.name"
@@ -134,49 +192,6 @@
           @quantityChanged="updateTotalPrice"
           :onClick="() => addToCart(card)"
           class="mx-auto" />
-
-        <!-- <q-card class="card my-card text-white p-3">
-            <q-card-section horizontal class="flex justify-around">
-              <div class="tulisan my-auto">
-                <div class="text-md pb-1 font-bold">{{ card.namaProduk }}</div>
-                <div class="text-xs text-justify">
-                  {{ card.descProduk }}
-                </div>
-                <div class="flex flex-row items-center justify-between">
-                  <div class="text-sm">
-                    {{ card.hargaProduk }}
-                  </div>
-
-                  <q-card-actions>
-                    <q-btn
-                      @click="decrement(card)"
-                      class="border-[#16A75C] text-black border-2"
-                      round
-                      color="white"
-                      icon="remove"
-                      size="sm" />
-
-                    <p class="mx-1 px-2">{{ getQuantity(card) }}</p>
-                    <q-btn
-                      @click="increment(card)"
-                      class="border-[#16A75C] text-black border-2"
-                      round
-                      color="white"
-                      icon="add"
-                      size="sm" />
-                  </q-card-actions>
-                </div>
-                <q-card-actions>
-                  <q-btn
-                    class="bg-green w-32 rounded-full text-sm text-black font-bold"
-                    label="Send"
-                    name="send"
-                    @click="addToCart(card)" />
-                </q-card-actions>
-              </div>
-              <q-img :src="`/src/assets/img/${card.gambarProduk}`" class="col-4" ratio="1" />
-            </q-card-section>
-          </q-card> -->
       </div>
     </div>
   </div>

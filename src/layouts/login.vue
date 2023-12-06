@@ -107,7 +107,7 @@
       <q-header class="bg-transparent border-0 border-transparent">
         <q-toolbar class="flex items-center justify-end">
           <q-btn
-            v-if="$route.path === '/' && !openCamera"
+            v-if="$route.path === '/login' && !openCamera"
             dense
             flat
             round

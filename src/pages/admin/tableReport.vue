@@ -1,7 +1,8 @@
 <template>
   <div class="min-w-full p-3 min-h-full bg-white mt-10">
+    <q-btn class="btn p-3 mb-3 ml-4" @click="generatePDF" label="Generate PDF"></q-btn>
     <q-card class="p-3 rounded-xl shadow-md overflow-x-hidden">
-     <!-- Table -->
+      <!-- Table -->
       <q-table
         class="my-table q-mb-md"
         flat
@@ -12,56 +13,131 @@
         row-key="no">
         <template v-slot:body-cell-action="props">
           <q-td :props="props" :key="props.col.name">
-            <q-btn
-              dense
-              flat
-              color="green"
-              icon="edit"
-              @click="handleEdit(props.row)"
-            />
-            <q-btn
-              dense
-              flat
-              color="negative"
-              icon="delete"
-              @click="handleDelete(props.row)"
-            />
+            <q-btn dense flat color="green" icon="edit" @click="handleEdit(props.row)" />
+            <q-btn dense flat color="negative" icon="delete" @click="handleDelete(props.row)" />
           </q-td>
         </template>
       </q-table>
-      </q-card>
-      </div>
+    </q-card>
+  </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-     columns : [
-        { name: 'no', align:'center', label: 'NO', field:'no', sortable: true },
-        { name: 'nameshop', align:'center', label: 'Name Shop', field:'nameshop', sortable: true },
-        { name: 'tog', align:'center', label: 'Type of Goods', field:'tog', sortable: true },
-        { name: 'commission', align:'center', label: 'Commission', field:'commission',  sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),},
-        { name: 'month', align:'center', label: 'Month', field:'month',  sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),},
-        { name: 'action', align:'center', label: 'Action', field:'action', style: 'width: 5px; border-radius: 0 10px 10px 0;', },
-      ],
-    tableData : [
-        { no: '1', nameshop: 'Ayam Taliwang', tog: 'Food & Beverage', commission: 'Rp. 825.000', month: 'Rp. 91.000', action: 'yes'},
-        { no: '2', nameshop: 'Caesar Salad', tog: 'Food & Beverage', commission: 'Rp. 600.000', month: 'Rp. 85.000', action: 'yes'},
-      ],
-    };
-  },
+<script lang="ts">
+  import jsPDF from 'jspdf'
+  import autoTable from 'jspdf-autotable'
+  import api from 'src/AxiosInterceptors'
+  import { ref, computed } from 'vue'
+
+  export default {
+    setup() {
+      const market = ref(
+        [] as {
+          id: any
+          picture: String
+          title: String
+          price: Number
+          typeId: Number
+          serviceTypeId: Number
+          user: {
+            name: String
+          }
+        }[]
+      )
+
+      api.get('/productReq/status/ACCEPTED', { withCredentials: true }).then((response) => {
+        market.value = response.data.data
+      })
+      return {
+        market,
+      }
+    },
+    data() {
+      return {
+        columns: [
+          { name: 'no', align: 'center', label: 'NO', field: 'no', sortable: true },
+          {
+            name: 'nameshop',
+            align: 'center',
+            label: 'Name Shop',
+            field: 'nameshop',
+            sortable: true,
+          },
+          { name: 'tog', align: 'center', label: 'Type of Goods', field: 'tog', sortable: true },
+          {
+            name: 'commission',
+            align: 'center',
+            label: 'Commission',
+            field: 'commission',
+            sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+          },
+          {
+            name: 'month',
+            align: 'center',
+            label: 'Month',
+            field: 'month',
+            sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+          },
+          {
+            name: 'action',
+            align: 'center',
+            label: 'Action',
+            field: 'action',
+            style: 'width: 5px; border-radius: 0 10px 10px 0;',
+          },
+        ],
+        tableData: [
+          {
+            no: '1',
+            nameshop: 'Ayam Taliwang',
+            tog: 'Food & Beverage',
+            commission: 'Rp. 825.000',
+            month: 'Rp. 91.000',
+            action: 'yes',
+          },
+          {
+            no: '2',
+            nameshop: 'Caesar Salad',
+            tog: 'Food & Beverage',
+            commission: 'Rp. 600.000',
+            month: 'Rp. 85.000',
+            action: 'yes',
+          },
+        ],
+      }
+    },
     methods: {
-    handleEdit(row) {
-      // Logika untuk menghandle edit
-      console.log('Edit:', row);
+      handleEdit(row) {
+        // Logika untuk menghandle edit
+        console.log('Edit:', row)
+      },
+      handleDelete(row) {
+        // Logika untuk menghandle delete
+        console.log('Delete:', row)
+      },
+      generatePDF() {
+        const doc = new jsPDF()
+
+        const tableData = this.market.map((row) => {
+          return [row.id, row.title, row.serviceTypeId, row.price, row.typeId]
+        })
+
+        const columns = [
+          { header: 'NO', dataKey: 'id' },
+          { header: 'Name Shop', dataKey: 'title' },
+          { header: 'Type of Goods', dataKey: 'typeId' },
+          { header: 'Commission', dataKey: 'price' },
+          { header: 'Month', dataKey: 'serviceTypeId' },
+        ]
+        console.log(tableData)
+        autoTable(doc, {
+          head: [columns.map((column) => column.header)],
+          body: tableData,
+        })
+
+        doc.save('Tes.pdf')
+      },
     },
-    handleDelete(row) {
-      // Logika untuk menghandle delete
-      console.log('Delete:', row);
-    },
-  },
-};
+  }
 </script>
 
 <style lang="scss">

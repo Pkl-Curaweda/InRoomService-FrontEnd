@@ -3,7 +3,11 @@
   import { useRouter } from 'vue-router'
   import CardMitra from 'src/components/CardMitra.vue'
   import api from 'src/AxiosInterceptors'
+  import { ref } from 'vue'
+
   import router from 'src/router'
+
+  var id = ''
   export default {
     components: { CardMitra },
 
@@ -23,17 +27,28 @@
         }[],
       }
     },
-    mounted() {
+    async mounted() {
+      await this.getProfile()
       this.getDataFromApi()
     },
     methods: {
+      async getProfile() {
+        try {
+          const response = await api.get('/profile', { withCredentials: true })
+          console.log(response.data)
+          id = response.data.data.id
+          console.log(id)
+        } catch (error) {
+          console.error(error)
+        }
+      },
       async getDataFromApi() {
         try {
-          const response = await api.get('/productReq', {
+          const response = await api.get(`/productReq/user/${id}`, {
             withCredentials: true,
           })
           console.log(response.data)
-          this.data = response.data.data.data
+          this.data = response.data.data
         } catch (error) {
           console.error('error fetching data: ', error)
         }
@@ -61,7 +76,7 @@
       </q-btn>
     </div>
     <div class="max-h-xl overflow-scroll custom-scrollbar text-lg mt-10">
-      <div class="block w-full gap-4 items-center">
+      <div v-if="data && data.length > 0" class="block w-full gap-4 items-center">
         <div v-for="(card, index) in data" :key="index">
           <card-mitra
             :nama-produk="card.title"
@@ -70,6 +85,9 @@
             :gambar-produk="card.picture"
             :onClick="card.id" />
         </div>
+      </div>
+      <div v-else>
+        <p class="text-center">No Data Available</p>
       </div>
     </div>
   </div>

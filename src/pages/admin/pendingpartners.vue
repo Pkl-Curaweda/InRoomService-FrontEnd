@@ -2,10 +2,14 @@
   <div class="px-8">
     <h1 class="font-bold">PENDING PRODUCT</h1>
 
-    <div class="">
+    <div v-if="data && data.length > 0" class="">
       <div v-for="(daata, index) in data" :key="index">
         <ListPartner :namaPartner="daata.user.name" :onClick="daata.id" />
       </div>
+    </div>
+
+    <div v-else>
+      <p class="text-center">No Upcoming Product</p>
     </div>
   </div>
 </template>

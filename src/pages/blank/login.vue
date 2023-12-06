@@ -91,9 +91,50 @@
   import { useRoute } from 'vue-router'
   import axios from 'axios'
   import api from 'src/AxiosInterceptors'
-  import { Cookies } from 'quasar'
+  import { Cookies, useQuasar } from 'quasar'
 
   export default {
+    setup() {
+      const $q = useQuasar()
+
+      return {
+        showNotif() {
+          $q.notify({
+            message: 'Login successful!',
+            textColor: 'green',
+            color: 'white',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'green',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        errorNotif() {
+          $q.notify({
+            message: 'Login Failed!',
+            color: 'red',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+      }
+    },
     data() {
       return {
         email: '',
@@ -156,8 +197,17 @@
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 
-            this.$router.push('/admin/home')
+            this.showNotif()
+
+            this.$nextTick(() => {
+              this.$router.push('/admin/home')
+            })
+            // this.$router.push({
+            //   path: '/admin/home',
+            //   query: { successMessage: 'Login successful' },
+            // })
           } catch (error) {
+            this.errorNotif()
             console.error('Login failed', error)
           }
         } else if (this.$route.path === '/login') {
@@ -177,9 +227,14 @@
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 
-            this.$router.push('/home')
+            this.showNotif()
+
+            this.$nextTick(() => {
+              this.$router.push('/home')
+            })
           } catch (error) {
-            console.error('Login failed', error.message)
+            this.errorNotif()
+            console.error('Login failed', error)
           }
         } else if (this.$route.path === '/mitra') {
           try {
@@ -198,9 +253,14 @@
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 
-            this.$router.push('/mitra/home')
+            this.showNotif()
+
+            this.$nextTick(() => {
+              this.$router.push('/mitra/home')
+            })
           } catch (error) {
-            console.error('Login failed', error.message)
+            this.errorNotif()
+            console.error('Login failed', error)
           }
         }
       },
