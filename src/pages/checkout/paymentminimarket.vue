@@ -1,6 +1,19 @@
 <template>
   <div class="w-full h-full px-5 pb-5 bg-gray-500">
     <!-- Produk -->
+    <div class="w-full flex justify-end">
+      <div>
+        <p class="text-white">Room</p>
+        <q-input
+          v-model="room"
+          filled
+          name="room"
+          bg-color="white"
+          type="number"
+          class="outline-none w-12"
+          min="1" />
+      </div>
+    </div>
     <div v-for="(cartItem, index) in cart" :key="index">
       <div>
         <input
@@ -37,6 +50,7 @@
         </q-item-section>
       </q-item>
     </div>
+
     <!-- Deskripsi Harga -->
     <q-item class="-mt-4">
       <q-item-section>
@@ -94,7 +108,7 @@
         class="bg-green w-32 left-0 rounded-full text-sm text-black font-bold"
         label="back"
         @click="$router.push('/minimarket')" />
-      <DialogModalVue />
+      <DialogModalVue :onClick="createOrder" />
       <!-- <q-btn
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
         label="payment"
@@ -112,9 +126,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { defineProps, ref } from 'vue'
   import DialogModalVue from '../../components/DialogModal.vue'
+  import api from 'src/AxiosInterceptors'
   export default {
     data() {
       return {
@@ -150,6 +165,7 @@
         increment,
         text: ref(''),
         wa: ref(''),
+        room: ref(''),
         group: ref(null),
         options: [
           { label: 'Cash', value: 'cash', name: 'cash' },
@@ -160,7 +176,7 @@
     },
     components: { DialogModalVue },
     methods: {
-      increm(cartItem) {
+      increm(cartItem: { namaProduk: any }) {
         const existProduct = this.finalSelected.find(
           (item) => item.namaProduk === cartItem.namaProduk
         )
@@ -171,7 +187,7 @@
           // this.finalSelected.push(cartItem)
         }
       },
-      decrem(cartItem) {
+      decrem(cartItem: { namaProduk: any }) {
         const existProduct = this.finalSelected.find(
           (item) => item.namaProduk === cartItem.namaProduk
         )
@@ -187,7 +203,7 @@
 
         console.log(this.finalSelected)
       },
-      getQuantity(cartItem) {
+      getQuantity(cartItem: { namaProduk: any }) {
         const existProduct = this.finalSelected.find(
           (item) => item.namaProduk === cartItem.namaProduk
         )
@@ -201,7 +217,7 @@
           this.cart = []
         }
       },
-      updateFinalSelected(cartItem) {
+      updateFinalSelected(cartItem: { selected: any }) {
         if (cartItem.selected) {
           this.finalSelected.push(cartItem)
         } else {
@@ -212,6 +228,25 @@
         }
 
         console.log(this.finalSelected)
+      },
+
+      createOrder() {
+        const data = new FormData()
+
+        data.append('roomId', this.room)
+        data.append('subtotal', this.subTotal)
+
+        try {
+          api
+            .post('/order/create', data, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              console.log(response.data)
+            })
+        } catch (error) {
+          console.error(error)
+        }
       },
     },
     computed: {

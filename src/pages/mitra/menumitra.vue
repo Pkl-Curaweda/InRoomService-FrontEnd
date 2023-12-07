@@ -25,11 +25,22 @@
           serviceType: number
           typeId: number
         }[],
+        tes: [] as {
+          id: string
+          title: string
+          price: number
+          desc: string
+          picture: string
+          serviceType: number
+          typeId: number
+          userId: number
+        }[],
       }
     },
     async mounted() {
       await this.getProfile()
       this.getDataFromApi()
+      this.getData()
     },
     methods: {
       async getProfile() {
@@ -38,6 +49,20 @@
           console.log(response.data)
           id = response.data.data.id
           console.log(id)
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      async getData() {
+        try {
+          const response = await api.get(`/services/1`, {
+            withCredentials: true,
+          })
+
+          this.tes = response.data.data.data.filter(
+            (item: { userId: number }) => item.userId === id
+          )
+          console.log(this.tes)
         } catch (error) {
           console.error(error)
         }
@@ -77,9 +102,9 @@
     </div>
     <div class="max-h-xl overflow-scroll custom-scrollbar text-lg mt-10">
       <div v-if="data && data.length > 0" class="block w-full gap-4 items-center">
-        <div v-for="(card, index) in data" :key="index">
+        <div v-for="(card, index) in tes" :key="index">
           <card-mitra
-            :nama-produk="card.title"
+            :nama-produk="card.name"
             :desc-produk="card.desc"
             :harga-produk="card.price"
             :gambar-produk="card.picture"

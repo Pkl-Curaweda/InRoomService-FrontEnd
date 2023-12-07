@@ -3,6 +3,7 @@
   import CardUser from 'src/components/CardUser.vue'
   import { defineProps, ref, defineEmits, toRef } from 'vue'
   import api from 'src/AxiosInterceptors'
+  import { useQuasar } from 'quasar'
   export default {
     components: {
       CardUser,
@@ -26,8 +27,42 @@
     },
     setup(props, { emit }) {
       const count = ref(0)
-
+      const $q = useQuasar()
       return {
+        addNotif() {
+          $q.notify({
+            message: 'Item Added to Cart',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        existNotif() {
+          $q.notify({
+            message: 'Item Already Added',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
         count,
       }
     },
@@ -61,7 +96,9 @@
             gambarProduk: card.picture,
             qty: 1,
           })
+          this.addNotif()
         } else {
+          this.existNotif()
           this.cart[existingProductIndex].qty += 1
         }
 

@@ -31,7 +31,7 @@
           label="Pay"
           style="background-color: #16a75c; width: 50%"
           text-color="black"
-          @click="BayarBerhasil = true" />
+          @click="handleClick" />
       </q-card-actions>
 
       <q-card-actions
@@ -172,7 +172,13 @@
   import { ref } from 'vue'
   import Receipt from './Receipt.vue'
   export default {
-    setup() {
+    props: {
+      onClick: {
+        type: Function,
+        required: true,
+      },
+    },
+    setup(props, emit) {
       return {
         Total: ref(false),
         BayarBerhasil: ref(false),
@@ -183,6 +189,10 @@
         ppn: '',
         servicefees: '',
         total: '',
+        handleClick() {
+          props.onClick()
+          BayarBerhasil = true
+        },
       }
     },
     components: {

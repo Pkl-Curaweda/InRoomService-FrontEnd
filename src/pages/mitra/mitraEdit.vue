@@ -243,15 +243,15 @@
       updateData() {
         const formData = new FormData()
 
-        formData.append('title', this.namegoods)
+        formData.append('name', this.namegoods)
         formData.append('serviceTypeId', this.serviceId) // ngambil dari select
-        formData.append('typeId', this.typeId) // ngambil dari yang duh di set di database
+        formData.append('subTypeId', this.typeId) // ngambil dari yang duh di set di database
         formData.append('desc', this.deskripsi)
         formData.append('price', this.price)
         formData.append('picture', this.img)
         console.log(this.typeService.value)
         api
-          .put(`/productReq/update/${this.id}`, formData, {
+          .put(`/services/update/${this.id}`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data',

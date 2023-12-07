@@ -4,6 +4,7 @@
   import pembayaranModal from 'src/components/pembayaranpages1.vue'
   import { defineProps, ref, defineEmits, toRef } from 'vue'
   import axios from 'axios'
+  import { useQuasar } from 'quasar'
   import api from 'src/AxiosInterceptors'
   export default {
     components: {
@@ -27,9 +28,44 @@
     },
 
     setup(props, { emit }) {
+      const $q = useQuasar()
       const count = ref(0)
 
       return {
+        addNotif() {
+          $q.notify({
+            message: 'Item Added to Cart',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        existNotif() {
+          $q.notify({
+            message: 'Item Already Added',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
         count,
       }
     },
@@ -65,10 +101,11 @@
             gambarProduk: card.picture,
             qty: 1,
           })
+          this.addNotif()
         } else {
+          this.existNotif()
           this.cart[existingProductIndex].qty += 1
         }
-
         this.saveCartToLocalStorage()
 
         console.log(this.cart)

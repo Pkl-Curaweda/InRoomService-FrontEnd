@@ -28,6 +28,7 @@ import checkoutLayout from '../layouts/checkout.vue'
 import mitraLayout from '../layouts/mitra.vue'
 import adminLayout from '../layouts/admin.vue'
 import tableReportVue from 'src/pages/admin/tableReport.vue'
+import coMinimarketVue from 'src/pages/checkout/coMinimarket.vue'
 
 export const subRoutes: RouteType[] = [
   {
@@ -198,7 +199,7 @@ export const subRoutes: RouteType[] = [
 
   {
     path: '/checkout/minimarket',
-    component: paymentMinimarketVue,
+    component: coMinimarketVue,
     // name: '/checkout/minimarket',
     meta: {
       layout: checkoutLayout,

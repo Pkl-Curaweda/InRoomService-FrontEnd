@@ -160,6 +160,33 @@
           console.error('Logout failed', error)
         }
       },
+      cancel() {
+        if (this.$route.path === '/minimarket') {
+          localStorage.removeItem('cart')
+        } else if (this.$route.path === '/foodbeverage') {
+          localStorage.removeItem('cartFood')
+        } else if (this.$route.path === '/laundry') {
+          this.$router.push('/estimated/laundry')
+        }
+      },
+      checkout() {
+        if (this.$route.path === '/minimarket') {
+          this.$router.push('/checkout/minimarket')
+        } else if (this.$route.path === '/foodbeverage') {
+          this.$router.push('/checkout/foodbeverage')
+        } else if (this.$route.path === '/laundry') {
+          this.$router.push('/checkout/laundry')
+        }
+      },
+      estimated() {
+        if (this.$route.path === '/minimarket') {
+          this.$router.push('/estimated/minimarket')
+        } else if (this.$route.path === '/foodbeverage') {
+          this.$router.push('/estimated/foodbeverage')
+        } else if (this.$route.path === '/laundry') {
+          this.$router.push('/estimated/laundry')
+        }
+      },
     },
   }
 </script>
