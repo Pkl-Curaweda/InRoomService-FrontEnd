@@ -152,12 +152,13 @@
   import { useRouter, useRoute } from 'vue-router'
   import { ref } from 'vue'
   import api from 'src/AxiosInterceptors'
-  import { QInput } from 'quasar'
+  import { QInput, useQuasar } from 'quasar'
   console.log(document.cookie)
   export default {
     setup() {
       const imgURL = ref('')
       const img = ref(null)
+      const $q = useQuasar()
       const handleUpload = () => {
         console.log('handleUpload is triggered')
         if (img.value) {
@@ -179,6 +180,42 @@
         route,
         id,
         options: ['Food', 'Drink', 'Laundry', 'Cleaning Tool'],
+        successNotif() {
+          $q.notify({
+            message: 'Item updated successfully',
+            color: 'white',
+            textColor: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'green',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        failedNotif() {
+          $q.notify({
+            message: 'Item failed to update',
+            color: 'white',
+            textColor: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'green',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
       }
     },
     data() {
@@ -197,6 +234,7 @@
           { value: 3, label: 'Cleaning Tool' },
           { value: 4, label: 'Medicine' },
         ],
+        data: [] as { name: string; price: number; desc: string; picture: string }[],
       }
     },
     mounted() {
@@ -216,19 +254,25 @@
       },
       async getData() {
         try {
-          const response = await api.get(`/productReq/${this.id}`, {
+          const response = await api.get(`/services/1?id=${this.id}/`, {
             withCredentials: true,
           })
-          console.log(response.data)
-          this.namegoods = response.data.data.title
-          this.price = response.data.data.price
-          this.deskripsi = response.data.data.desc
-          this.imgURL = response.data.data.picture
-          this.typegoods = this.getTypeLabel(response.data.data.typeId)
-          this.typeId = response.data.data.typeId
-          this.serviceId = response.data.data.serviceTypeId
-          this.typeService = this.getServiceLabel(response.data.data.serviceTypeId)
-          console.log(response.data.data.picture)
+
+          if (response.data.success) {
+            const serviceData = response.data.data.data[0]
+            this.namegoods = serviceData.name
+            this.price = serviceData.price
+            this.imgURL = serviceData.picture
+            this.typegoods = this.getTypeLabel(serviceData.subTypeId)
+            this.typeId = serviceData.subTypeId
+            this.serviceId = serviceData.serviceTypeId
+            this.typeService = this.getServiceLabel(serviceData.serviceTypeId)
+            this.deskripsi = serviceData.desc
+          } else {
+            console.error('Error: Service request was not successful')
+          }
+
+          console.log(response.data.data.data.picture)
         } catch (error) {
           console.error('error fetching data', error)
         }
@@ -258,9 +302,11 @@
             },
           })
           .then((response) => {
+            this.successNotif()
             console.log('Data updated successfully', response.data)
           })
           .catch((error) => {
+            this.failedNotif()
             console.error('Error update data:', error)
           })
       },

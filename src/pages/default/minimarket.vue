@@ -16,6 +16,7 @@
     data() {
       return {
         cart: [] as {
+          serviceId: number
           namaProduk: string
           hargaProduk: number
           gambarProduk: string
@@ -23,7 +24,9 @@
         }[],
         price: 0,
         data: [] as { name: string; price: number; desc: string; picture: string }[],
-        search: '',
+        searchQuery: '',
+        currPage: 1,
+        totalPages: 1,
       }
     },
 
@@ -76,11 +79,14 @@
     methods: {
       async getDataFromApi() {
         try {
-          const response = await api.get('/services/1', {
+          const response = await api.get('/services/1?page=' + this.currPage, {
+            params: { search: this.searchQuery },
             withCredentials: true,
           })
           console.log(response.data)
           this.data = response.data.data.data
+
+          this.totalPages = response.data.data.meta.lastPage
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -96,6 +102,7 @@
 
         if (existingProductIndex === -1) {
           this.cart.push({
+            serviceId: card.id,
             namaProduk: card.name,
             hargaProduk: card.price,
             gambarProduk: card.picture,
@@ -110,7 +117,18 @@
 
         console.log(this.cart)
       },
-
+      async goToPage(page: number) {
+        if (page >= 1 && page <= this.totalPages) {
+          this.currPage = page
+          this.getDataFromApi()
+        }
+      },
+      async goToNextPage() {
+        this.goToPage(this.currPage + 1)
+      },
+      async goToPrevPage() {
+        this.goToPage(this.currPage - 1)
+      },
       saveCartToLocalStorage() {
         const existingCart = JSON.parse(localStorage.getItem('cart') || '[]')
 
@@ -158,7 +176,7 @@
     watch: {},
     computed: {
       filteredData() {
-        const lowerCaseFilter = this.search.toLocaleLowerCase()
+        const lowerCaseFilter = this.searchQuery.toLocaleLowerCase()
         return this.data.filter((item) => item.name.toLocaleLowerCase().includes(lowerCaseFilter))
       },
       subTotal() {
@@ -184,8 +202,9 @@
 
       <q-input
         outlined
-        v-model="search"
+        v-model="searchQuery"
         label="Search"
+        @update:model-value="getDataFromApi()"
         for="search"
         type="search"
         color="dark w-full"
@@ -229,7 +248,7 @@
   <div class="h-[550px] overflow-y-scroll scrollhide justify-center items-center">
     <div class="flex flex-col gap-4 items-center">
       <!-- <pembayaranModal /> -->
-      <div v-for="(card, index) in filteredData" :key="index" class="mx-auto w-screen px-5">
+      <div v-for="(card, index) in data" :key="index" class="mx-auto w-screen px-5">
         <CardUser
           :gambarProduk="`${card.picture}`"
           :namaProduk="card.name"
@@ -238,6 +257,18 @@
           @quantityChanged="updateTotalPrice"
           :onClick="() => addToCart(card)"
           class="mx-auto" />
+      </div>
+      <div class="flex justify-between p-2 px-4 w-full">
+        <q-btn @click="goToPrevPage" unelevated size="sm" rounded padding="sm" color="green">
+          <div class="px-3 font-semibold text-center">
+            <span> Previous </span>
+          </div>
+        </q-btn>
+        <q-btn @click="goToNextPage" unelevated size="sm" rounded padding="sm" color="green">
+          <div class="px-3 font-semibold text-center">
+            <span> Next </span>
+          </div>
+        </q-btn>
       </div>
     </div>
   </div>

@@ -25,7 +25,7 @@
     class="card my-card text-white p-3 sm:p-5 w-full sm:w-[600px] xl:w-[700px] justify-center">
     <q-card-section horizontal class="flex justify-around w-full">
       <div class="tulisan my-auto w-50 md:w-96">
-        <div class="text-lg pb-1 font-bold">{{ namaProduk }}</div>
+        <h5 class="text-lg pb-1 font-bold capitalize">{{ namaProduk }}</h5>
         <div class="text-base text-justify truncate text-ellipsis">
           {{ descProduk }}
         </div>

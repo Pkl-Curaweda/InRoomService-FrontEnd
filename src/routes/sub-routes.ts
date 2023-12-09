@@ -29,6 +29,7 @@ import mitraLayout from '../layouts/mitra.vue'
 import adminLayout from '../layouts/admin.vue'
 import tableReportVue from 'src/pages/admin/tableReport.vue'
 import coMinimarketVue from 'src/pages/checkout/coMinimarket.vue'
+import menuPendingVue from 'src/pages/mitra/menuPending.vue'
 
 export const subRoutes: RouteType[] = [
   {
@@ -194,6 +195,17 @@ export const subRoutes: RouteType[] = [
       title: 'Minimarket - Lingian Hotel',
       label: 'History',
       icon: 'history',
+    },
+  },
+  {
+    path: '/mitra/pending',
+    component: menuPendingVue,
+    // name: '/mitra/history',
+    meta: {
+      layout: mitraLayout,
+      title: 'Minimarket - Lingian Hotel',
+      label: 'Pending',
+      icon: 'checklist',
     },
   },
 

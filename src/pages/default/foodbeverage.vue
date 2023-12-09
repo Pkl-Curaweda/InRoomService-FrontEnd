@@ -12,6 +12,7 @@
     data() {
       return {
         cart: [] as {
+          serviceId: number
           namaProduk: string
           hargaProduk: number
           gambarProduk: string
@@ -19,7 +20,9 @@
         }[],
         price: 0,
         data: [] as { name: string; price: number; desc: string; picture: string }[],
-        search: '',
+        searchQuery: '',
+        currPage: 1,
+        totalPages: 1,
       }
     },
     mounted() {
@@ -70,12 +73,14 @@
       async getDataFromApi() {
         try {
           const response = await api.get('/services/2', {
+            params: { search: this.searchQuery },
             withCredentials: true,
           })
           console.log('Response status:', response.status)
           console.log('Response data:', response.data)
           console.log(response.data)
           this.data = response.data.data.data
+          this.totalPages = response.data.data.meta.lastPage
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -85,12 +90,25 @@
         this.price = value
         this.$emit('total', value)
       },
+      async goToPage(page: number) {
+        if (page >= 1 && page <= this.totalPages) {
+          this.currPage = page
+          this.getDataFromApi()
+        }
+      },
+      async goToNextPage() {
+        this.goToPage(this.currPage + 1)
+      },
+      async goToPrevPage() {
+        this.goToPage(this.currPage - 1)
+      },
 
       addToCart(card: any) {
-        const existingProductIndex = this.cart.findIndex((item) => item.namaProduk === card.name)
+        const existingProductIndex = this.cart.findIndex((item) => item.serviceId === card.id)
 
         if (existingProductIndex === -1) {
           this.cart.push({
+            serviceId: card.id,
             namaProduk: card.name,
             hargaProduk: card.price,
             gambarProduk: card.picture,
@@ -111,7 +129,7 @@
 
         for (const newItem of this.cart) {
           const existingProductIndex = existingCart.findIndex(
-            (item: { namaProduk: string }) => item.namaProduk === newItem.namaProduk
+            (item: { serviceId: number }) => item.serviceId === newItem.serviceId
           )
 
           if (existingProductIndex === -1) {
@@ -149,7 +167,7 @@
     },
     computed: {
       filteredData() {
-        const lowerCaseFilter = this.search.toLocaleLowerCase()
+        const lowerCaseFilter = this.searchQuery.toLocaleLowerCase()
         return this.data.filter((item) => item.name.toLocaleLowerCase().includes(lowerCaseFilter))
       },
       subTotal() {
@@ -175,10 +193,11 @@
 
       <q-input
         outlined
-        v-model="search"
+        v-model="searchQuery"
         label="Search"
         for="search"
         type="search"
+        @update:model-value="getDataFromApi()"
         color="dark w-full"
         bg-color="white"
         class="w-56 sm:w-80 md:w-96">
@@ -219,8 +238,7 @@
   </q-toolbar>
   <div class="h-[550px] overflow-y-scroll scrollhide justify-center items-center">
     <div class="flex flex-col gap-4 items-center">
-      <p class="hidden">{{ subTotal }}</p>
-      <div v-for="(card, index) in filteredData" :key="index" class="mx-auto w-screen px-5">
+      <div v-for="(card, index) in data" :key="index" class="mx-auto w-screen px-5">
         <CardUser
           :gambarProduk="`${card.picture}`"
           :namaProduk="card.name"
@@ -229,6 +247,18 @@
           @quantityChanged="updateTotalPrice"
           :onClick="() => addToCart(card)"
           class="mx-auto" />
+      </div>
+      <div class="flex justify-between p-2 px-4 w-full">
+        <q-btn @click="goToPrevPage" unelevated size="sm" rounded padding="sm" color="green">
+          <div class="px-3 font-semibold text-center">
+            <span> Previous </span>
+          </div>
+        </q-btn>
+        <q-btn @click="goToNextPage" unelevated size="sm" rounded padding="sm" color="green">
+          <div class="px-3 font-semibold text-center">
+            <span> Next </span>
+          </div>
+        </q-btn>
       </div>
     </div>
   </div>

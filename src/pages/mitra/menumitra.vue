@@ -7,7 +7,7 @@
 
   import router from 'src/router'
 
-  var id = ''
+  var id = 0
   export default {
     components: { CardMitra },
 
@@ -16,18 +16,10 @@
         cart: [] as { namaProduk: string; hargaProduk: number; qty: number }[],
 
         price: 0,
+
         data: [] as {
           id: string
-          title: string
-          price: number
-          desc: string
-          picture: string
-          serviceType: number
-          typeId: number
-        }[],
-        tes: [] as {
-          id: string
-          title: string
+          name: string
           price: number
           desc: string
           picture: string
@@ -35,12 +27,14 @@
           typeId: number
           userId: number
         }[],
+        currPage: 1,
+        totalPages: 1,
       }
     },
     async mounted() {
       await this.getProfile()
-      this.getDataFromApi()
       this.getData()
+      // this.getDataFromApi()
     },
     methods: {
       async getProfile() {
@@ -55,28 +49,30 @@
       },
       async getData() {
         try {
-          const response = await api.get(`/services/1`, {
+          const response = await api.get(`/services/1?page=` + this.currPage, {
             withCredentials: true,
           })
 
-          this.tes = response.data.data.data.filter(
+          this.data = response.data.data.data.filter(
             (item: { userId: number }) => item.userId === id
           )
-          console.log(this.tes)
+          this.totalPages = response.data.data.meta.lastPage
+          console.log(this.data)
         } catch (error) {
           console.error(error)
         }
       },
-      async getDataFromApi() {
-        try {
-          const response = await api.get(`/productReq/user/${id}`, {
-            withCredentials: true,
-          })
-          console.log(response.data)
-          this.data = response.data.data
-        } catch (error) {
-          console.error('error fetching data: ', error)
+      async goToPage(page: number) {
+        if (page >= 1 && page <= this.totalPages) {
+          this.currPage = page
+          this.getData()
         }
+      },
+      async goToNextPage() {
+        this.goToPage(this.currPage + 1)
+      },
+      async goToPrevPage() {
+        this.goToPage(this.currPage - 1)
       },
     },
     setup(props) {
@@ -87,7 +83,8 @@
 </script>
 <template>
   <div class="m-auto h-full overflow-scroll">
-    <div class="flex justify-end p-2 w-full">
+    <div class="flex justify-between items-center p-2 px-4 w-full">
+      <h3 class="font-bold">Accepted Product</h3>
       <q-btn
         @click="navigate.push('/mitra/upload')"
         unelevated
@@ -95,20 +92,34 @@
         rounded
         padding="sm"
         color="green"
-        class="px-8 font-semibold flex justify-center items-center text-semibold"
-        ><q-icon name="o_add" class="mr-5 w-2 items-center h-full" />
-        <span class="font-bold">Upload</span>
+        class="">
+        <div class="px-3 py-1 font-semibold flex justify-center items-center text-semibold">
+          <q-icon name="o_add" class="mr-5" />
+          <span class="font-bold">Upload</span>
+        </div>
       </q-btn>
     </div>
     <div class="max-h-xl overflow-scroll custom-scrollbar text-lg mt-10">
       <div v-if="data && data.length > 0" class="block w-full gap-4 items-center">
-        <div v-for="(card, index) in tes" :key="index">
+        <div v-for="(card, index) in data" :key="index">
           <card-mitra
             :nama-produk="card.name"
             :desc-produk="card.desc"
             :harga-produk="card.price"
             :gambar-produk="card.picture"
             :onClick="card.id" />
+        </div>
+        <div class="flex justify-between p-2 px-4 w-full">
+          <q-btn @click="goToPrevPage" unelevated size="sm" rounded padding="sm" color="green">
+            <div class="px-3 font-semibold text-center">
+              <span> Previous </span>
+            </div>
+          </q-btn>
+          <q-btn @click="goToNextPage" unelevated size="sm" rounded padding="sm" color="green">
+            <div class="px-3 font-semibold text-center">
+              <span> Next </span>
+            </div>
+          </q-btn>
         </div>
       </div>
       <div v-else>

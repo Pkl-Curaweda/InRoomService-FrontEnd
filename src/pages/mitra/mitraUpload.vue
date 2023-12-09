@@ -209,9 +209,7 @@
         selectedService: ref(''),
       }
     },
-    mounted() {
-      this.getServiceType()
-    },
+    mounted() {},
     methods: {
       handleService(id) {
         this.selectedService = id
@@ -219,18 +217,7 @@
       tes() {
         console.log(this.model)
       },
-      async getServiceType() {
-        try {
-          const response = await api.get('/services/1/1', {
-            withCredentials: true,
-          })
 
-          console.log(response.data)
-          this.filihan = response.data.data
-        } catch (error) {
-          console.error('Error fetching data : ', error)
-        }
-      },
       sendData() {
         const formData = new FormData()
         formData.append('title', this.namegoods)

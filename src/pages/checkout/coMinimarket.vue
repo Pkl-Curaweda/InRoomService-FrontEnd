@@ -151,6 +151,7 @@
 
         <q-card-actions class="flex justify-end">
           <q-btn
+            @click="createOrder"
             no-caps
             class="bg-green w-32 rounded-full text-sm text-black font-bold"
             label="Payment" />
@@ -162,6 +163,8 @@
 
 <script>
   import { defineProps, ref } from 'vue'
+  import api from 'src/AxiosInterceptors'
+
   export default {
     data() {
       return {
@@ -211,19 +214,17 @@
         this.$refs.transferDialogRef.showModal = this.group === 'transfer'
       },
       increm(cartItem) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.namaProduk === cartItem.namaProduk
-        )
+        const existProduct = this.finalSelected.find((item) => item.id === cartItem.id)
         if (existProduct) {
           existProduct.qty++
         } else {
           // this.finalSelected.push(cartItem)
         }
+
+        console.log(this.finalSelected)
       },
       decrem(cartItem) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.namaProduk === cartItem.namaProduk
-        )
+        const existProduct = this.finalSelected.find((item) => item.id === cartItem.id)
         if (existProduct) {
           if (existProduct.qty > 1) {
             existProduct.qty--
@@ -235,9 +236,7 @@
         console.log(this.finalSelected)
       },
       getQuantity(cartItem) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.namaProduk === cartItem.namaProduk
-        )
+        const existProduct = this.finalSelected.find((item) => item.id === cartItem.id)
         return existProduct ? existProduct.qty : 0
       },
       getCartFromLocalStorage() {
@@ -249,8 +248,11 @@
         }
       },
       updateFinalSelected(cartItem) {
+        const { serviceId, qty } = cartItem
         if (cartItem.selected) {
-          this.finalSelected.push(cartItem)
+          // this.finalSelected.push(cartItem)
+
+          this.finalSelected.push({ serviceId, qty })
         } else {
           const index = this.finalSelected.findIndex((item) => item === cartItem)
           if (index !== -1) {
@@ -258,6 +260,45 @@
           }
         }
         console.log(this.finalSelected)
+      },
+      createOrder() {
+        try {
+          // const data = new FormData()
+
+          // Convert finalSelected array to JSON string and append it to FormData
+          // data.append('items[]', JSON.stringify(this.finalSelected))
+
+          let tes = JSON.stringify(this.finalSelected)
+          api
+            .post(
+              '/order/create',
+              { items: this.finalSelected },
+              {
+                withCredentials: true,
+                headers: {
+                  accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              }
+            )
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch((error) => {
+              console.error('Error creating order:', error)
+            })
+
+          // fetch('http://localhost:8080/order/create', {
+          //   method: 'POST',
+          //   body: JSON.stringify({ items: [{ serviceId: 1, qty: 2 }] }),
+          //   headers: {
+          //     accept: 'application/json',
+          //     'Content-Type': 'application/json',
+          //   },
+          // })
+        } catch (error) {
+          console.error('Unexpected error:', error)
+        }
       },
     },
     computed: {

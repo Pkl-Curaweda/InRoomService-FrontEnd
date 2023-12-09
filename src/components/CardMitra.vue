@@ -12,7 +12,7 @@
       //   type: Function,
       //   required: true,
       // },
-      onClick: Promise,
+      onClick: Number,
     },
     setup(props) {
       const navigate = useRouter()
@@ -30,7 +30,7 @@
   <q-card class="card my-card text-white p-3 w-[80%] md:w-md m-auto my-5">
     <q-card-section horizontal class="flex justify-between">
       <div class="block relative w-32">
-        <h4 class="text-md font-bold">{{ namaProduk }}</h4>
+        <h5 class="text-lg capitalize pb-1 font-bold">{{ namaProduk }}</h5>
         <p class="text-xs">
           {{ descProduk }}
         </p>
