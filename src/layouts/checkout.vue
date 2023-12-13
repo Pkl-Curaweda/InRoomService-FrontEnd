@@ -137,7 +137,7 @@
           </q-list>
         </q-scroll-area>
       </q-drawer>
-      <q-page-container class="">
+      <q-page-container class="h-full">
         <router-view />
       </q-page-container>
     </q-layout>

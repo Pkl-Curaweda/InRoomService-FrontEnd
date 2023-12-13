@@ -211,7 +211,7 @@ export const subRoutes: RouteType[] = [
 
   {
     path: '/checkout/minimarket',
-    component: coMinimarketVue,
+    component: paymentMinimarketVue,
     // name: '/checkout/minimarket',
     meta: {
       layout: checkoutLayout,

@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-full px-5 pb-5 bg-gray-500">
+  <div class="w-full h-screen px-5 pb-5 bg-gray-500">
     <!-- Produk -->
-    <div class="w-full flex justify-end">
+    <!-- <div class="w-full flex justify-end">
       <div>
         <p class="text-white">Room</p>
         <q-input
@@ -13,33 +13,18 @@
           class="outline-none w-12"
           min="1" />
       </div>
-    </div>
+    </div> -->
     <div v-for="(cartItem, index) in cart" :key="index">
       <div>
-        <input
-          type="checkbox"
-          v-model="cartItem.selected"
-          @change="updateFinalSelected(cartItem)" />
-        <h1 class="text-lg text-white font-bold m-0">{{ cartItem.namaProduk }}</h1>
+        <div class="flex gap-4">
+          <input
+            type="checkbox"
+            v-model="cartItem.selected"
+            @change="updateFinalSelected(cartItem)" />
+          <h1 class="text-lg text-white font-bold m-0">{{ cartItem.namaProduk }}</h1>
+        </div>
         <div class="flex flex-row justify-around">
           <q-img :src="`${cartItem.gambarProduk}`" alt="gambaritems" class="w-36 h-36" />
-          <q-card-actions>
-            <q-btn
-              @click="decrem(cartItem)"
-              class="border-[#16A75C] text-black border-2"
-              round
-              color="white"
-              icon="remove"
-              size="sm" />
-            <p class="mx-1 px-2">{{ getQuantity(cartItem) }}</p>
-            <q-btn
-              @click="increm(cartItem)"
-              class="border-[#16A75C] text-black border-2"
-              round
-              color="white"
-              icon="add"
-              size="sm" />
-          </q-card-actions>
         </div>
       </div>
 
@@ -51,64 +36,24 @@
       </q-item>
     </div>
 
-    <!-- Deskripsi Harga -->
-    <q-item class="-mt-4">
-      <q-item-section>
-        <q-item-label class="text-white"
-          >Subtotal Order ({{ finalSelected.length }} menu)</q-item-label
-        >
-      </q-item-section>
-      <q-item-section side class="text-white">
-        <q-item-label>{{ subTotal }}</q-item-label>
-      </q-item-section>
-    </q-item>
-    <q-item class="-mt-4">
-      <q-item-section>
-        <q-item-label class="text-white">PPN</q-item-label>
-      </q-item-section>
-      <q-item-section side class="text-white">
-        <q-item-label>{{ ppn }}</q-item-label>
-      </q-item-section>
-    </q-item>
-    <q-item class="-mt-4">
-      <q-item-section>
-        <q-item-label class="text-white">Service Fees</q-item-label>
-      </q-item-section>
-      <q-item-section side class="text-white">
-        <q-item-label>{{ servicefees }}</q-item-label>
-      </q-item-section>
-    </q-item>
-    <q-item class="-mt-4">
-      <q-item-section>
-        <q-item-label class="font-bold text-white">TOTAL</q-item-label>
-      </q-item-section>
-      <q-item-section side class="text-white">
-        <q-item-label>{{ grandTotal }}</q-item-label>
-      </q-item-section>
-    </q-item>
-    <!-- Pembayaran -->
-    <div class="q-pa-md -mt-5">
-      <q-item-label class="my-1 text-white">Change Options</q-item-label>
-      <q-option-group :options="options" type="radio" v-model="group" class="text-white" />
-    </div>
-
-    <!-- Whatsapp  Number-->
-    <div class="q-pa-md max-w-full -mt-5">
-      <q-item-label class="my-1 text-white">Whatsapp Number</q-item-label>
-      <q-input v-model="wa" filled name="whatsappNumber" bg-color="white" />
-    </div>
-    <!-- Name -->
-    <div class="q-pa-md max-w-full -mt-5">
-      <q-item-label class="my-1 text-white">Your Note *</q-item-label>
-      <q-input v-model="text" filled name="fullName" bg-color="white" type="textarea" />
-    </div>
-
     <q-card-actions class="flex justify-around">
       <q-btn
         class="bg-green w-32 left-0 rounded-full text-sm text-black font-bold"
         label="back"
         @click="$router.push('/minimarket')" />
-      <DialogModalVue :onClick="createOrder" />
+      <q-btn
+        v-if="!orderIdExists && !showUpdateButton"
+        @click="createOrder"
+        no-caps
+        class="bg-green w-32 rounded-full text-sm text-black font-bold"
+        label="Checkout" />
+      <q-btn
+        v-if="orderIdExists || showUpdateButton"
+        @click="updateOrder"
+        no-caps
+        class="bg-green w-32 rounded-full text-sm text-black font-bold"
+        label="Update Checkout" />
+      <!-- <DialogModalVue :onClick="createOrder" /> -->
       <!-- <q-btn
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
         label="payment"
@@ -137,6 +82,9 @@
         ppn: 3950,
         servicefees: 1000,
         finalSelected: [],
+        updatedCart: [],
+        showUpdateButton: false,
+        orderID: localStorage.getItem('orderId'),
       }
     },
     mounted() {
@@ -217,32 +165,115 @@
           this.cart = []
         }
       },
-      updateFinalSelected(cartItem: { selected: any }) {
+      updateFinalSelected(cartItem: never) {
+        const { serviceId, qty } = cartItem
         if (cartItem.selected) {
-          this.finalSelected.push(cartItem)
+          // this.finalSelected.push(cartItem)
+
+          this.finalSelected.push({ serviceId, qty })
+          this.updatedCart = this.cart.filter(
+            (item) =>
+              !this.finalSelected.some((selectedItem) => selectedItem.serviceId === item.serviceId)
+          )
         } else {
           const index = this.finalSelected.findIndex((item) => item === cartItem)
           if (index !== -1) {
             this.finalSelected.splice(index, 1)
           }
+          this.updatedCart = this.cart
         }
 
+        const orderId = localStorage.getItem('orderId')
+        // if (orderId) {
+        //   // this.updatedCart = this.cart.map((item) => ({ ...item, selected: false }))
+        //   if (cartItem.selected) {
+        //     this.updatedCart = this.cart.filter(
+        //       (item) =>
+        //         !this.finalSelected.some(
+        //           (selectedItem) => selectedItem.serviceId === item.serviceId
+        //         )
+        //     )
+        //   } else {
+        //     this.updatedCart = this.cart
+        //   }
+        // }
+
+        console.log(this.updatedCart)
         console.log(this.finalSelected)
       },
 
       createOrder() {
-        const data = new FormData()
-
-        data.append('roomId', this.room)
-        data.append('subtotal', this.subTotal)
-
         try {
           api
-            .post('/order/create', data, {
-              withCredentials: true,
-            })
+            .post(
+              '/order/create',
+              { items: this.finalSelected },
+              {
+                withCredentials: true,
+                headers: {
+                  accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              }
+            )
             .then((response) => {
-              console.log(response.data)
+              // this.checkoutData = response.data.data
+              // this.ppn = response.data.data.ppn
+              // this.fees = response.data.data.fees
+              // this.total = response.data.data.total
+              // this.length = response.data.data.orderDetails.length
+              // this.sub = response.data.data.subtotal
+              // console.log(this.length)
+
+              localStorage.setItem('cart', JSON.stringify(this.updatedCart))
+              window.location.reload()
+              this.finalSelected = []
+
+              console.log(this.updatedCart)
+
+              localStorage.setItem('orderId', response.data.data.id)
+              // console.log(this.checkoutData)
+              console.log(this.finalSelected)
+              // this.showUpdateButton = true
+            })
+            .catch((error) => {
+              console.error('Error creating order:', error)
+            })
+
+          // fetch('http://localhost:8080/order/create', {
+          //   method: 'POST',
+          //   body: JSON.stringify({ items: [{ serviceId: 1, qty: 2 }] }),
+          //   headers: {
+          //     accept: 'application/json',
+          //     'Content-Type': 'application/json',
+          //   },
+          // })
+        } catch (error) {
+          console.error('Unexpected error:', error)
+        }
+      },
+
+      updateOrder() {
+        const orderId = localStorage.getItem('orderId')
+        try {
+          api
+            .put(
+              `/order/update/newItem/${orderId}`,
+              { items: this.finalSelected },
+              {
+                withCredentials: true,
+                headers: {
+                  accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              }
+            )
+            .then((response) => {
+              localStorage.setItem('cart', JSON.stringify(this.updatedCart))
+              this.finalSelected = []
+              window.location.reload()
+
+              console.log(response)
             })
         } catch (error) {
           console.error(error)
@@ -250,6 +281,9 @@
       },
     },
     computed: {
+      orderIdExists() {
+        return !!this.orderID
+      },
       subTotal() {
         var subCost = 0
         for (var items in this.finalSelected) {
@@ -262,6 +296,12 @@
       grandTotal() {
         return this.subTotal + this.ppn + this.servicefees
       },
+    },
+    created() {
+      // Automatically show the Update button if orderId exists in localStorage
+      if (this.orderIdExists) {
+        this.showUpdateButton = true
+      }
     },
   }
 </script>
