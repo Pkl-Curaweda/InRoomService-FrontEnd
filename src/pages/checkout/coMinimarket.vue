@@ -17,13 +17,13 @@
                 <p class="text-weight-bold">{{ data.service.name }}</p>
                 <p>Rp. {{ data.service.price }}</p>
               </div>
-              <q-btn
+              <!-- <q-btn
                 no-caps
                 color="red-1"
                 class="text-black mb-2"
                 name="o_description"
                 icon="description"
-                label="Notes" />
+                label="Notes" /> -->
             </div>
             <div class="column items-center">
               <q-img :src="`${data.service.picture}`" class="bg-red-100 w-30 h-30" />
@@ -89,11 +89,11 @@
           :maximized="maximizedToggle"
           transition-show="slide-up"
           transition-hide="slide-down">
-          <q-card class="bg-primary text-white">
+          <q-card class="bg-white text-black">
             <q-bar>
               <q-space />
 
-              <q-btn
+              <!-- <q-btn
                 dense
                 flat
                 icon="minimize"
@@ -110,14 +110,14 @@
                 <q-tooltip v-if="!maximizedToggle" class="bg-white text-primary"
                   >Maximize</q-tooltip
                 >
-              </q-btn>
+              </q-btn> -->
               <q-btn dense flat icon="close" v-close-popup>
                 <q-tooltip class="bg-white text-primary">Close</q-tooltip>
               </q-btn>
             </q-bar>
 
             <q-card-section>
-              <div class="text-h6">Choose payment method</div>
+              <div class="text-h6">Select payment method</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
@@ -127,22 +127,6 @@
             </q-card-section>
           </q-card>
         </q-dialog>
-        <br />
-
-        <q-card-actions class="flex justify-end">
-          <q-btn
-            v-if="!orderIdExists && !showUpdateButton"
-            @click="createOrder"
-            no-caps
-            class="bg-green w-32 rounded-full text-sm text-black font-bold"
-            label="Checkout" />
-          <q-btn
-            v-if="orderIdExists || showUpdateButton"
-            @click="updateOrder"
-            no-caps
-            class="bg-green w-32 rounded-full text-sm text-black font-bold"
-            label="Update Checkout" />
-        </q-card-actions>
       </q-form>
     </div>
   </div>
@@ -175,7 +159,6 @@
       }
     },
     mounted() {
-      this.getCartFromLocalStorage()
       this.getOrder()
     },
     props: {
@@ -238,133 +221,21 @@
         } catch (error) {
           console.error(error)
         }
-        // const existProduct = this.finalSelected.find(
-        //   (item) => item.serviceId === cartItem.serviceId
-        // )
-        // console.log(existProduct.serviceId)
-        // console.log(existProduct)
-        // if (existProduct) {
-        //   const orderDetail = this.orderData.data.orderDetails.find(
-        //     (detail) => detail.serviceId === cartItem.serviceId
-        //   )
-        //   if (orderDetail) {
-        //     try {
-        //       existProduct.qty++
-        //       console.log(orderDetail)
-        //       // Use the found detailid in the API request
-        //       api.put(
-        //         '/order/update/qty/' + this.orderId + '/' + orderDetail.id,
-        //         {
-        //           serviceId: existProduct.serviceId,
-        //           qty: existProduct.qty,
-        //         },
-        //         {
-        //           withCredentials: true,
-        //           headers: {
-        //             accept: 'application/json',
-        //             'Content-Type': 'application/json',
-        //           },
-        //         }
-        //       )
-        //     } catch (error) {
-        //       console.error(error)
-        //     }
-        //   } else {
-        //     // console.warn('Order detail not found for serviceId:', cartItem.serviceId)
-        //     existProduct.qty++
-        //   }
-        // } else {
-        //   // this.finalSelected.push(cartItem)
-        // }
+      },
+      async decrem(data) {
+        var id = data.id
+        var qty = data.qty
+        var serviceId = data.service.id
 
-        // console.log(this.finalSelected)
-      },
-      decrem(cartItem) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.serviceId === cartItem.serviceId
-        )
-        if (existProduct) {
-          const orderDetail = this.orderData.data.orderDetails.find(
-            (detail) => detail.serviceId === cartItem.serviceId
-          )
-          if (orderDetail) {
-            try {
-              if (existProduct.qty >= 0) {
-                existProduct.qty--
-                console.log(orderDetail)
-                api.put(
-                  '/order/update/qty/' + this.orderId + '/' + orderDetail.id,
-                  {
-                    serviceId: existProduct.serviceId,
-                    qty: existProduct.qty,
-                  },
-                  {
-                    withCredentials: true,
-                    headers: {
-                      accept: 'application/json',
-                      'Content-Type': 'application/json',
-                    },
-                  }
-                )
-              } else {
-                existProduct.qty = 0
-                existProduct.selected = false
-              }
-            } catch (error) {
-              console.error(error)
-            }
-          } else {
-            // console.warn('Order detail not found for serviceId:', cartItem.serviceId)
-            if (existProduct.qty > 1) {
-              existProduct.qty--
-            } else {
-              existProduct.qty = 0
-              existProduct.selected = false
-            }
-          }
-        }
-        console.log(this.finalSelected)
-      },
-      getQuantity(cartItem) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.serviceId === cartItem.serviceId
-        )
-        return existProduct ? existProduct.qty : 0
-      },
-      getCartFromLocalStorage() {
-        const cartString = localStorage.getItem('cart')
-        if (cartString) {
-          this.cart = JSON.parse(cartString)
-        } else {
-          this.cart = []
-        }
-      },
-      updateFinalSelected(cartItem) {
-        const { serviceId, qty } = cartItem
-        if (cartItem.selected) {
-          // this.finalSelected.push(cartItem)
-
-          this.finalSelected.push({ serviceId, qty })
-        } else {
-          const index = this.finalSelected.findIndex((item) => item === cartItem)
-          if (index !== -1) {
-            this.finalSelected.splice(index, 1)
-          }
-        }
-        console.log(this.finalSelected)
-      },
-      createOrder() {
         try {
-          // const data = new FormData()
-
-          // Convert finalSelected array to JSON string and append it to FormData
-          // data.append('items[]', JSON.stringify(this.finalSelected))
-
-          let tes = JSON.stringify(this.finalSelected)
-          api
-            .post(
-              '/order/create',
-              { items: this.finalSelected },
+          if (qty >= 0) {
+            qty--
+            await api.put(
+              `/order/update/qty/${this.orderId}/${id}`,
+              {
+                serviceId: serviceId,
+                qty: qty,
+              },
               {
                 withCredentials: true,
                 headers: {
@@ -373,68 +244,9 @@
                 },
               }
             )
-            .then((response) => {
-              this.checkoutData = response.data.data
-              this.ppn = response.data.data.ppn
-              this.fees = response.data.data.fees
-              this.total = response.data.data.total
-              this.length = response.data.data.orderDetails.length
-              this.sub = response.data.data.subtotal
-              console.log(this.length)
-              this.cart.forEach((cartItem) => {
-                cartItem.selected = false
-              })
-              this.finalSelected = []
-              localStorage.setItem('orderId', response.data.data.id)
-              console.log(this.checkoutData)
-              console.log(this.finalSelected)
-              this.showUpdateButton = true
-            })
-            .catch((error) => {
-              console.error('Error creating order:', error)
-            })
 
-          // fetch('http://localhost:8080/order/create', {
-          //   method: 'POST',
-          //   body: JSON.stringify({ items: [{ serviceId: 1, qty: 2 }] }),
-          //   headers: {
-          //     accept: 'application/json',
-          //     'Content-Type': 'application/json',
-          //   },
-          // })
-        } catch (error) {
-          console.error('Unexpected error:', error)
-        }
-      },
-      updateOrder() {
-        const orderId = localStorage.getItem('orderId')
-        try {
-          api
-            .put(
-              '/order/update/newItem/' + orderId,
-              { items: this.finalSelected },
-              {
-                withCredentials: true,
-                headers: {
-                  accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-              }
-            )
-            .then((response) => {
-              this.checkoutData = response.data.data
-              this.ppn = response.data.data.ppn
-              this.fees = response.data.data.fees
-              this.total = response.data.data.total
-              this.length = response.data.data.orderDetails.length
-
-              this.sub = response.data.data.subtotal
-              this.cart.forEach((cartItem) => {
-                cartItem.selected = false
-              })
-              this.finalSelected = []
-              console.log(response.data)
-            })
+            this.getOrder()
+          }
         } catch (error) {
           console.error(error)
         }
