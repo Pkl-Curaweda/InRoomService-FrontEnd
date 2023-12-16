@@ -10,16 +10,12 @@
     <div class="q-px-md">
       <q-form>
         <!-- SECTION 2 -->
-        <div v-for="(cartItem, index) in cart" :key="index">
+        <div v-for="(data, index) in orderData" :key="index">
           <div class="row justify-between">
             <div class="column justify-between">
               <div>
-                <p class="text-weight-bold">{{ cartItem.namaProduk }}</p>
-                <p>Rp. {{ cartItem.hargaProduk }}</p>
-                <input
-                  type="checkbox"
-                  v-model="cartItem.selected"
-                  @change="updateFinalSelected(cartItem)" />
+                <p class="text-weight-bold">{{ data.service.name }}</p>
+                <p>Rp. {{ data.service.price }}</p>
               </div>
               <q-btn
                 no-caps
@@ -30,18 +26,18 @@
                 label="Notes" />
             </div>
             <div class="column items-center">
-              <q-img :src="`${cartItem.gambarProduk}`" class="bg-red-100 w-30 h-30" />
+              <q-img :src="`${data.service.picture}`" class="bg-red-100 w-30 h-30" />
               <q-card-actions>
                 <q-btn
-                  @click="decrem(cartItem)"
+                  @click="decrem(data)"
                   class="border-[#16A75C] text-black border-2"
                   round
                   color="white"
                   icon="remove"
                   size="sm" />
-                <p class="mx-1 px-2">{{ getQuantity(cartItem) }}</p>
+                <p class="mx-1 px-2">{{ data.qty }}</p>
                 <q-btn
-                  @click="increm(cartItem)"
+                  @click="increm(data)"
                   class="border-[#16A75C] text-black border-2"
                   round
                   color="white"
@@ -161,6 +157,7 @@
       return {
         cart: [],
         ppn: 0,
+        qty: 0,
         fees: 0,
         sub: 0,
         total: 0,
@@ -200,7 +197,12 @@
       getOrder() {
         try {
           api.get('/order/' + this.orderId, { withCredentials: true }).then((response) => {
-            this.orderData = response.data
+            this.orderData = response.data.data.orderDetails
+            this.length = response.data.data.orderDetails.length
+            this.fees = response.data.data.fees
+            this.ppn = response.data.data.ppn
+            this.total = response.data.data.total
+            this.sub = response.data.data.subtotal
             console.log(this.orderData)
           })
         } catch (error) {}
@@ -210,47 +212,72 @@
         this.$refs.qrisDialogRef.showModal = this.group === 'qris'
         this.$refs.transferDialogRef.showModal = this.group === 'transfer'
       },
-      increm(cartItem) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.serviceId === cartItem.serviceId
-        )
-        console.log(existProduct.serviceId)
-        console.log(existProduct)
-        if (existProduct) {
-          const orderDetail = this.orderData.data.orderDetails.find(
-            (detail) => detail.serviceId === cartItem.serviceId
-          )
-          if (orderDetail) {
-            try {
-              existProduct.qty++
-              console.log(orderDetail)
-              // Use the found detailid in the API request
-              api.put(
-                '/order/update/qty/' + this.orderId + '/' + orderDetail.id,
-                {
-                  serviceId: existProduct.serviceId,
-                  qty: existProduct.qty,
-                },
-                {
-                  withCredentials: true,
-                  headers: {
-                    accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                }
-              )
-            } catch (error) {
-              console.error(error)
+      async increm(data) {
+        var id = data.id
+        var qty = data.qty
+        var serviceId = data.service.id
+        console.log(serviceId)
+        try {
+          qty++
+          await api.put(
+            `/order/update/qty/${this.orderId}/${id}`,
+            {
+              serviceId: serviceId,
+              qty: qty,
+            },
+            {
+              withCredentials: true,
+              headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
             }
-          } else {
-            // console.warn('Order detail not found for serviceId:', cartItem.serviceId)
-            existProduct.qty++
-          }
-        } else {
-          // this.finalSelected.push(cartItem)
-        }
+          )
 
-        console.log(this.finalSelected)
+          this.getOrder()
+        } catch (error) {
+          console.error(error)
+        }
+        // const existProduct = this.finalSelected.find(
+        //   (item) => item.serviceId === cartItem.serviceId
+        // )
+        // console.log(existProduct.serviceId)
+        // console.log(existProduct)
+        // if (existProduct) {
+        //   const orderDetail = this.orderData.data.orderDetails.find(
+        //     (detail) => detail.serviceId === cartItem.serviceId
+        //   )
+        //   if (orderDetail) {
+        //     try {
+        //       existProduct.qty++
+        //       console.log(orderDetail)
+        //       // Use the found detailid in the API request
+        //       api.put(
+        //         '/order/update/qty/' + this.orderId + '/' + orderDetail.id,
+        //         {
+        //           serviceId: existProduct.serviceId,
+        //           qty: existProduct.qty,
+        //         },
+        //         {
+        //           withCredentials: true,
+        //           headers: {
+        //             accept: 'application/json',
+        //             'Content-Type': 'application/json',
+        //           },
+        //         }
+        //       )
+        //     } catch (error) {
+        //       console.error(error)
+        //     }
+        //   } else {
+        //     // console.warn('Order detail not found for serviceId:', cartItem.serviceId)
+        //     existProduct.qty++
+        //   }
+        // } else {
+        //   // this.finalSelected.push(cartItem)
+        // }
+
+        // console.log(this.finalSelected)
       },
       decrem(cartItem) {
         const existProduct = this.finalSelected.find(

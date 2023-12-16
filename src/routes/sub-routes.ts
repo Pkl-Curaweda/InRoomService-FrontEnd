@@ -221,6 +221,17 @@ export const subRoutes: RouteType[] = [
     },
   },
   {
+    path: '/payment',
+    component: coMinimarketVue,
+    // name: '/checkout/minimarket',
+    meta: {
+      layout: checkoutLayout,
+      title: 'Mini Market - Lingian Hotel',
+      label: '',
+      icon: '',
+    },
+  },
+  {
     path: '/checkout/foodbeverage',
     component: paymentFoodVue,
     // name: '/checkout/foodbeverage',
