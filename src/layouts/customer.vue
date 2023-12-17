@@ -264,7 +264,7 @@
                 </q-item>
               </template>
             </template>
-            <q-item clickable v-ripple @click="logout">
+            <q-item clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="o_support_agent" />
               </q-item-section>

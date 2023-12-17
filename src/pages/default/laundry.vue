@@ -231,7 +231,9 @@
       </div>
     </div>
   </q-toolbar>
-  <div class="h-[550px] overflow-y-scroll scrollhide justify-center items-center">
+  <div
+    v-if="data && data.length > 0"
+    class="h-[550px] overflow-y-scroll scrollhide justify-center items-center">
     <div class="flex flex-col gap-4 items-center">
       <div v-for="(card, index) in data" :key="index" class="mx-auto w-screen px-5">
         <CardUser
@@ -256,6 +258,17 @@
         </q-btn>
       </div>
     </div>
+  </div>
+
+  <div
+    v-else-if="data && data.length === 0 && searchQuery.length > 0"
+    class="h-[550px] overflow-y-scroll flex flex-col items-center px-5">
+    <h1 class="text-3xl">Check your query</h1>
+    <h3 class="text-2xl text-center">No matching results found for '{{ searchQuery }}'.</h3>
+  </div>
+  <div v-else class="h-[550px] overflow-y-scroll px-5">
+    <h1 class="text-3xl">Something Wrong</h1>
+    <h3 class="text-2xl text-center">Please, try again later.</h3>
   </div>
 </template>
 

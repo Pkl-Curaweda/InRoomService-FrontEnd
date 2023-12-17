@@ -4,9 +4,9 @@ import RouteType from 'src/types/route'
 import dashboardUserVue from 'src/pages/mainPages/index.vue'
 import regsiterPageVue from '../pages/register/registerPages.vue'
 
-import paymentMinimarketVue from '../pages/checkout/paymentminimarket.vue'
-import paymentFoodVue from '../pages/checkout/paymentFood.vue'
-import paymentLaundryVue from '../pages/checkout/paymentLaundry.vue'
+import paymentMinimarketVue from '../pages/checkout/minimarket.vue'
+import paymentFoodVue from '../pages/checkout/foodbeverage.vue'
+import paymentLaundryVue from '../pages/checkout/laundry.vue'
 
 import mitraPageVue from '../pages/mitra/mitraUpload.vue'
 import about from 'src/pages/about/about.vue'

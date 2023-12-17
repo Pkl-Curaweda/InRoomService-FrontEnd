@@ -1,7 +1,5 @@
 <template>
   <div class="flex items-center flex-col justify-center">
-   
-
     <p class="mt-8" v-if="$route.path === '/mitra'">
       Don't have an account?
       <a class="text-[#D1CB2A]" href="/mitra/register">Create an account</a>

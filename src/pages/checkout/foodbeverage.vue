@@ -1,5 +1,9 @@
 <template>
-  <div class="w-full h-screen px-5 pb-5 bg-gray-500">
+  <div class="w-full h-full overflow-y-scroll px-5 pb-5 bg-gray-500" v-if="cart && cart.length > 0">
+    <q-btn
+      class="bg-green left-0 rounded-full text-sm text-black font-bold"
+      icon="arrow_back"
+      @click="$router.push('/foodbeverage')" />
     <!-- Produk -->
     <!-- <div class="w-full flex justify-end">
       <div>
@@ -38,10 +42,6 @@
 
     <q-card-actions class="flex justify-around">
       <q-btn
-        class="bg-green w-32 left-0 rounded-full text-sm text-black font-bold"
-        label="back"
-        @click="$router.push('/minimarket')" />
-      <q-btn
         v-if="!orderIdExists && !showUpdateButton"
         @click="createOrder"
         no-caps
@@ -53,21 +53,26 @@
         no-caps
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
         label="Update Checkout" />
-      <!-- <DialogModalVue :onClick="createOrder" /> -->
-      <!-- <q-btn
+      <q-btn
+        v-if="orderIdExists || showUpdateButton"
+        @click="navigate.push('/payment')"
+        no-caps
         class="bg-green w-32 rounded-full text-sm text-black font-bold"
-        label="payment"
-        name="payment" /> -->
+        label="Next" />
     </q-card-actions>
+  </div>
 
-    <!-- <div>
-      <h2>Selected Items:</h2>
-      <ul>
-        <li v-for="(selectedItem, index) in finalSelected" :key="index">
-          {{ selectedItem.namaProduk }}
-        </li>
-      </ul>
-    </div> -->
+  <div
+    v-else
+    class="w-full h-full bg-gray-500 flex flex-col gap-4 justify-center items-center text-white">
+    <h1 class="text-3xl">Item Not Found</h1>
+    <h3 class="text-2xl text-center">Please, add item into cart before you checkout it.</h3>
+    <q-btn
+      no-caps
+      label="Back"
+      color="green"
+      class="text-white my-5"
+      @click="navigate.push('/foodbeverage')" />
   </div>
 </template>
 
@@ -75,16 +80,15 @@
   import { defineProps, ref } from 'vue'
   import DialogModalVue from '../../components/DialogModal.vue'
   import api from 'src/AxiosInterceptors'
+  import { useRouter } from 'vue-router'
   export default {
     data() {
       return {
         cart: [],
-        ppn: 3950,
-        servicefees: 1000,
         finalSelected: [],
         updatedCart: [],
         showUpdateButton: false,
-        orderID: localStorage.getItem('orderId'),
+        orderId: localStorage.getItem('orderFoodId'),
       }
     },
     mounted() {
@@ -95,70 +99,24 @@
       gambaritems: String,
       hargaitems: String,
       subtotal: Number,
+      ppn: Number,
+      servicefees: Number,
       total: Number,
     },
     setup() {
-      const count = ref(0)
-      const decrement = () => {
-        if (count.value > 0) {
-          count.value--
-        }
-      }
-      const increment = () => {
-        count.value++
-      }
+      const navigate = useRouter()
+
       return {
-        count,
-        decrement,
-        increment,
+        navigate,
         text: ref(''),
         wa: ref(''),
         room: ref(''),
-        group: ref(null),
-        options: [
-          { label: 'Cash', value: 'cash', name: 'cash' },
-          { label: 'QRIS', value: 'qris', name: 'qris' },
-          { label: 'Transfer', value: 'transfer', name: 'transfer' },
-        ],
       }
     },
     components: { DialogModalVue },
     methods: {
-      increm(cartItem: { namaProduk: any }) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.namaProduk === cartItem.namaProduk
-        )
-
-        if (existProduct) {
-          existProduct.qty++
-        } else {
-          // this.finalSelected.push(cartItem)
-        }
-      },
-      decrem(cartItem: { namaProduk: any }) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.namaProduk === cartItem.namaProduk
-        )
-
-        if (existProduct) {
-          if (existProduct.qty > 1) {
-            existProduct.qty--
-          } else {
-            existProduct.qty = 0
-            existProduct.selected = false
-          }
-        }
-
-        console.log(this.finalSelected)
-      },
-      getQuantity(cartItem: { namaProduk: any }) {
-        const existProduct = this.finalSelected.find(
-          (item) => item.namaProduk === cartItem.namaProduk
-        )
-        return existProduct ? existProduct.qty : 0
-      },
       getCartFromLocalStorage() {
-        const cartString = localStorage.getItem('cart')
+        const cartString = localStorage.getItem('cartFood')
         if (cartString) {
           this.cart = JSON.parse(cartString)
         } else {
@@ -217,44 +175,25 @@
               }
             )
             .then((response) => {
-              // this.checkoutData = response.data.data
-              // this.ppn = response.data.data.ppn
-              // this.fees = response.data.data.fees
-              // this.total = response.data.data.total
-              // this.length = response.data.data.orderDetails.length
-              // this.sub = response.data.data.subtotal
-              // console.log(this.length)
-
-              localStorage.setItem('cart', JSON.stringify(this.updatedCart))
+              localStorage.setItem('cartFood', JSON.stringify(this.updatedCart))
               window.location.reload()
               this.finalSelected = []
 
               console.log(this.updatedCart)
 
-              localStorage.setItem('orderId', response.data.data.id)
-              // console.log(this.checkoutData)
+              localStorage.setItem('orderFoodId', response.data.data.id)
               console.log(this.finalSelected)
-              // this.showUpdateButton = true
             })
             .catch((error) => {
               console.error('Error creating order:', error)
             })
-
-          // fetch('http://localhost:8080/order/create', {
-          //   method: 'POST',
-          //   body: JSON.stringify({ items: [{ serviceId: 1, qty: 2 }] }),
-          //   headers: {
-          //     accept: 'application/json',
-          //     'Content-Type': 'application/json',
-          //   },
-          // })
         } catch (error) {
           console.error('Unexpected error:', error)
         }
       },
 
       updateOrder() {
-        const orderId = localStorage.getItem('orderId')
+        const orderId = localStorage.getItem('orderFoodId')
         try {
           api
             .put(
@@ -282,19 +221,7 @@
     },
     computed: {
       orderIdExists() {
-        return !!this.orderID
-      },
-      subTotal() {
-        var subCost = 0
-        for (var items in this.finalSelected) {
-          var individualItem = this.finalSelected[items]
-          subCost += individualItem.qty * individualItem.hargaProduk
-        }
-
-        return subCost
-      },
-      grandTotal() {
-        return this.subTotal + this.ppn + this.servicefees
+        return !!this.orderId
       },
     },
     created() {
@@ -306,4 +233,10 @@
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>

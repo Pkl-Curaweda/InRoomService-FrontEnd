@@ -115,7 +115,7 @@
             <q-img src="../assets/img/logoLingian.png" class="w-40" />
           </div>
           <q-list>
-            <template v-for="(route, index) in mainRoutes" :key="index">
+            <template v-for="(route, index) in routes" :key="index">
               <!-- Only display routes with a non-empty label in the sidebar -->
               <template v-if="route.meta.label">
                 <q-item
@@ -134,20 +134,37 @@
                 </q-item>
               </template>
             </template>
+            <q-item clickable v-ripple @click="whatsapp">
+              <q-item-section avatar>
+                <q-icon name="o_support_agent" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Whatsapp</p>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple @click="logout">
+              <q-item-section avatar>
+                <q-icon name="o_logout" />
+              </q-item-section>
+              <q-item-section>
+                <p class="text-bold">Logout</p>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>
-      <q-page-container class="h-full">
+      <q-page-container class="h-screen">
         <router-view />
       </q-page-container>
     </q-layout>
   </div>
 </template>
 
-<script setup>
+<!-- <script setup>
   import { useRoute, useRouter } from 'vue-router'
   import { computed, ref, watch } from 'vue'
   import { mainRoutes } from '../routes/main-routes'
+  import { Cookies, useQuasar } from 'quasar'
 
   const leftDrawerOpen = ref(false)
   function toggleLeftDrawer() {
@@ -156,6 +173,41 @@
 
   const route = useRoute()
   const router = useRouter()
+  const $q = useQuasar()
+  function showNotif() {
+    $q.notify({
+      message: 'Logout successful!',
+      color: 'green',
+      position: 'top',
+      actions: [
+        {
+          icon: 'close',
+          color: 'white',
+          round: true,
+          handler: () => {
+            /* ... */
+          },
+        },
+      ],
+    })
+  }
+  function errorNotif() {
+    $q.notify({
+      message: 'Login Failed!',
+      color: 'red',
+      position: 'top',
+      actions: [
+        {
+          icon: 'close',
+          color: 'white',
+          round: true,
+          handler: () => {
+            /* ... */
+          },
+        },
+      ],
+    })
+  }
   const search = ref('')
 
   function back() {
@@ -167,6 +219,123 @@
       router.push('/laundry')
     }
   }
-</script>
 
-<style lang="scss" scoped></style>
+   async function logout() {
+    try {
+          await api.get(
+            '/auth/logout',
+            // { req: Cookies.get('refreshToken') },
+            { withCredentials: true }
+          )
+          localStorage.removeItem('token')
+
+          showNotif()
+          this.$nextTick(() => {
+            this.router.push('/login')
+          })
+        } catch (error) {
+          this.errorNotif()
+          console.error('Logout failed', error)
+        }
+  }
+</script> -->
+
+<script lang="ts">
+  import { useRoute, useRouter } from 'vue-router'
+  import { ref, computed, watch } from 'vue'
+  import { routes } from '../router'
+  import { mainRoutes } from '../routes/main-routes'
+  import api from 'src/AxiosInterceptors'
+  import { Cookies, useQuasar } from 'quasar'
+
+  export default {
+    setup() {
+      const $q = useQuasar()
+
+      return {
+        showNotif() {
+          $q.notify({
+            message: 'Logout successful!',
+            color: 'green',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+        errorNotif() {
+          $q.notify({
+            message: 'Login Failed!',
+            color: 'red',
+            position: 'top',
+            actions: [
+              {
+                icon: 'close',
+                color: 'white',
+                round: true,
+                handler: () => {
+                  /* ... */
+                },
+              },
+            ],
+          })
+        },
+      }
+    },
+    data() {
+      return {
+        routes: mainRoutes,
+        leftDrawerOpen: false,
+        router: useRouter(),
+        route: useRoute(),
+        search: '',
+      }
+    },
+    methods: {
+      whatsapp() {
+        window.location.replace('https://api.whatsapp.com/send?phone=6281220222629&text=Halo')
+      },
+      toggleLeftDrawer() {
+        this.leftDrawerOpen = !this.leftDrawerOpen
+      },
+
+      async logout() {
+        const refreshToken = Cookies.get('refreshToken')
+
+        try {
+          await api.get(
+            '/auth/logout',
+            // { req: Cookies.get('refreshToken') },
+            { withCredentials: true }
+          )
+          localStorage.removeItem('token')
+
+          this.showNotif()
+          this.$nextTick(() => {
+            this.router.push('/login')
+          })
+        } catch (error) {
+          this.errorNotif()
+          console.error('Logout failed', error)
+        }
+      },
+
+      back() {
+        if (this.$route.path === '/checkout/minimarket') {
+          this.$router.push('/minimarket')
+        } else if (this.$route.path === '/checkout/foodbeverage') {
+          this.$router.push('/foodbeverage')
+        } else if (this.$route.path === '/checkout/laundry') {
+          this.$router.push('/laundry')
+        }
+      },
+    },
+  }
+</script>

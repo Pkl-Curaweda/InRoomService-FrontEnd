@@ -1,14 +1,17 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md" v-if="orderData && orderData.length > 0">
     <div class="row justify-between">
       <span class="row items-center">
-        <q-icon name="arrow_back_ios" class="h-10 w-10"></q-icon>
+        <q-icon
+          name="arrow_back_ios"
+          size="30px"
+          @click="navigate.push('/checkout/minimarket')"></q-icon>
         <p>PAYMENT</p>
       </span>
       <q-icon name="map" class="h-10 w-10"></q-icon>
     </div>
     <div class="q-px-md">
-      <q-form>
+      <div class="flex flex-col">
         <!-- SECTION 2 -->
         <div v-for="(data, index) in orderData" :key="index">
           <div class="row justify-between">
@@ -82,6 +85,12 @@
           class="text-black my-5"
           @click="dialog = true"
           icon-right="expand_more" />
+        <q-btn
+          no-caps
+          label="Cancel Order"
+          color="red"
+          class="text-white my-5"
+          @click="confirm = true" />
 
         <q-dialog
           v-model="dialog"
@@ -127,14 +136,40 @@
             </q-card-section>
           </q-card>
         </q-dialog>
-      </q-form>
+
+        <q-dialog v-model="confirm" persistent>
+          <q-card>
+            <q-card-section class="row items-center">
+              <q-avatar icon="signal_wifi_off" color="primary" text-color="white" />
+              <span class="q-ml-sm">Are you sure to cancel order?</span>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="No" color="black" v-close-popup />
+              <q-btn label="Yes" color="red" v-close-popup @click="cancelOrder" />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+      </div>
     </div>
+  </div>
+
+  <div v-else class="flex flex-col gap-4 justify-center items-center q-pa-md">
+    <h1 class="text-3xl">Order Not Found</h1>
+    <h3 class="text-2xl text-center">Please, checkout first before you pay it.</h3>
+    <q-btn
+      no-caps
+      label="Back"
+      color="green"
+      class="text-white my-5"
+      @click="navigate.push('/checkout/minimarket')" />
   </div>
 </template>
 
 <script>
   import { defineProps, ref } from 'vue'
   import api from 'src/AxiosInterceptors'
+  import { useRouter } from 'vue-router'
 
   export default {
     data() {
@@ -148,6 +183,7 @@
         finalSelected: [],
         length: 0,
         dialog: ref(false),
+        confirm: ref(false),
         orderId: localStorage.getItem('orderId'),
         serviceId: 0,
         maximizedToggle: ref(true),
@@ -169,7 +205,9 @@
       // total: Number,
     },
     setup() {
+      const navigate = useRouter()
       return {
+        navigate,
         text: ref(''),
         wa: ref(''),
         group: ref(null),
@@ -177,6 +215,19 @@
       }
     },
     methods: {
+      cancelOrder() {
+        try {
+          api
+            .delete(`/order/delete/${this.orderId}`, { withCredentials: true })
+            .then((response) => {
+              localStorage.removeItem('orderId')
+              window.location.reload()
+              console.log(response)
+            })
+        } catch (error) {
+          console.error(error)
+        }
+      },
       getOrder() {
         try {
           api.get('/order/' + this.orderId, { withCredentials: true }).then((response) => {
