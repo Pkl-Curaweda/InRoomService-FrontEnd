@@ -84,10 +84,7 @@
 
 <script lang="ts">
   import { ref, computed } from 'vue'
-  import ButtonVue from '../../components/Button.vue'
-  import CardMitra from 'src/components/CardMitra.vue'
-  import CardUser from 'src/components/CardUser.vue'
-  import CardMenu from 'src/components/CardMenu.vue'
+
   import { useRoute } from 'vue-router'
   import axios from 'axios'
   import api from 'src/AxiosInterceptors'
@@ -188,12 +185,12 @@
             )
 
             const token = response.data.data.accessToken
-            console.log(token)
+            // console.log(token)
             console.log('berhasil login')
             console.log(response.data.message)
             const refreshToken = Cookies.get('refreshToken')
 
-            console.log(refreshToken)
+            // console.log(refreshToken)
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 
@@ -219,11 +216,11 @@
             )
 
             const token = response.data.data.accessToken
-            console.log(token)
+            // console.log(token)
             console.log('berhasil login')
             const refreshToken = Cookies.get('refreshToken')
 
-            console.log(refreshToken)
+            // console.log(refreshToken)
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 
@@ -245,11 +242,11 @@
             )
 
             const token = response.data.data.accessToken
-            console.log(token)
+            // console.log(token)
             console.log('berhasil login')
             const refreshToken = Cookies.get('refreshToken')
 
-            console.log(refreshToken)
+            // console.log(refreshToken)
             // localStorage.setItem('auth', true)
             localStorage.setItem('token', token)
 

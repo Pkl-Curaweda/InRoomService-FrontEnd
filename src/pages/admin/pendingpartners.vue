@@ -31,18 +31,18 @@
       return {}
     },
     mounted() {
-      this.getHistory()
+      this.getPending()
     },
     methods: {
-      async getHistory() {
+      async getPending() {
         try {
           const response = await api.get('/productReq/status/PENDING', {
             withCredentials: true,
           })
-          console.log(response.data.data)
+          // console.log(response.data.data)
           this.data = response.data.data
         } catch (error) {
-          console.error(error)
+          // console.error(error)
         }
       },
     },

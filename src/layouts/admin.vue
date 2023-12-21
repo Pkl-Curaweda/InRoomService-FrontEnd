@@ -18,7 +18,7 @@
             <q-btn flat round icon="o_mail" class="opacity-80 hover:opacity-100" />
           </router-link>
 
-          <router-link to="/">
+          <router-link to="/profile">
             <q-btn flat round icon="o_account_circle" class="opacity-80 hover:opacity-100" />
           </router-link>
         </q-toolbar>
@@ -105,7 +105,10 @@
           <q-list>
             <template v-for="(route, index) in routes" :key="index">
               <!-- Only display routes with a non-empty label in the sidebar -->
-              <template v-if="route.meta.label && route.path !== '/promotoday'">
+              <template
+                v-if="
+                  route.meta.label && route.path !== '/promotoday' && route.path !== '/laundry'
+                ">
                 <q-item
                   clickable
                   :active="route.meta.label === 'Outbox'"

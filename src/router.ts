@@ -1,5 +1,4 @@
 import { RouteRecordName, RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
-import defaultVue from './layouts/default.vue'
 import indexUser from './pages/mainPages/index.vue'
 import minimarketVue from './pages/default/minimarket.vue'
 import foodbeverageVue from './pages/default/foodbeverage.vue'
@@ -74,7 +73,7 @@ export const routes: RouteType[] = [
     component: promotodayVue,
     // name: '/promotoday',
     meta: {
-      layout: defaultVue,
+      layout: customerVue,
       title: 'Promo Today - Lingian Hotel',
       label: 'promo today',
       icon: 'percent',
@@ -118,17 +117,7 @@ export const routes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    // create path about
-    path: '/admin/acc',
-    component: adminPageVue,
-    meta: {
-      layout: navAbout,
-      title: 'About - Lingian Hotel',
-      label: '',
-      icon: '',
-    },
-  },
+
   {
     // create path about
     path: '/profile',

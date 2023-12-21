@@ -186,17 +186,17 @@ export const subRoutes: RouteType[] = [
       icon: '',
     },
   },
-  {
-    path: '/mitra/history',
-    component: historyPageVue,
-    // name: '/mitra/history',
-    meta: {
-      layout: mitraLayout,
-      title: 'Minimarket - Lingian Hotel',
-      label: 'History',
-      icon: 'history',
-    },
-  },
+  // {
+  //   path: '/mitra/history',
+  //   component: historyPageVue,
+  //   // name: '/mitra/history',
+  //   meta: {
+  //     layout: mitraLayout,
+  //     title: 'Minimarket - Lingian Hotel',
+  //     label: 'History',
+  //     icon: 'history',
+  //   },
+  // },
   {
     path: '/mitra/pending',
     component: menuPendingVue,

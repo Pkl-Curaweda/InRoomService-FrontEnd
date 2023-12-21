@@ -245,7 +245,7 @@
               this.finalSelected = []
               window.location.reload()
 
-              console.log(response)
+              // console.log(response)
             })
         } catch (error) {
           console.error(error)

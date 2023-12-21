@@ -75,7 +75,7 @@
             params: { search: this.searchQuery },
             withCredentials: true,
           })
-          console.log(response.data)
+          // console.log(response.data)
           this.data = response.data.data.data
         } catch (error) {
           console.error('Error fetching data:', error)
@@ -183,7 +183,7 @@
   <q-toolbar class="flex flex-col w-screen">
     <div class="flex items-center gap-2 flex-row">
       <q-btn dense flat round icon="timeline" @click="estimated()" class="text-white" />
-      <q-btn dense flat round icon="person" class="text-white" />
+      <q-btn dense flat round icon="person" @click="$router.push('/profile')" class="text-white" />
       <q-btn dense flat round icon="shopping_cart" @click="checkout()" class="text-white" />
 
       <q-input

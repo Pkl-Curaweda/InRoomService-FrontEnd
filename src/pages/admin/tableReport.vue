@@ -1,5 +1,29 @@
 <template>
   <div class="min-w-full p-3 min-h-full bg-white mt-10">
+    <q-select
+      outlined
+      name="serviceTypeId"
+      label-color="green"
+      class="w-52 ml-4"
+      v-model="typeService"
+      :options="typeServiceOptions"
+      label="Service">
+    </q-select>
+    <!-- <p>{{ formattedDateRange }}</p> -->
+    <q-input outlined name="date" class="w-56 ml-4 text-[#069550]" v-model="formattedDateRange">
+      <template #append>
+        <q-icon
+          name="arrow_drop_down"
+          class="text-[#069550] cursor-pointer"
+          size="24px"
+          @click="toggleDropdown">
+          <q-popup-proxy>
+            <q-date v-model="dateModel" range color="green" />
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+
     <q-btn class="btn p-3 mb-3 ml-4" @click="generatePDF" label="Generate PDF"></q-btn>
     <q-card class="p-3 rounded-xl shadow-md overflow-x-hidden">
       <!-- Table -->
@@ -53,6 +77,12 @@
     },
     data() {
       return {
+        dateModel: ref({ from: '', to: '' }),
+        typeService: null,
+        typeServiceOptions: [
+          { value: 1, label: 'Mini Market' },
+          { value: 2, label: 'Food Beverage' },
+        ],
         columns: [
           { name: 'no', align: 'center', label: 'NO', field: 'no', sortable: true },
           {
@@ -68,14 +98,14 @@
             align: 'center',
             label: 'Commission',
             field: 'commission',
-            sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+            sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
           },
           {
             name: 'month',
             align: 'center',
             label: 'Month',
             field: 'month',
-            sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+            sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
           },
           {
             name: 'action',
@@ -106,11 +136,11 @@
       }
     },
     methods: {
-      handleEdit(row) {
+      handleEdit(row: any) {
         // Logika untuk menghandle edit
         console.log('Edit:', row)
       },
-      handleDelete(row) {
+      handleDelete(row: any) {
         // Logika untuk menghandle delete
         console.log('Delete:', row)
       },
@@ -135,6 +165,25 @@
         })
 
         doc.save('Tes.pdf')
+      },
+    },
+    computed: {
+      dateRange() {
+        return this.dateModel && this.dateModel.from && this.dateModel.to
+      },
+      formattedDateRange() {
+        const fromDate = new Date(this.dateModel.from)
+        const toDate = new Date(this.dateModel.to)
+
+        // Check if dates are valid
+        if (!isNaN(fromDate) && !isNaN(toDate)) {
+          const formattedFromDate = fromDate.toLocaleDateString()
+          const formattedToDate = toDate.toLocaleDateString()
+          return `${formattedFromDate} - ${formattedToDate}`
+        } else {
+          // Default value if dates are invalid
+          return 'Select the date'
+        }
       },
     },
   }

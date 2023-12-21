@@ -21,7 +21,7 @@
           <!-- elemen ini berdasarkan props -->
           <h5 class="text-black">{{ namaToko }}</h5>
           <!-- elemen ini berdasarkan props -->
-          <p class="text-[#808080]">{{ jam }}</p>
+          <!-- <p class="text-[#808080]">{{ jam }}</p> -->
           <!-- elemen ini berdasarkan props -->
         </div>
         <q-item-section>

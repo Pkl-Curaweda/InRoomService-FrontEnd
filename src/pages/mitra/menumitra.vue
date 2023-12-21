@@ -40,7 +40,7 @@
       async getProfile() {
         try {
           const response = await api.get('/profile', { withCredentials: true })
-          console.log(response.data)
+          // console.log(response.data)
           id = response.data.data.id
           console.log(id)
         } catch (error) {
@@ -57,7 +57,7 @@
             (item: { userId: number }) => item.userId === id
           )
           this.totalPages = response.data.data.meta.lastPage
-          console.log(this.data)
+          // console.log(this.data)
         } catch (error) {
           console.error(error)
         }

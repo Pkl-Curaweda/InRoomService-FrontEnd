@@ -419,7 +419,7 @@
           console.log('cancle input')
           this.confirmExit == true ? this.$router.push('/home') : ''
         } else {
-          this.$router.push('/home')
+          this.$router.back()
         }
       },
     },

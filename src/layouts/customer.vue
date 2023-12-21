@@ -209,7 +209,6 @@
         <q-toolbar class="flex items-center">
           <div class="flex items-center gap-1 flex-nowrap">
             <q-icon name="o_shopping_cart" size="32px"></q-icon>
-            <p>{{ length }}</p>
           </div>
           <div class="flex justify-end gap-5 p-2 w-full">
             <q-btn

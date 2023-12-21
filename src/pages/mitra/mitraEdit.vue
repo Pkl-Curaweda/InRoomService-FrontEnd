@@ -272,7 +272,7 @@
             console.error('Error: Service request was not successful')
           }
 
-          console.log(response.data.data.data.picture)
+          // console.log(response.data.data.data.picture)
         } catch (error) {
           console.error('error fetching data', error)
         }

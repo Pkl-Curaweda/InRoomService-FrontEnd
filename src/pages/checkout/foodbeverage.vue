@@ -185,10 +185,10 @@
               console.log(this.finalSelected)
             })
             .catch((error) => {
-              console.error('Error creating order:', error)
+              // console.error('Error creating order:', error)
             })
         } catch (error) {
-          console.error('Unexpected error:', error)
+          // console.error('Unexpected error:', error)
         }
       },
 
@@ -212,10 +212,10 @@
               this.finalSelected = []
               window.location.reload()
 
-              console.log(response)
+              // console.log(response)
             })
         } catch (error) {
-          console.error(error)
+          // console.error(error)
         }
       },
     },

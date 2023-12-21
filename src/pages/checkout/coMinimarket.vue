@@ -51,7 +51,7 @@
           </div>
         </div>
         <!-- SECTION 3 -->
-        <q-separator class="q-my-lg q-mb-xs" />
+        <q-separator class="q-my-lg q-mb-xs" color="black" />
 
         <div class="column gap-2">
           <div class="row justify-between">
@@ -125,14 +125,57 @@
               </q-btn>
             </q-bar>
 
-            <q-card-section>
-              <div class="text-h6">Select payment method</div>
+            <q-card-section class="mb-4">
+              <div class="text-h6 font-bold">Select payment method</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit
-              voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel
-              numquam exercitationem aut, natus minima, porro labore.
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/gopay.svg" alt="" width="35px" height="" />
+                <p class="font-bold">GoPay</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/spay.svg" alt="" width="35px" height="" />
+                <p class="font-bold">ShopeePay</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/dana.svg" alt="" width="35px" height="" />
+                <p class="font-bold">Dana</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+            </q-card-section>
+            <q-card-section class="mb-4">
+              <div class="text-h6 font-bold">Other payment methods</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/logobca.png" alt="" width="35px" height="" />
+                <p class="font-bold">BCA MOBILE</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/mandiri.svg" alt="" width="35px" height="" />
+                <p class="font-bold">MANDIRI</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/logobri.png" alt="" width="35px" height="" />
+                <p class="font-bold">BRImo</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+              <div class="flex gap-4 items-center">
+                <q-img src="../../assets/img/logobni.png" alt="" width="35px" height="" />
+                <p class="font-bold">BNI</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
+              <div class="flex gap-4 items-center">
+                <q-icon name="paid" color="green" size="35px" height="" />
+                <p class="font-bold">CASH</p>
+              </div>
+              <q-separator class="q-my-lg q-mb-xs" color="black" />
             </q-card-section>
           </q-card>
         </q-dialog>

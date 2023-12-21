@@ -90,7 +90,7 @@
   const router = useRouter()
   var tex = ''
   function onDecode(Text: any) {
-    console.log(`Decode text from QR code is ${Text}`)
+    // console.log(`Decode text from QR code is ${Text}`)
     tex = Text.value
     // window.location.replace(Text)
   }

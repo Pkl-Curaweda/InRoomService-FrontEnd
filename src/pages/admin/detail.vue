@@ -147,31 +147,6 @@
       }
       const route = useRoute()
       const id = route.params.id
-      // const sendData = () => {
-      //   // Prepare data object
-      //   const data = {
-      //     type: this.model,
-      //     name: this.namegoods,
-      //     price: this.price,
-      //     description: this.deskripsi,
-      //     file: this.file,
-      //   }
-      //   // Send data to the server using axios (replace the URL with your actual API endpoint)
-      //   axios
-      //     .post('http://localhost:8080/productReq', data)
-      //     .then((response) => {
-      //       console.log('Data sent successfully:', response.data)
-      //       // Reset form fields if needed
-      //       this.model = null
-      //       this.namegoods = ''
-      //       this.price = ''
-      //       this.deskripsi = ''
-      //       this.file = ''
-      //     })
-      //     .catch((error) => {
-      //       console.error('Error sending data:', error)
-      //     })
-      // }
       return {
         model: ref(null),
         deskripsi: ref(''),
@@ -215,16 +190,16 @@
           const response = await api.get(`/productReq/${this.id}`, {
             withCredentials: true,
           })
-          console.log(response.data)
+          // console.log(response.data)
           this.namegoods = response.data.data.title
           this.price = response.data.data.price
           this.deskripsi = response.data.data.desc
           this.imgURL = response.data.data.picture
           this.typegoods = this.getTypeLabel(response.data.data.typeId)
           this.typeService = this.getServiceLabel(response.data.data.serviceTypeId)
-          console.log(response.data.data.picture)
+          // console.log(response.data.data.picture)
         } catch (error) {
-          console.error('error fetching data', error)
+          // console.error('error fetching data', error)
         }
       },
 
@@ -235,12 +210,12 @@
               withCredentials: true,
             })
             .then((response) => {
-              console.log('Data updated successfully', response.data)
+              // console.log('Data updated successfully', response.data)
             })
 
           this.$router.push('/admin/partners')
         } catch (error) {
-          console.error('Error update data', error)
+          // console.error('Error update data', error)
         }
       },
       async reject() {
@@ -250,12 +225,12 @@
               withCredentials: true,
             })
             .then((response) => {
-              console.log('Data updated successfully', response.data)
+              // console.log('Data updated successfully', response.data)
             })
 
           this.$router.push('/admin/partners')
         } catch (error) {
-          console.error('Error updated data', error)
+          // console.error('Error updated data', error)
         }
       },
       getTypeLabel(typeId: any) {

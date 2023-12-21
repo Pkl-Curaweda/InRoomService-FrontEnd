@@ -234,7 +234,7 @@
             },
           })
           .then((response) => {
-            console.log('Data sent successfully:', response.data)
+            // console.log('Data sent successfully:', response.data)
             this.$router.push('/mitra/minimarket')
             // Reset form fields if needed
             this.model = null

@@ -36,23 +36,7 @@
         <!-- DETAIL ACTION -->
         <template v-slot:body-cell-detailaction="props">
           <q-td :props="props">
-            <!-- <q-btn-dropdown class="text-white bg-green text-semibold round" label="detail">
-              <q-list> -->
-            <!-- <q-item
-                  class="bg-green text-white m-2 rounded-sm px-10"
-                  v-for="option in typeServiceOptions"
-                  :key="option.value"
-                  clickable
-                  v-close-popup
-                  @click="onItemClick(option)">
-                  <q-item-section>
-                    <q-item-label>{{ option.label }}</q-item-label>
-                  </q-item-section>
-                </q-item> -->
-            <!-- </q-list>
-            </q-btn-dropdown> -->
             {{ getService(props.row.typeId) }}
-            <!-- <q-img :src="props.row.picture"  style="width: 100px; height: auto; border-radius: 10px;" /> -->
           </q-td>
         </template>
       </q-table>
@@ -148,25 +132,7 @@
           style: 'width: 15px; border-radius: 0 10px 10px 0;',
         },
       ]
-      // const filter = ref('')
-      // const data = ref()
-      // const filteredRows = computed(() => {
-      //   const searchTerm = filter.value.toLowerCase().trim()
-      //   if (!searchTerm) {
-      //     return data
-      //   } else {
-      //     return data.filter((row) => {
-      //       return (
-      //         row.title.toLowerCase().includes(searchTerm) || row.id.toString().includes(searchTerm)
-      //       )
-      //     })
-      //   }
-      // })
 
-      const onItemClick = (option: any) => {
-        // Handle item click based on the selected option
-        // You can access the selected option using 'option'
-      }
       const pagination = ref({
         sortBy: 'id',
         descending: false,
@@ -202,7 +168,6 @@
         rows,
         market,
         detailOptions,
-        onItemClick,
       }
     },
     data() {
@@ -239,9 +204,9 @@
           this.data = response.data.data.filter(
             (item: { serviceTypeId: number }) => item.serviceTypeId === 1
           )
-          console.log(response.data.data)
+          // console.log(response.data.data)
         } catch (error) {
-          console.error(error)
+          // console.error(error)
         }
       },
 

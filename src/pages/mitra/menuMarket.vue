@@ -60,7 +60,7 @@
           const response = await api.get('/productReq', {
             withCredentials: true,
           })
-          console.log(response.data)
+          // console.log(response.data)
           this.data = response.data.data
         } catch (error) {
           console.error('error fetching data: ', error)

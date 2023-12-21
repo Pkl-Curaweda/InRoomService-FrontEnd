@@ -83,7 +83,7 @@
             params: { search: this.searchQuery },
             withCredentials: true,
           })
-          console.log(response.data)
+          // console.log(response.data)
           this.data = response.data.data.data
 
           this.totalPages = response.data.data.meta.lastPage
@@ -197,7 +197,7 @@
   <q-toolbar class="flex flex-col w-screen">
     <div class="flex items-center gap-2 flex-row">
       <q-btn dense flat round icon="timeline" @click="estimated()" class="text-white" />
-      <q-btn dense flat round icon="person" class="text-white" />
+      <q-btn dense flat round icon="person" class="text-white" @click="$router.push('/profile')" />
       <q-btn dense flat round icon="shopping_cart" @click="checkout()" class="text-white" />
 
       <q-input

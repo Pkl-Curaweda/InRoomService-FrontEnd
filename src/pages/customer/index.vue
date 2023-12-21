@@ -9,7 +9,6 @@
       <card-menu
         :tanggal="card.tanggal"
         :namaToko="card.namaToko"
-        :jam="card.jam"
         :iconName="card.iconName"
         :link="card.link" />
     </div>
